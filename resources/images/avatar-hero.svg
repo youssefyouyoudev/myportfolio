@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 960 960" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="160" y1="120" x2="820" y2="840" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0ea5e9" stop-opacity="0.28" />
+      <stop offset="0.5" stop-color="#10b981" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#111827" stop-opacity="0.6" />
+    </linearGradient>
+    <linearGradient id="glow" x1="320" y1="140" x2="720" y2="780" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399" stop-opacity="0.45" />
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0.35" />
+    </linearGradient>
+    <clipPath id="clip">
+      <rect x="80" y="80" width="800" height="800" rx="220" />
+    </clipPath>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="960" rx="120" fill="#0b1220" />
+  <rect x="80" y="80" width="800" height="800" rx="220" fill="#0f172a" stroke="#1f2937" stroke-width="8" />
+  <rect x="80" y="80" width="800" height="800" rx="220" fill="url(#bg)" />
+  <circle cx="240" cy="210" r="120" fill="#22c55e" fill-opacity="0.06" />
+  <circle cx="760" cy="300" r="180" fill="#06b6d4" fill-opacity="0.08" />
+  <ellipse cx="340" cy="720" rx="180" ry="90" fill="#10b981" fill-opacity="0.06" />
+  <ellipse cx="640" cy="720" rx="210" ry="100" fill="#0891b2" fill-opacity="0.05" />
+  <path d="M180 500c40-140 160-250 300-250s260 110 300 250" stroke="url(#glow)" stroke-width="18" stroke-linecap="round" stroke-dasharray="24 22" opacity="0.6" />
+
+  <g clip-path="url(#clip)">
+    <circle cx="480" cy="360" r="150" fill="#111827" stroke="#1f2937" stroke-width="6" />
+    <circle cx="430" cy="340" r="14" fill="#0ea5e9" />
+    <circle cx="530" cy="340" r="14" fill="#0ea5e9" />
+    <path d="M434 398c14 20 38 32 66 32" stroke="#34d399" stroke-width="10" stroke-linecap="round" />
+    <path d="M372 320c8-54 52-96 108-96 45 0 88 24 104 62" stroke="#22d3ee" stroke-width="10" stroke-linecap="round" />
+
+    <path d="M320 626c0-104 72-166 160-166s160 62 160 166" fill="#0f172a" />
+    <path d="M320 626c0-104 72-166 160-166s160 62 160 166" stroke="#1f2937" stroke-width="10" />
+    <path d="M350 610c22-64 72-108 130-108s108 44 130 108" stroke="#22d3ee" stroke-width="10" stroke-linecap="round" opacity="0.6" />
+
+    <rect x="356" y="596" width="248" height="220" rx="46" fill="#0b1220" stroke="#1f2937" stroke-width="10" />
+    <path d="M356 666c68 28 136 28 248 0" stroke="#111827" stroke-width="14" />
+    <circle cx="480" cy="716" r="52" fill="#0f172a" stroke="#22d3ee" stroke-width="10" />
+    <path d="M452 720c8 12 18 18 28 18 12 0 24-8 34-22" stroke="#34d399" stroke-width="10" stroke-linecap="round" />
+
+    <rect x="250" y="564" width="460" height="260" rx="120" fill="url(#glow)" opacity="0.16" />
+  </g>
+
+  <g opacity="0.8">
+    <text x="140" y="880" fill="#94a3b8" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="28" letter-spacing="2">Youssef Youyou · Full-Stack</text>
+    <text x="140" y="920" fill="#22d3ee" font-family="'Segoe UI Semibold', 'Helvetica Neue', Arial, sans-serif" font-size="22" letter-spacing="1.2">Laravel · Vue · Product Design</text>
+  </g>
+</svg>
