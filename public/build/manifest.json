@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-B7u1e1UC.css",
+    "file": "assets/app-Bz0VXL5m.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,16 +9,9 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BW3SjEdg.js",
+    "file": "assets/app-aCipIz3H.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true,
-    "assets": [
-      "assets/youssef_avatar-Baed-hLs.glb"
-    ]
-  },
-  "resources/models/youssef_avatar.glb": {
-    "file": "assets/youssef_avatar-Baed-hLs.glb",
-    "src": "resources/models/youssef_avatar.glb"
+    "isEntry": true
   }
 }
