@@ -17,7 +17,7 @@
             <div class="shell flex items-center justify-between gap-4 py-4">
                 <a href="/" class="group flex items-center gap-3" aria-label="{{ __('navigation.back_home') }}">
                     <span class="soft-badge shadow-soft relative inline-flex h-12 w-12 items-center justify-center rounded-full">
-                        <img src="{{ Vite::asset('resources/images/avatar.png') }}" alt="Avatar" class="h-9 w-9 object-contain" />
+                        <img src="{{ asset('images/avatar.png') }}" alt="Avatar" class="h-9 w-9 object-contain" />
                     </span>
                     <div>
                         <div class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]">{{ config('app.author_name', 'Youssef Youyou') }}</div>
