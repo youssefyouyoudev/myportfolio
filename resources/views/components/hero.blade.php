@@ -114,8 +114,8 @@
         <div class="relative z-10 md:pt-4" data-reveal>
             <div class="surface p-4 md:-mt-6">
                 <div class="relative overflow-hidden rounded-2xl">
-                    <img
-                        src="{{ Vite::asset('public/images/avatar.png') }}"
+                  <img
+                        src="{{ asset('images/avatar.png') }}"
                         alt="{{ __('hero.avatar_alt') }}"
                         class="w-full rounded-2xl"
                         loading="lazy"
