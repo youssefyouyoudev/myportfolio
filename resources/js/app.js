@@ -37,3 +37,13 @@ document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
 		applyTheme(nextTheme);
 	});
 });
+
+document.querySelectorAll('[data-lang-select]').forEach((select) => {
+	select.addEventListener('change', () => {
+		const form = select.closest('form');
+
+		if (form) {
+			form.submit();
+		}
+	});
+});

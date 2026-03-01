@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class SetLocale
 {
@@ -17,14 +18,32 @@ class SetLocale
     {
         $supported = ['en', 'fr', 'ar'];
 
-        $requested = $request->get('lang') ?? $request->get('locale');
+        $requested = $request->query('lang') ?? $request->query('locale');
+        $routeLocale = $request->route('locale');
         $sessionLocale = $request->session()->get('app_locale');
 
-        $locale = $requested && in_array($requested, $supported, true)
-            ? $requested
+        if (
+            $request->isMethod('GET')
+            && $requested
+            && in_array($requested, $supported, true)
+            && $routeLocale !== $requested
+            && $request->route()?->getName()
+        ) {
+            $parameters = Arr::except($request->route()->parameters(), ['locale']);
+            $parameters['locale'] = $requested;
+
+            $query = Arr::except($request->query(), ['lang', 'locale']);
+
+            return redirect()->route($request->route()->getName(), array_merge($parameters, $query));
+        }
+
+        $locale = $routeLocale && in_array($routeLocale, $supported, true)
+            ? $routeLocale
+            : ($requested && in_array($requested, $supported, true)
+                ? $requested
             : ($sessionLocale && in_array($sessionLocale, $supported, true)
                 ? $sessionLocale
-                : $request->getPreferredLanguage($supported));
+                : $request->getPreferredLanguage($supported)));
 
         $locale = $locale && in_array($locale, $supported, true)
             ? $locale
