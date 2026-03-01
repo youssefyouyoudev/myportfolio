@@ -12,6 +12,7 @@
                 <th class="text-left">Title</th>
                 <th class="text-left">Status</th>
                 <th class="text-left">Featured</th>
+                <th class="text-left">Assets</th>
                 <th class="text-left">Published</th>
                 <th class="text-left"></th>
             </tr>
@@ -22,6 +23,7 @@
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->status }}</td>
                     <td>{{ $project->featured ? 'Yes' : 'No' }}</td>
+                    <td class="text-[var(--muted)]">{{ $project->screenshots->count() }} screenshots · {{ $project->files->count() }} files · {{ $project->tasks->count() }} tasks</td>
                     <td class="text-[var(--muted)]">{{ optional($project->published_at)->format('Y-m-d') }}</td>
                     <td class="space-x-3 text-right">
                         <a class="font-semibold text-[var(--accent-2)] hover:opacity-80" href="{{ route('admin.projects.edit', [app()->getLocale(), $project]) }}">Edit</a>

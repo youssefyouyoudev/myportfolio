@@ -34,11 +34,12 @@ class DatabaseSeeder extends Seeder
 
     private function seedAdmin(): void
     {
-        User::query()->firstOrCreate(
-            ['email' => 'devonter@example.com'],
+        User::query()->updateOrCreate(
+            ['email' => 'contact@youssefyouyou.com'],
             [
-                'name' => 'Youssef Devonter',
-                'password' => bcrypt('password'),
+                'name' => 'youssef youyou',
+                'password' => bcrypt('Youssef@0812'),
+                'is_admin' => true,
             ]
         );
     }

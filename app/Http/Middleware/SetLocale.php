@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
 
@@ -31,6 +32,7 @@ class SetLocale
 
         app()->setLocale($locale);
         Carbon::setLocale($locale);
+        URL::defaults(['locale' => $locale]);
         view()->share('appLocale', $locale);
         view()->share('isRtl', $locale === 'ar');
         $request->session()->put('app_locale', $locale);

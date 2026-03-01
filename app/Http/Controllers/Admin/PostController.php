@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -31,6 +32,7 @@ class PostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $this->validated($request);
+        $data = $this->handleCoverImage($request, $data);
         $post = Post::create($data);
         $post->tags()->sync($request->input('tag_ids', []));
 
@@ -51,6 +53,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post): RedirectResponse
     {
         $data = $this->validated($request, $post->id);
+        $data = $this->handleCoverImage($request, $data, $post);
         $post->update($data);
         $post->tags()->sync($request->input('tag_ids', []));
 
@@ -59,6 +62,10 @@ class PostController extends Controller
 
     public function destroy(Request $request, Post $post): RedirectResponse
     {
+        if ($post->cover_image) {
+            Storage::disk('public')->delete($post->cover_image);
+        }
+
         $post->delete();
 
         return redirect()->route('admin.posts.index', [$request->route('locale')])->with('status', 'Post removed');
@@ -73,6 +80,7 @@ class PostController extends Controller
             'body' => ['required', 'string'],
             'status' => ['required', 'in:draft,published'],
             'cover_image' => ['nullable', 'string', 'max:255'],
+            'cover_image_file' => ['nullable', 'image', 'max:5120'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'published_at' => ['nullable', 'date'],
             'translations' => ['nullable', 'array'],
@@ -81,5 +89,18 @@ class PostController extends Controller
             'translations.*.body' => ['nullable', 'string'],
             'meta' => ['nullable', 'array'],
         ]);
+    }
+
+    private function handleCoverImage(Request $request, array $data, ?Post $post = null): array
+    {
+        if ($request->hasFile('cover_image_file')) {
+            if ($post?->cover_image) {
+                Storage::disk('public')->delete($post->cover_image);
+            }
+
+            $data['cover_image'] = $request->file('cover_image_file')->store('posts/covers', 'public');
+        }
+
+        return $data;
     }
 }

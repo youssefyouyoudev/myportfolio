@@ -2,7 +2,7 @@
 
 @section('content')
 <h1 class="mb-4 text-2xl font-semibold text-[var(--text-strong)]">{{ $post->exists ? 'Edit post' : 'New post' }}</h1>
-<form method="post" action="{{ $post->exists ? route('admin.posts.update', [app()->getLocale(), $post]) : route('admin.posts.store', app()->getLocale()) }}" class="surface space-y-4 p-6">
+<form method="post" enctype="multipart/form-data" action="{{ $post->exists ? route('admin.posts.update', [app()->getLocale(), $post]) : route('admin.posts.store', app()->getLocale()) }}" class="surface space-y-4 p-6">
     @csrf
     @if($post->exists)
         @method('PUT')
@@ -45,6 +45,16 @@
         <div>
             <label class="text-sm font-semibold text-[var(--muted)]">Published at</label>
             <input type="datetime-local" name="published_at" value="{{ old('published_at', optional($post->published_at)->format('Y-m-d\TH:i')) }}" class="input-ghost mt-2 w-full">
+        </div>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+        <div>
+            <label class="text-sm font-semibold text-[var(--muted)]">Cover image path / URL</label>
+            <input name="cover_image" value="{{ old('cover_image', $post->cover_image) }}" class="input-ghost mt-2 w-full">
+        </div>
+        <div>
+            <label class="text-sm font-semibold text-[var(--muted)]">Upload cover image</label>
+            <input type="file" name="cover_image_file" accept="image/*" class="input-ghost mt-2 w-full">
         </div>
     </div>
     <div>

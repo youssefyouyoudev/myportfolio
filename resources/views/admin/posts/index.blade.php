@@ -11,6 +11,7 @@
             <tr>
                 <th class="text-left">Title</th>
                 <th class="text-left">Status</th>
+                <th class="text-left">Cover</th>
                 <th class="text-left">Published</th>
                 <th class="text-left"></th>
             </tr>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->status }}</td>
+                    <td class="text-[var(--muted)]">{{ $post->cover_image ? 'Available' : '—' }}</td>
                     <td class="text-[var(--muted)]">{{ optional($post->published_at)->format('Y-m-d') }}</td>
                     <td class="space-x-3 text-right">
                         <a class="font-semibold text-[var(--accent-2)] hover:opacity-80" href="{{ route('admin.posts.edit', [app()->getLocale(), $post]) }}">Edit</a>
