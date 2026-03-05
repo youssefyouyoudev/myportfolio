@@ -10,10 +10,14 @@ return new class extends Migration
     {
         Schema::create('seo_metas', function (Blueprint $table): void {
             $table->id();
-            $table->morphs('seoable');
+            $table->string('key')->nullable()->unique();
+            $table->nullableMorphs('seoable');
             $table->string('meta_title');
             $table->string('meta_description')->nullable();
             $table->string('meta_image')->nullable();
+            $table->string('og_title')->nullable();
+            $table->text('og_description')->nullable();
+            $table->string('canonical')->nullable();
             $table->string('locale', 5)->default('en');
             $table->string('og_type')->nullable();
             $table->json('schema')->nullable();

@@ -269,4 +269,18 @@
 		@apply text-xs font-semibold uppercase tracking-wider;
 		color: var(--muted);
 	}
+
+	.pulse-dot {
+		width: 8px;
+		height: 8px;
+		background-color: #22c55e;
+		border-radius: 50%;
+		display: inline-block;
+		animation: pulse 2s infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; transform: scale(1); }
+		50% { opacity: 0.5; transform: scale(1.4); }
+	}
 }

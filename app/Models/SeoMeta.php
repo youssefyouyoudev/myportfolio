@@ -11,9 +11,13 @@ class SeoMeta extends Model
     use HasFactory;
 
     protected $fillable = [
+        'key',
         'meta_title',
         'meta_description',
         'meta_image',
+        'og_title',
+        'og_description',
+        'canonical',
         'locale',
         'og_type',
         'schema',

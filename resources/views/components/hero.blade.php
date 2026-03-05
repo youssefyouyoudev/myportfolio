@@ -50,14 +50,14 @@
                 </div>
                 <div class="stat-tile">
                     <span>{{ $stats['availability']['label'] }}</span>
-                    <strong>{{ $stats['availability']['value'] }}</strong>
+                    <strong class="flex items-center justify-center gap-1.5"><span class="pulse-dot"></span>{{ $stats['availability']['value'] }}</strong>
                     <span>{{ $stats['availability']['hint'] }}</span>
                 </div>
             </div>
 
             <div class="flex flex-wrap items-center gap-4">
                 <div class="tagline">
-                    <span class="h-2 w-2 rounded-full bg-[var(--accent)]"></span>
+                    <span class="pulse-dot"></span>
                     <span>{{ __('navigation.tagline') }}</span>
                 </div>
                 <div class="flex items-center gap-2 text-xs text-[var(--muted)]">
@@ -126,7 +126,7 @@
                     <a
                         href="https://github.com/youssefyouyoudev"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         class="btn-ghost justify-center"
                     >
                         {{ __('hero.github_button') }}

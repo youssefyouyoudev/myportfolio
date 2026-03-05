@@ -8,6 +8,6 @@ return [
         'body' => 'تصميم وبناء وإطلاق منتجات موثوقة لفرق ومؤسسين طموحين.',
         'location' => 'مقيم في المغرب · والعمل عن بعد متاح',
         'copyright' => '© :year يوسف يييو. جميع الحقوق محفوظة.',
-        'email' => 'hello@youssefyouyou.com',
+        'email' => 'contact@youssefyouyou.com',
     ],
 ];

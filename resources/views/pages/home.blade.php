@@ -126,6 +126,24 @@
                     </div>
                 </article>
             @endforeach
+            {{-- Quick Win: MVP Scope & Architecture --}}
+            <article class="surface p-6" data-reveal>
+                <div class="flex items-center justify-between gap-2">
+                    <h3 class="text-xl font-semibold text-[var(--text-strong)]">MVP Scope &amp; Architecture</h3>
+                    <span class="chip text-[var(--success)] border-[var(--success)]/40 bg-[rgba(34,197,94,0.08)]">FAST TURNAROUND</span>
+                </div>
+                <p class="mt-3 text-sm text-[var(--muted)]">Get a full technical scope, architecture plan, and stack recommendation for your product idea. Delivered in 48 hours.</p>
+                <div class="mt-4 flex flex-wrap gap-2 text-xs text-[var(--muted)]">
+                    <span class="chip">Architecture plan</span>
+                    <span class="chip">Stack recommendation</span>
+                    <span class="chip">48-hour delivery</span>
+                    <span class="chip">Risk mapping</span>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <a class="text-[var(--accent)] font-semibold" href="{{ route('contact.create') }}">Get started →</a>
+                    <span class="text-xs text-[var(--muted)]">Starts from $300</span>
+                </div>
+            </article>
         </div>
     </div>
 </section>
@@ -140,6 +158,29 @@
             </div>
             <a class="btn-ghost" href="{{ route('projects.index') }}">{{ __('cta.view_all') }}</a>
         </div>
+        @php
+        $projectValueMap = [
+            'menapay-billing-suite'    => 'Revenue-critical',
+            'atlas-logistics-portal'   => 'Ops efficiency',
+            'orbipay-finops-console'   => 'Revenue-critical',
+            'relay-iot-fleet'          => 'Real-time ops',
+            'lumen-health-records'     => 'HIPAA-ready',
+            'quant-trading-desk'       => 'Low-latency',
+            'nova-learning-lms'        => 'Learning outcomes',
+            'terra-delivery-tracker'   => 'Ops efficiency',
+            'harbor-erp-suite'         => 'Mid-market scale',
+            'alva-insights-dashboard'  => 'Revenue-critical',
+            'pulse-support-center'     => 'Ops efficiency',
+            'strata-okr'               => 'Ops efficiency',
+            'beacon-incident-response' => 'Ops efficiency',
+            'summit-booking-engine'    => 'Revenue-critical',
+            'vector-ml-workbench'      => 'Learning outcomes',
+            'cobalt-desktop-pos'       => 'Ops efficiency',
+            'aurora-mobile-banking'    => 'Revenue-critical',
+            'neon-social-stream'       => 'Ops efficiency',
+            'keystone-identity-hub'    => 'Ops efficiency',
+        ];
+        @endphp
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach($projects as $project)
                 <article class="surface p-5 space-y-4" data-reveal>
@@ -156,7 +197,7 @@
                         </div>
                         <div>
                             <span class="text-[var(--text-strong)] font-semibold">{{ __('home.projects.solution') }}</span>
-                            <p>{{ __('home.projects.solution_copy') }}</p>
+                            <p>{{ $project->description ?? __('home.projects.solution_copy') }}</p>
                         </div>
                         <div>
                             <span class="text-[var(--text-strong)] font-semibold">{{ __('home.projects.stack') }}</span>
@@ -177,7 +218,7 @@
                             </div>
                             <div class="surface border border-[var(--card-2)] bg-[var(--card)] p-2 text-center">
                                 <p class="text-[var(--muted)]">{{ __('home.projects.metrics.value') }}</p>
-                                <p class="text-[var(--text-strong)] font-semibold">{{ __('home.projects.value_metric') }}</p>
+                                <p class="text-[var(--text-strong)] font-semibold">{{ $projectValueMap[$project->slug] ?? __('home.projects.value_metric') }}</p>
                             </div>
                         </div>
                     </div>
@@ -269,7 +310,7 @@
                 </div>
                 <div class="flex gap-3">
                     <a class="btn-primary" href="{{ route('contact.create') }}">{{ __('home.conversion.lead_magnet.primary') }}</a>
-                    <a class="btn-ghost" href="https://wa.me/212" target="_blank" rel="noreferrer">{{ __('home.conversion.lead_magnet.secondary') }}</a>
+                    <a class="btn-ghost" href="https://wa.me/212610090070" target="_blank" rel="noopener noreferrer">{{ __('home.conversion.lead_magnet.secondary') }}</a>
                 </div>
             </div>
             <div class="surface p-5 space-y-3">
