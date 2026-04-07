@@ -31,8 +31,18 @@ Route::middleware('setLocale')->prefix('{locale?}')
         Route::get('/', [SiteController::class, 'home'])->name('home');
         Route::get('/about', [SiteController::class, 'about'])->name('about');
         Route::get('/skills', [SiteController::class, 'skills'])->name('skills');
+        Route::get('/expertise', [SiteController::class, 'skills'])->name('expertise');
+        Route::get('/tech-stack', [SiteController::class, 'sitePage'])->defaults('slug', 'tech-stack')->name('tech-stack');
         Route::get('/experience', [SiteController::class, 'experience'])->name('experience');
         Route::get('/resume', [SiteController::class, 'resume'])->name('resume');
+        Route::get('/industries', [SiteController::class, 'sitePage'])->defaults('slug', 'industries')->name('industries');
+        Route::get('/process', [SiteController::class, 'sitePage'])->defaults('slug', 'process')->name('process.page');
+        Route::get('/trust', [SiteController::class, 'sitePage'])->defaults('slug', 'trust')->name('trust');
+        Route::get('/faq', [SiteController::class, 'sitePage'])->defaults('slug', 'faq')->name('faq');
+        Route::get('/availability', [SiteController::class, 'sitePage'])->defaults('slug', 'availability')->name('availability');
+        Route::get('/hire-me', [SiteController::class, 'sitePage'])->defaults('slug', 'availability')->name('hire-me');
+        Route::get('/privacy-policy', [SiteController::class, 'sitePage'])->defaults('slug', 'privacy-policy')->name('privacy-policy');
+        Route::get('/terms-of-service', [SiteController::class, 'sitePage'])->defaults('slug', 'terms-of-service')->name('terms-of-service');
         Route::get('/developer-nador', [SiteController::class, 'location'])->defaults('slug', 'developer-nador')->name('pages.developer-nador');
         Route::get('/developer-oriental', [SiteController::class, 'location'])->defaults('slug', 'developer-oriental')->name('pages.developer-oriental');
         Route::get('/developer-morocco', [SiteController::class, 'location'])->defaults('slug', 'developer-morocco')->name('pages.developer-morocco');

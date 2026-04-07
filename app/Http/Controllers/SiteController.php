@@ -80,6 +80,26 @@ class SiteController extends Controller
         ]);
     }
 
+    public function sitePage(string $slug): View
+    {
+        $locale = app()->getLocale();
+        $page = BrandContent::sitePage($locale, $slug);
+        abort_unless($page, 404);
+
+        $schema = [BrandContent::personSchema($locale)];
+
+        if (! empty($page['faq'])) {
+            $schema[] = BrandContent::faqSchema($page['faq']);
+        }
+
+        return view('pages.site.show', [
+            'page' => $page,
+            'seo' => array_merge($page['seo'], [
+                'schema' => $schema,
+            ]),
+        ]);
+    }
+
     public function location(string $slug): View
     {
         $locale = app()->getLocale();
@@ -102,8 +122,16 @@ class SiteController extends Controller
             $urls[] = route('home', ['locale' => $locale]);
             $urls[] = route('about', ['locale' => $locale]);
             $urls[] = route('skills', ['locale' => $locale]);
+            $urls[] = route('tech-stack', ['locale' => $locale]);
             $urls[] = route('experience', ['locale' => $locale]);
             $urls[] = route('resume', ['locale' => $locale]);
+            $urls[] = route('industries', ['locale' => $locale]);
+            $urls[] = route('process.page', ['locale' => $locale]);
+            $urls[] = route('trust', ['locale' => $locale]);
+            $urls[] = route('faq', ['locale' => $locale]);
+            $urls[] = route('availability', ['locale' => $locale]);
+            $urls[] = route('privacy-policy', ['locale' => $locale]);
+            $urls[] = route('terms-of-service', ['locale' => $locale]);
             $urls[] = route('services.index', ['locale' => $locale]);
             $urls[] = route('projects.index', ['locale' => $locale]);
             $urls[] = route('blog.index', ['locale' => $locale]);

@@ -199,6 +199,20 @@
         </div>
     </section>
 
+    <section class="section section-soft">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['industries_intro']['eyebrow']" :title="$page['industries_intro']['title']" :copy="$page['industries_intro']['copy']" />
+            <div class="card-grid industry-grid">
+                @foreach($page['industries'] as $industry)
+                    <article class="panel industry-card" data-reveal>
+                        <h3>{{ $industry['title'] }}</h3>
+                        <p>{{ $industry['copy'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     <section class="section section-soft" id="process">
         <div class="container">
             <x-site.section-heading :eyebrow="$page['process_intro']['eyebrow']" :title="$page['process_intro']['title']" :copy="$page['process_intro']['copy']" />
@@ -209,6 +223,41 @@
                         <h3>{{ $item['title'] }}</h3>
                         <p>{{ $item['copy'] }}</p>
                     </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['trust_intro']['eyebrow']" :title="$page['trust_intro']['title']" :copy="$page['trust_intro']['copy']" />
+            <div class="logo-placeholder-strip">
+                <span>Client logo placeholder</span>
+                <span>Agency logo placeholder</span>
+                <span>SaaS brand placeholder</span>
+                <span>Recruiter proof placeholder</span>
+            </div>
+            <div class="card-grid trust-grid">
+                @foreach($page['trust_placeholders'] as $placeholder)
+                    <article class="panel trust-card" data-reveal>
+                        <span class="eyebrow">Placeholder</span>
+                        <h3>{{ $placeholder['title'] }}</h3>
+                        <p>{{ $placeholder['copy'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-soft">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['faq_intro']['eyebrow']" :title="$page['faq_intro']['title']" :copy="$page['faq_intro']['copy']" />
+            <div class="faq-list">
+                @foreach($page['faq'] as $item)
+                    <details class="panel faq-item" data-reveal>
+                        <summary>{{ $item['question'] }}</summary>
+                        <p>{{ $item['answer'] }}</p>
+                    </details>
                 @endforeach
             </div>
         </div>
