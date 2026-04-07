@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lead;
+use App\Support\BrandContent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -11,7 +12,15 @@ class ContactController extends Controller
 {
     public function create(): View
     {
-        return view('pages.contact');
+        $locale = app()->getLocale();
+        $page = BrandContent::contact($locale);
+
+        return view('pages.contact', [
+            'page' => $page,
+            'seo' => array_merge($page['seo'], [
+                'schema' => [BrandContent::personSchema($locale)],
+            ]),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

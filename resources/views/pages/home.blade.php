@@ -1,340 +1,256 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $site = \App\Support\BrandContent::site(app()->getLocale());
+    @endphp
 
-<x-hero :locale="app()->getLocale()" :is-rtl="$isRtl ?? false" />
+    <section class="hero landing-hero">
+        <div class="container hero-grid">
+            <div class="hero-copy" data-reveal>
+                <span class="eyebrow">{{ $page['hero']['eyebrow'] }}</span>
+                <h1>{{ $page['hero']['title'] }}</h1>
+                <p>{{ $page['hero']['copy'] }}</p>
 
-<section id="skills" class="section">
-    <div class="shell space-y-8">
-        <div class="section-title">
-            <span class="heading-accent">{{ __('home.skills.badge') }}</span>
-            <h2>{{ __('home.skills.title') }}</h2>
-            <p>{{ __('home.skills.subtitle') }}</p>
-        </div>
-        <div class="flex flex-wrap gap-3 text-xs text-[var(--muted)]">
-            @foreach(__('home.skills.chips') as $chip)
-                <span class="chip">{{ $chip }}</span>
-            @endforeach
-        </div>
-        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            @foreach($skills as $group)
-                <div class="surface p-5">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ $group['title'] }}</h3>
-                        <span class="pill">{{ __('labels.senior') }}</span>
-                    </div>
-                    <div class="mt-4 flex flex-wrap gap-2 text-sm text-[var(--muted)]">
-                        @foreach($group['items'] as $item)
-                            <span class="chip">{{ $item }}</span>
-                        @endforeach
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section id="how" class="section">
-    <div class="shell space-y-6">
-        <div class="section-title">
-            <span class="heading-accent">{{ __('home.how.badge') }}</span>
-            <h2>{{ __('home.how.title') }}</h2>
-            <p class="text-[var(--muted)]">{{ __('home.how.subtitle') }}</p>
-        </div>
-        <div class="grid gap-4 md:grid-cols-3">
-            @foreach(__('home.how.steps') as $step)
-                <div class="surface p-5 space-y-3">
-                    <div class="pill">{{ $step['number'] }}</div>
-                    <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ $step['title'] }}</h3>
-                    <p class="text-sm text-[var(--muted)]">{{ $step['copy'] }}</p>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section id="why" class="section">
-    <div class="shell space-y-6">
-        <div class="section-title">
-            <span class="heading-accent">{{ __('home.why.badge') }}</span>
-            <h2>{{ __('home.why.title') }}</h2>
-            <p class="text-[var(--muted)]">{{ __('home.why.subtitle') }}</p>
-        </div>
-        <div class="grid gap-4 md:grid-cols-2">
-            <div class="surface p-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ __('home.why.agencies.title') }}</h3>
-                    <span class="pill">{{ __('home.why.agencies.pill') }}</span>
-                </div>
-                <ul class="mt-4 space-y-2 text-sm text-[var(--muted)]">
-                    @foreach(__('home.why.agencies.points') as $point)
-                        <li>{{ $point }}</li>
+                <div class="hero-pills">
+                    @foreach($page['hero']['pills'] as $pill)
+                        <span>{{ $pill }}</span>
                     @endforeach
-                </ul>
-            </div>
-            <div class="surface p-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ __('home.why.me.title') }}</h3>
-                    <span class="pill">{{ __('home.why.me.pill') }}</span>
                 </div>
-                <ul class="mt-4 space-y-2 text-sm text-[var(--muted)]">
-                    @foreach(__('home.why.me.points') as $point)
-                        <li>{{ $point }}</li>
+
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">{{ $page['nav']['start_project'] }}</a>
+                    <a href="#projects" class="btn btn-secondary">{{ $site['actions']['view_projects'] }}</a>
+                </div>
+
+                <div class="hero-meta-grid">
+                    @foreach($page['hero']['metrics'] as $metric)
+                        <article class="metric-card">
+                            <strong>{{ $metric['title'] }}</strong>
+                            <span>{{ $metric['copy'] }}</span>
+                        </article>
                     @endforeach
-                </ul>
+                </div>
+            </div>
+
+            <div class="hero-stage" aria-hidden="true">
+                <div class="floating-card dashboard-card">
+                    <div class="card-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="dashboard-head">
+                        <strong>Growth Dashboard</strong>
+                        <span>Live overview</span>
+                    </div>
+                    <div class="chart-bars">
+                        <span style="height: 40%"></span>
+                        <span style="height: 58%"></span>
+                        <span style="height: 74%"></span>
+                        <span style="height: 56%"></span>
+                        <span style="height: 88%"></span>
+                        <span style="height: 68%"></span>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div><small>MRR</small><strong>$18.4k</strong></div>
+                        <div><small>Users</small><strong>1,284</strong></div>
+                        <div><small>Growth</small><strong>+22%</strong></div>
+                    </div>
+                </div>
+
+                <div class="floating-card code-card">
+                    <div class="code-header">
+                        <span class="code-chip">api</span>
+                        <span class="code-chip">auth</span>
+                    </div>
+                    <pre><code>POST /v1/workflows
+{
+  "status": "ready",
+  "scale": true,
+  "secure": true
+}</code></pre>
+                </div>
+
+                <div class="floating-card api-card">
+                    <span class="api-label">Response</span>
+                    <strong>200 OK</strong>
+                    <p>Fast endpoints, clean structure, stable integrations.</p>
+                    <div class="api-lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="floating-card mobile-card">
+                    <div class="mobile-notch"></div>
+                    <div class="mobile-screen">
+                        <span class="signal-dot"></span>
+                        <div class="mobile-chart"></div>
+                        <div class="mobile-list">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-gridline"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="manifesto" class="section">
-    <div class="shell space-y-4 text-center">
-        <div class="section-title">
-            <span class="heading-accent">{{ __('home.manifesto.badge') }}</span>
-            <h2 class="text-3xl font-semibold text-[var(--text-strong)]">{{ __('home.manifesto.title') }}</h2>
-        </div>
-        <p class="mx-auto max-w-3xl text-[var(--muted)]">{{ __('home.manifesto.copy') }}</p>
-    </div>
-</section>
-
-<section id="services" class="section">
-    <div class="shell space-y-6">
-        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div class="section-title">
-                <span class="heading-accent">{{ __('sections.services') }}</span>
-                <h2>{{ __('sections.services') }}</h2>
-                <p class="text-[var(--muted)]">{{ __('home.services.subtitle') }}</p>
-            </div>
-            <a class="btn-ghost" href="{{ route('services.index') }}">{{ __('cta.view_all') }}</a>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2">
-            @foreach($services as $service)
-                <article class="surface p-6" data-reveal>
-                    <div class="flex items-center justify-between gap-2">
-                        <h3 class="text-xl font-semibold text-[var(--text-strong)]">{{ $service->localized('title') }}</h3>
-                        <span class="chip">{{ strtoupper($service->status) }}</span>
-                    </div>
-                    <p class="mt-3 text-sm text-[var(--muted)]">{{ $service->localized('excerpt') }}</p>
-                    <div class="mt-4 flex flex-wrap gap-2 text-xs text-[var(--muted)]">
-                        @foreach(($service->features ?? []) as $feature)
-                            <span class="chip">{{ $feature }}</span>
-                        @endforeach
-                    </div>
-                    <div class="mt-6 flex items-center justify-between">
-                        <a class="text-[var(--accent)] font-semibold" href="{{ route('services.show', $service) }}">{{ __('cta.view_details') }}</a>
-                        <span class="text-xs text-[var(--muted)]">{{ __('labels.starts_from') }} {{ $service->price_from ? '$'.number_format($service->price_from) : __('labels.custom_quote') }}</span>
-                    </div>
-                </article>
+    <section class="section trust-strip" id="proof">
+        <div class="container proof-strip">
+            @foreach($page['proof_strip'] as $proof)
+                <span>{{ $proof }}</span>
             @endforeach
-            {{-- Quick Win: MVP Scope & Architecture --}}
-            <article class="surface p-6" data-reveal>
-                <div class="flex items-center justify-between gap-2">
-                    <h3 class="text-xl font-semibold text-[var(--text-strong)]">MVP Scope &amp; Architecture</h3>
-                    <span class="chip text-[var(--success)] border-[var(--success)]/40 bg-[rgba(34,197,94,0.08)]">FAST TURNAROUND</span>
-                </div>
-                <p class="mt-3 text-sm text-[var(--muted)]">Get a full technical scope, architecture plan, and stack recommendation for your product idea. Delivered in 48 hours.</p>
-                <div class="mt-4 flex flex-wrap gap-2 text-xs text-[var(--muted)]">
-                    <span class="chip">Architecture plan</span>
-                    <span class="chip">Stack recommendation</span>
-                    <span class="chip">48-hour delivery</span>
-                    <span class="chip">Risk mapping</span>
-                </div>
-                <div class="mt-6 flex items-center justify-between">
-                    <a class="text-[var(--accent)] font-semibold" href="{{ route('contact.create') }}">Get started →</a>
-                    <span class="text-xs text-[var(--muted)]">Starts from $300</span>
-                </div>
-            </article>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="projects" class="section">
-    <div class="shell space-y-6">
-        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div class="section-title">
-                <span class="heading-accent">{{ __('sections.projects') }}</span>
-                <h2>{{ __('sections.projects') }}</h2>
-                <p class="text-[var(--muted)]">{{ __('home.projects.subtitle') }}</p>
+    <section class="section" id="services">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['services_intro']['eyebrow']" :title="$page['services_intro']['title']" :copy="$page['services_intro']['copy']" />
+            <div class="card-grid service-grid">
+                @foreach($page['services'] as $service)
+                    <article class="panel service-card" data-reveal>
+                        <span class="service-icon">{{ $service['icon'] }}</span>
+                        <h3>{{ $service['title'] }}</h3>
+                        <p>{{ $service['description'] }}</p>
+                        <strong>{{ $service['value'] }}</strong>
+                    </article>
+                @endforeach
             </div>
-            <a class="btn-ghost" href="{{ route('projects.index') }}">{{ __('cta.view_all') }}</a>
         </div>
-        @php
-        $projectValueMap = [
-            'menapay-billing-suite'    => 'Revenue-critical',
-            'atlas-logistics-portal'   => 'Ops efficiency',
-            'orbipay-finops-console'   => 'Revenue-critical',
-            'relay-iot-fleet'          => 'Real-time ops',
-            'lumen-health-records'     => 'HIPAA-ready',
-            'quant-trading-desk'       => 'Low-latency',
-            'nova-learning-lms'        => 'Learning outcomes',
-            'terra-delivery-tracker'   => 'Ops efficiency',
-            'harbor-erp-suite'         => 'Mid-market scale',
-            'alva-insights-dashboard'  => 'Revenue-critical',
-            'pulse-support-center'     => 'Ops efficiency',
-            'strata-okr'               => 'Ops efficiency',
-            'beacon-incident-response' => 'Ops efficiency',
-            'summit-booking-engine'    => 'Revenue-critical',
-            'vector-ml-workbench'      => 'Learning outcomes',
-            'cobalt-desktop-pos'       => 'Ops efficiency',
-            'aurora-mobile-banking'    => 'Revenue-critical',
-            'neon-social-stream'       => 'Ops efficiency',
-            'keystone-identity-hub'    => 'Ops efficiency',
-        ];
-        @endphp
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            @foreach($projects as $project)
-                <article class="surface p-5 space-y-4" data-reveal>
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ $project->localized('title') }}</h3>
-                        @if($project->featured)
-                            <span class="pill">{{ __('labels.featured') }}</span>
-                        @endif
-                    </div>
-                    <div class="grid gap-3 text-sm text-[var(--muted)]">
-                        <div>
-                            <span class="text-[var(--text-strong)] font-semibold">{{ __('home.projects.problem') }}</span>
-                            <p>{{ $project->localized('excerpt') }}</p>
+    </section>
+
+    <section class="section section-soft" id="stack">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['stack_intro']['eyebrow']" :title="$page['stack_intro']['title']" :copy="$page['stack_intro']['copy']" />
+            <div class="stack-grid">
+                @foreach($page['stack_groups'] as $group)
+                    <article class="panel stack-card" data-reveal>
+                        <h3>{{ $group['title'] }}</h3>
+                        <div class="stack-list">
+                            @foreach($group['items'] as $item)
+                                <span>{{ $item }}</span>
+                            @endforeach
                         </div>
-                        <div>
-                            <span class="text-[var(--text-strong)] font-semibold">{{ __('home.projects.solution') }}</span>
-                            <p>{{ $project->description ?? __('home.projects.solution_copy') }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['projects_intro']['eyebrow']" :title="$page['projects_intro']['title']" :copy="$page['projects_intro']['copy']" />
+            <div class="card-grid project-grid">
+                @foreach($page['projects'] as $project)
+                    <article class="panel project-card" data-reveal>
+                        <div class="project-preview {{ $project['preview'] }}">
+                            <div class="preview-surface">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
                         </div>
-                        <div>
-                            <span class="text-[var(--text-strong)] font-semibold">{{ __('home.projects.stack') }}</span>
-                            <div class="mt-2 flex flex-wrap gap-2 text-xs">
-                                @foreach(array_slice($project->stack ?? [], 0, 5) as $tech)
-                                    <span class="chip">{{ $tech }}</span>
+                        <div class="project-copy">
+                            <h3>{{ $project['title'] }}</h3>
+                            <p>{{ $project['description'] }}</p>
+                            <div class="stack-list">
+                                @foreach($project['stack'] as $item)
+                                    <span>{{ $item }}</span>
                                 @endforeach
                             </div>
                         </div>
-                        <div class="grid grid-cols-3 gap-2 text-xs">
-                            <div class="surface border border-[var(--card-2)] bg-[var(--card)] p-2 text-center">
-                                <p class="text-[var(--muted)]">{{ __('home.projects.metrics.users') }}</p>
-                                <p class="text-[var(--text-strong)] font-semibold">1k+</p>
-                            </div>
-                            <div class="surface border border-[var(--card-2)] bg-[var(--card)] p-2 text-center">
-                                <p class="text-[var(--muted)]">{{ __('home.projects.metrics.perf') }}</p>
-                                <p class="text-[var(--text-strong)] font-semibold">90+ LCP</p>
-                            </div>
-                            <div class="surface border border-[var(--card-2)] bg-[var(--card)] p-2 text-center">
-                                <p class="text-[var(--muted)]">{{ __('home.projects.metrics.value') }}</p>
-                                <p class="text-[var(--text-strong)] font-semibold">{{ $projectValueMap[$project->slug] ?? __('home.projects.value_metric') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between text-sm">
-                        <a class="text-[var(--accent)] font-semibold" href="{{ route('projects.show', $project) }}">{{ __('cta.view_details') }}</a>
-                        {{-- @if($project->live_url)
-                            <a class="text-[var(--muted)] hover:text-[var(--text-strong)]" href="{{ $project->live_url }}" target="_blank" rel="noopener">{{ __('cta.visit_live') }}</a>
-                        @endif --}}
-                    </div>
-                </article>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section id="trust" class="section">
-    <div class="shell space-y-6">
-        <div class="section-title">
-            <span class="heading-accent">{{ __('home.trust.badge') }}</span>
-            <h2>{{ __('home.trust.title') }}</h2>
-            <p class="text-[var(--muted)]">{{ __('home.trust.subtitle') }}</p>
-        </div>
-        <div class="grid gap-4 md:grid-cols-3">
-            @foreach(__('home.trust.tiles') as $tile)
-                <div class="surface p-5 space-y-3">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ $tile['title'] }}</h3>
-                        <span class="pill">{{ $tile['pill'] }}</span>
-                    </div>
-                    @if(isset($tile['body']))
-                        <p class="text-sm text-[var(--muted)]">{{ $tile['body'] }}</p>
-                    @endif
-                    @if(isset($tile['body_items']))
-                        <ul class="space-y-2 text-sm text-[var(--muted)]">
-                            @foreach($tile['body_items'] as $item)
-                                <li>{{ $item }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                    @if(isset($tile['href'], $tile['cta']))
-                        <a class="btn-ghost" href="{{ $tile['href'] }}" target="_blank" rel="noreferrer">{{ $tile['cta'] }}</a>
-                    @endif
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section id="blog" class="section">
-    <div class="shell space-y-6">
-        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div class="section-title">
-                <span class="heading-accent">{{ __('sections.blog') }}</span>
-                <h2>{{ __('sections.blog') }}</h2>
-                <p class="text-[var(--muted)]">{{ __('home.blog.subtitle') }}</p>
+                    </article>
+                @endforeach
             </div>
-            <a class="btn-ghost" href="{{ route('blog.index') }}">{{ __('cta.view_all') }}</a>
         </div>
-        <div class="grid gap-6 md:grid-cols-3">
-            @foreach($posts as $post)
-                <article class="surface p-5" data-reveal>
-                    <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ $post->localized('title') }}</h3>
-                    <p class="mt-3 text-sm text-[var(--muted)]">{{ $post->localized('excerpt') }}</p>
-                    <div class="mt-6 flex items-center justify-between text-sm">
-                        <span class="text-[var(--muted)]">{{ $post->published_at?->translatedFormat('M d, Y') }}</span>
-                        <a class="text-[var(--accent)] font-semibold" href="{{ route('blog.show', $post) }}">{{ __('cta.read') }}</a>
-                    </div>
-                </article>
-            @endforeach
-        </div>
-    </div>
-</section>
+    </section>
 
-<section id="conversion" class="section">
-    <div class="shell space-y-6">
-        <div class="section-title">
-            <span class="heading-accent">{{ __('home.conversion.badge') }}</span>
-            <h2>{{ __('home.conversion.title') }}</h2>
-            <p class="text-[var(--muted)]">{{ __('home.conversion.subtitle') }}</p>
-        </div>
-        <div class="grid gap-4 md:grid-cols-2">
-            <div class="surface p-5 space-y-3">
-                <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ __('home.conversion.lead_magnet.title') }}</h3>
-                <p class="text-sm text-[var(--muted)]">{{ __('home.conversion.lead_magnet.copy') }}</p>
-                <div class="flex flex-wrap gap-2 text-xs text-[var(--muted)]">
-                    @foreach(__('home.conversion.lead_magnet.chips') as $chip)
-                        <span class="chip">{{ $chip }}</span>
-                    @endforeach
-                </div>
-                <div class="flex gap-3">
-                    <a class="btn-primary" href="{{ route('contact.create') }}">{{ __('home.conversion.lead_magnet.primary') }}</a>
-                    <a class="btn-ghost" href="https://wa.me/212610090070" target="_blank" rel="noopener noreferrer">{{ __('home.conversion.lead_magnet.secondary') }}</a>
-                </div>
+    <section class="section section-soft">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['authority_intro']['eyebrow']" :title="$page['authority_intro']['title']" :copy="$page['authority_intro']['copy']" />
+            <div class="proof-grid">
+                @foreach($page['stats'] as $stat)
+                    <article class="panel stat-card" data-reveal>
+                        <strong><span data-counter="{{ $stat['value'] }}">0</span>{{ $stat['suffix'] }}</strong>
+                        <span>{{ $stat['label'] }}</span>
+                    </article>
+                @endforeach
             </div>
-            <div class="surface p-5 space-y-3">
-                <h3 class="text-lg font-semibold text-[var(--text-strong)]">{{ __('home.conversion.quick_contact.title') }}</h3>
-                <p class="text-sm text-[var(--muted)]">{{ __('home.conversion.quick_contact.copy') }}</p>
-                <div class="flex gap-3">
-                    <button class="btn-ghost" type="button" data-open-contact>{{ __('home.conversion.quick_contact.button') }}</button>
-                    <a class="btn-ghost" href="mailto:{{ __('layout.footer.email') }}">{{ __('home.conversion.quick_contact.email') }}</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container split-showcase">
+            <div>
+                <x-site.section-heading :eyebrow="$page['why_intro']['eyebrow']" :title="$page['why_intro']['title']" :copy="$page['why_intro']['copy']" />
+            </div>
+            <div class="reason-grid">
+                @foreach($page['reasons'] as $reason)
+                    <article class="panel reason-card" data-reveal>
+                        <h3>{{ $reason['title'] }}</h3>
+                        <p>{{ $reason['copy'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-soft" id="process">
+        <div class="container">
+            <x-site.section-heading :eyebrow="$page['process_intro']['eyebrow']" :title="$page['process_intro']['title']" :copy="$page['process_intro']['copy']" />
+            <div class="process-grid">
+                @foreach($page['process'] as $item)
+                    <article class="panel process-card" data-reveal>
+                        <span class="process-step">{{ $item['step'] }}</span>
+                        <h3>{{ $item['title'] }}</h3>
+                        <p>{{ $item['copy'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section final-cta">
+        <div class="container">
+            <div class="section-cta">
+                <div>
+                    <span class="eyebrow">{{ $page['final_cta']['eyebrow'] }}</span>
+                    <h2>{{ $page['final_cta']['title'] }}</h2>
+                    <p>{{ $page['final_cta']['copy'] }}</p>
+                </div>
+                <div class="cta-actions">
+                    <a href="#contact" class="btn btn-primary">{{ $page['final_cta']['primary'] }}</a>
+                    <a href="{{ $site['whatsapp_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener">{{ $page['final_cta']['secondary'] }}</a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<div class="sticky bottom-4 inset-x-0 px-4">
-    <div class="mx-auto flex max-w-4xl items-center justify-between gap-3 rounded-2xl border border-[var(--card-2)] bg-[var(--card)]/90 p-4 shadow-lg backdrop-blur">
-        <div class="space-y-1">
-            <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]">{{ __('home.sticky.badge') }}</p>
-            <p class="text-base font-semibold text-[var(--text-strong)]">{{ __('home.sticky.title') }}</p>
+    <section class="section" id="contact">
+        <div class="container contact-layout">
+            <div class="contact-column">
+                <x-site.section-heading :eyebrow="$page['contact_intro']['eyebrow']" :title="$page['contact_intro']['title']" :copy="$page['contact_intro']['copy']" />
+                <div class="panel contact-card">
+                    <div class="contact-list">
+                        <a href="{{ $site['email_link'] }}">{{ $site['email'] }}</a>
+                        <a href="{{ $site['phone_link'] }}">{{ $site['phone'] }}</a>
+                        <a href="{{ $site['whatsapp_url'] }}" target="_blank" rel="noopener">WhatsApp</a>
+                        <a href="{{ $site['github_url'] }}" target="_blank" rel="noopener">GitHub</a>
+                        <a href="{{ $site['linkedin_url'] }}" target="_blank" rel="noopener">LinkedIn</a>
+                        <span>{{ $site['location'] }}</span>
+                    </div>
+                    <div class="contact-mini-proof">
+                        @foreach($page['contact_badges'] as $badge)
+                            <span>{{ $badge }}</span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <x-site.contact-form />
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-            <a class="btn-primary" href="{{ route('contact.create') }}">{{ __('home.sticky.primary') }}</a>
-            <a class="btn-ghost" href="#projects">{{ __('home.sticky.secondary') }}</a>
-        </div>
-    </div>
-</div>
+    </section>
 @endsection

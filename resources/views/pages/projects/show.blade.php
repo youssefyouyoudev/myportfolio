@@ -1,43 +1,58 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="section">
-    <div class="mx-auto max-w-5xl px-6 space-y-8">
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-            <div class="space-y-3">
-                <p class="heading-accent">{{ __('sections.projects') }}</p>
-                <h1 class="mt-1 text-3xl font-semibold text-[var(--text-strong)]">{{ $project->localized('title') }}</h1>
-                <p class="text-lg text-[var(--muted)]">{{ $project->localized('excerpt') }}</p>
-                <div class="mt-3 flex flex-wrap gap-2 text-xs text-[var(--muted)]">
-                    @foreach(($project->stack ?? []) as $tech)
-                        <span class="chip">{{ $tech }}</span>
+    <section class="inner-hero">
+        <div class="container narrow">
+            <span class="eyebrow">{{ $page['label'] }}</span>
+            <h1 class="page-title">{{ $page['title'] }}</h1>
+            <p class="page-copy">{{ $page['summary'] }}</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container split-layout">
+            <article class="panel">
+                <h2>{{ __('brand.common.challenge') }}</h2>
+                <p>{{ $page['challenge'] }}</p>
+            </article>
+            <article class="panel">
+                <h2>{{ __('brand.common.solution') }}</h2>
+                <p>{{ $page['solution'] }}</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section section-soft">
+        <div class="container split-layout">
+            <article class="panel">
+                <h2>{{ __('brand.common.role') }}</h2>
+                <p>{{ $page['role'] }}</p>
+                <h3>{{ __('brand.common.outcome') }}</h3>
+                <p>{{ $page['outcome'] }}</p>
+            </article>
+            <article class="panel">
+                <h2>{{ __('brand.common.stack') }}</h2>
+                <div class="stack-list">
+                    @foreach($page['stack'] as $item)
+                        <span>{{ $item }}</span>
                     @endforeach
                 </div>
-            </div>
-            <div class="flex flex-col gap-3 text-sm text-[var(--text-strong)]">
-                {{-- @if($project->live_url)
-                    <a class="btn-ghost justify-center" href="{{ $project->live_url }}" target="_blank" rel="noopener">{{ __('cta.visit_live') }}</a>
-                @endif --}}
-                @if($project->repo_url)
-                    <a class="btn-ghost justify-center" href="{{ $project->repo_url }}" target="_blank" rel="noopener">{{ __('labels.repo') }}</a>
-                @endif
-            </div>
+                <h3>{{ __('brand.common.features') }}</h3>
+                <ul class="simple-list">
+                    @foreach($page['features'] as $feature)
+                        <li>{{ $feature }}</li>
+                    @endforeach
+                </ul>
+            </article>
         </div>
+    </section>
 
-        <div class="surface p-6">
-            <div class="prose max-w-none">
-                {!! nl2br(e($project->localized('description'))) !!}
-            </div>
+    <section class="section">
+        <div class="container narrow">
+            <article class="panel prose-panel">
+                <h2>{{ __('brand.common.context') }}</h2>
+                <p>{{ $page['note'] }}</p>
+            </article>
         </div>
-
-        <div class="flex flex-wrap items-center gap-4">
-            <a href="{{ route('contact.create') }}" class="btn-primary">
-                {{ __('cta.hire_me') }}
-            </a>
-            @if($project->category)
-                <span class="chip">{{ __('labels.category') }}: {{ $project->category->localized('name') }}</span>
-            @endif
-        </div>
-    </div>
-</section>
+    </section>
 @endsection

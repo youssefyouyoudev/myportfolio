@@ -16,7 +16,7 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $supported = ['en', 'fr', 'ar'];
+        $supported = ['en', 'fr', 'ar', 'es', 'de'];
 
         $requested = $request->query('lang') ?? $request->query('locale');
         $routeLocale = $request->route('locale');

@@ -2,22 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
+use App\Support\BrandContent;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $services = Service::published()->orderBy('position')->get();
+        $locale = app()->getLocale();
+        $page = BrandContent::servicesIndex($locale);
 
-        return view('pages.services.index', compact('services'));
+        return view('pages.services.index', [
+            'page' => $page,
+            'seo' => array_merge($page['seo'], [
+                'schema' => [BrandContent::personSchema($locale)],
+            ]),
+        ]);
     }
 
-    public function show( $service)
+    public function show(string $service): View
     {
-        $service = Service::where('slug', $service)->firstOrFail();
+        $locale = app()->getLocale();
+        $page = BrandContent::service($locale, $service);
+        abort_unless($page, 404);
 
-        return view('pages.services.show', compact('service'));
+        return view('pages.services.show', [
+            'page' => $page,
+            'seo' => array_merge($page['seo'], [
+                'schema' => [
+                    BrandContent::personSchema($locale),
+                    BrandContent::serviceSchema($page, route('services.show', ['locale' => $locale, 'service' => $service])),
+                ],
+            ]),
+        ]);
     }
 }

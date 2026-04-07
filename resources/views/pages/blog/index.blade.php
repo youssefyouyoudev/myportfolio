@@ -1,29 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="section">
-    <div class="mx-auto max-w-5xl px-6">
-        <div class="flex items-center justify-between">
-            <div class="section-title">
-                <span class="heading-accent">{{ __('sections.blog') }}</span>
-                <h1 class="text-3xl font-semibold text-[var(--text-strong)]">{{ __('sections.blog') }}</h1>
-                <p class="text-[var(--muted)]">{{ $posts->total() }} {{ __('labels.articles') }}</p>
+    @php($site = \App\Support\BrandContent::site(app()->getLocale()))
+
+    <section class="inner-hero">
+        <div class="container narrow">
+            <span class="eyebrow">{{ $page['eyebrow'] }}</span>
+            <h1 class="page-title">{{ $page['title'] }}</h1>
+            <p class="page-copy">{{ $page['copy'] }}</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="card-grid two">
+                @foreach($page['items'] as $article)
+                    <article class="panel article-card">
+                        <span>{{ $article['published_at'] }}</span>
+                        <h2>{{ $article['title'] }}</h2>
+                        <p>{{ $article['excerpt'] }}</p>
+                        <a href="{{ route('blog.show', ['locale' => app()->getLocale(), 'slug' => $article['slug']]) }}" class="btn btn-secondary">{{ $site['actions']['read_article'] }}</a>
+                    </article>
+                @endforeach
             </div>
-            <span class="chip">{{ $posts->total() }} {{ __('labels.posts') }}</span>
         </div>
-        <div class="mt-8 space-y-6">
-            @foreach($posts as $post)
-                <article class="surface p-5" data-reveal>
-                    <h2 class="text-xl font-semibold text-[var(--text-strong)]">{{ $post->localized('title') }}</h2>
-                    <p class="mt-2 text-sm text-[var(--muted)]">{{ $post->localized('excerpt') }}</p>
-                    <div class="mt-4 flex items-center justify-between text-sm text-[var(--muted)]">
-                        <span>{{ $post->published_at?->translatedFormat('M d, Y') }}</span>
-                        <a class="text-[var(--accent)] font-semibold" href="{{ route('blog.show', $post) }}">{{ __('cta.read') }}</a>
-                    </div>
-                </article>
-            @endforeach
-        </div>
-        <div class="mt-10">{{ $posts->withQueryString()->links() }}</div>
-    </div>
-</section>
+    </section>
 @endsection

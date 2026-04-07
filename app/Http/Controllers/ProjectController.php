@@ -2,22 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Support\BrandContent;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
 {
     public function index(): View
     {
-        $projects = Project::published()->with(['tags', 'category'])->orderByDesc('published_at')->paginate(9);
+        $locale = app()->getLocale();
+        $page = BrandContent::projectsIndex($locale);
 
-        return view('pages.projects.index', compact('projects'));
+        return view('pages.projects.index', [
+            'page' => $page,
+            'seo' => array_merge($page['seo'], [
+                'schema' => [BrandContent::personSchema($locale)],
+            ]),
+        ]);
     }
 
-    public function show(Project $project): View
+    public function show(string $project): View
     {
-        $project->load(['tags', 'category']);
+        $locale = app()->getLocale();
+        $page = BrandContent::project($locale, $project);
+        abort_unless($page, 404);
 
-        return view('pages.projects.show', compact('project'));
+        return view('pages.projects.show', [
+            'page' => $page,
+            'seo' => array_merge($page['seo'], [
+                'schema' => [BrandContent::personSchema($locale)],
+            ]),
+        ]);
     }
 }

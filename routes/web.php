@@ -26,16 +26,25 @@ Route::get('/admin/dashboard', function () {
 });
 
 Route::middleware('setLocale')->prefix('{locale?}')
-    ->where(['locale' => 'en|fr|ar'])
+    ->where(['locale' => 'en|fr|ar|es|de'])
     ->group(function (): void {
         Route::get('/', [SiteController::class, 'home'])->name('home');
         Route::get('/about', [SiteController::class, 'about'])->name('about');
+        Route::get('/skills', [SiteController::class, 'skills'])->name('skills');
+        Route::get('/experience', [SiteController::class, 'experience'])->name('experience');
+        Route::get('/resume', [SiteController::class, 'resume'])->name('resume');
+        Route::get('/developer-nador', [SiteController::class, 'location'])->defaults('slug', 'developer-nador')->name('pages.developer-nador');
+        Route::get('/developer-oriental', [SiteController::class, 'location'])->defaults('slug', 'developer-oriental')->name('pages.developer-oriental');
+        Route::get('/developer-morocco', [SiteController::class, 'location'])->defaults('slug', 'developer-morocco')->name('pages.developer-morocco');
+        Route::get('/{slug}', [SiteController::class, 'location'])
+            ->where('slug', 'developer-nador|developer-oriental|developer-morocco')
+            ->name('pages.location');
 
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
         Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
 
         Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-        Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->name('projects.show');
+        Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 
         Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
         Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
@@ -72,5 +81,7 @@ Route::middleware('setLocale')->prefix('{locale?}')
                 Route::patch('tasks/{task}/move', [TaskController::class, 'move'])->whereNumber('task')->name('tasks.move');
             });
     });
+
+Route::get('/sitemap.xml', [SiteController::class, 'sitemap'])->name('sitemap');
 
 require __DIR__.'/auth.php';
