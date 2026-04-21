@@ -29,7 +29,9 @@ class ContactController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:150'],
             'company' => ['nullable', 'string', 'max:120'],
+            'project_type' => ['nullable', 'string', 'max:80'],
             'budget' => ['nullable', 'string', 'max:60'],
+            'timeline' => ['nullable', 'string', 'max:80'],
             'message' => ['required', 'string', 'max:2000'],
         ]);
 
@@ -42,6 +44,8 @@ class ContactController extends Controller
             'locale' => app()->getLocale(),
             'source' => 'website',
             'meta' => [
+                'project_type' => $validated['project_type'] ?? null,
+                'timeline' => $validated['timeline'] ?? null,
                 'ip' => $request->ip(),
                 'user_agent' => $request->userAgent(),
                 'path' => $request->path(),

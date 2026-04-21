@@ -24,18 +24,44 @@ document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
     });
 });
 
-document.querySelectorAll('[data-lang-select]').forEach((select) => {
-    select.addEventListener('change', () => {
-        const form = select.closest('form');
-        if (form) {
-            form.submit();
+document.querySelectorAll('[data-print-resume]').forEach((button) => {
+    button.addEventListener('click', () => {
+        window.print();
+    });
+});
+
+const header = document.querySelector('.site-header');
+
+const syncHeaderState = () => {
+    if (!header) {
+        return;
+    }
+
+    header.classList.toggle('is-scrolled', window.scrollY > 12);
+};
+
+syncHeaderState();
+window.addEventListener('scroll', syncHeaderState, { passive: true });
+
+const detailMenus = document.querySelectorAll('details.locale-menu, details.mobile-nav');
+
+document.addEventListener('click', (event) => {
+    detailMenus.forEach((menu) => {
+        if (!menu.contains(event.target)) {
+            menu.removeAttribute('open');
         }
     });
 });
 
-document.querySelectorAll('[data-print-resume]').forEach((button) => {
-    button.addEventListener('click', () => {
-        window.print();
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        detailMenus.forEach((menu) => menu.removeAttribute('open'));
+    }
+});
+
+document.querySelectorAll('.mobile-nav-panel a, .locale-list a').forEach((link) => {
+    link.addEventListener('click', () => {
+        detailMenus.forEach((menu) => menu.removeAttribute('open'));
     });
 });
 

@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    @php($site = \App\Support\BrandContent::site(app()->getLocale()))
+    @php
+        $site = \App\Support\BrandContent::site(app()->getLocale());
+        $sitePagesUi = trans('brand.ui.site_pages');
+    @endphp
 
     <section class="inner-hero">
         <div class="container narrow">
@@ -93,7 +96,7 @@
         <section class="section">
             <div class="container narrow">
                 <article class="panel prose-panel">
-                    <h2>Placeholders for Real Proof</h2>
+                    <h2>{{ $sitePagesUi['proof_placeholders_title'] }}</h2>
                     <ul class="simple-list">
                         @foreach($page['placeholders'] as $item)
                             <li>{{ $item }}</li>
@@ -124,13 +127,13 @@
             <div class="container">
                 <div class="section-cta">
                     <div>
-                        <span class="eyebrow">Next Step</span>
+                        <span class="eyebrow">{{ $sitePagesUi['next_step'] }}</span>
                         <h2>{{ $page['cta']['title'] }}</h2>
                         <p>{{ $page['cta']['copy'] }}</p>
                     </div>
                     <div class="cta-actions">
                         <a href="{{ route('contact.create', ['locale' => app()->getLocale()]) }}" class="btn btn-primary">{{ $site['actions']['contact_me'] }}</a>
-                        <a href="{{ $site['whatsapp_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener">WhatsApp</a>
+                        <a href="{{ $site['whatsapp_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
                     </div>
                 </div>
             </div>

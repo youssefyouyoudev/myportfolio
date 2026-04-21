@@ -4,18 +4,53 @@
     $landing = \App\Support\BrandContent::landing($locale);
     $meta = array_merge($site['default_seo'], $seo ?? []);
     $homeUrl = route('home', ['locale' => $locale]);
-    $anchorBase = \Illuminate\Support\Facades\Route::currentRouteNamed('home') ? '' : $homeUrl;
     $alternateLocales = \App\Support\BrandContent::supportedLocales();
     $currentRouteName = \Illuminate\Support\Facades\Route::currentRouteName() ?? 'home';
     $currentRouteParameters = request()->route()?->parameters() ?? [];
+    $ogLocales = [
+        'en' => 'en_US',
+        'fr' => 'fr_FR',
+        'ar' => 'ar_MA',
+        'es' => 'es_ES',
+        'de' => 'de_DE',
+    ];
     $localeLabels = collect($alternateLocales)->mapWithKeys(
-        fn (string $supportedLocale): array => [$supportedLocale => \App\Support\BrandContent::localeName($supportedLocale)]
+        fn (string $supportedLocale): array => [$supportedLocale => [
+            'ar' => 'العربية',
+        ][$supportedLocale] ?? \App\Support\BrandContent::localeName($supportedLocale)]
     );
     $localeLinks = collect($alternateLocales)->mapWithKeys(
         fn (string $supportedLocale): array => [
             $supportedLocale => route($currentRouteName, array_filter(array_merge($currentRouteParameters, ['locale' => $supportedLocale])))
         ]
     );
+    $primaryNav = [
+        [
+            'label' => $landing['nav']['services'],
+            'url' => route('services.index', ['locale' => $locale]),
+            'active' => str_starts_with($currentRouteName, 'services.'),
+        ],
+        [
+            'label' => $landing['nav']['projects'],
+            'url' => route('projects.index', ['locale' => $locale]),
+            'active' => str_starts_with($currentRouteName, 'projects.'),
+        ],
+        [
+            'label' => $landing['nav']['expertise'],
+            'url' => route('skills', ['locale' => $locale]),
+            'active' => in_array($currentRouteName, ['skills', 'expertise', 'tech-stack'], true),
+        ],
+        [
+            'label' => $landing['nav']['about'],
+            'url' => route('about', ['locale' => $locale]),
+            'active' => $currentRouteName === 'about',
+        ],
+        [
+            'label' => $landing['nav']['insights'],
+            'url' => route('blog.index', ['locale' => $locale]),
+            'active' => str_starts_with($currentRouteName, 'blog.'),
+        ],
+    ];
 @endphp
 <!DOCTYPE html>
 <html lang="{{ $locale }}" dir="{{ ($isRtl ?? false) ? 'rtl' : 'ltr' }}" data-theme="dark">
@@ -25,12 +60,18 @@
     <title>{{ $meta['title'] }}</title>
     <meta name="description" content="{{ $meta['description'] }}">
     <meta name="keywords" content="{{ $meta['keywords'] }}">
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
     <meta name="theme-color" content="#050816">
+    <meta property="og:site_name" content="{{ $site['name'] }}">
+    <meta property="og:locale" content="{{ $ogLocales[$locale] ?? 'en_US' }}">
     <meta property="og:title" content="{{ $meta['title'] }}">
     <meta property="og:description" content="{{ $meta['description'] }}">
     <meta property="og:type" content="{{ $meta['type'] ?? 'website' }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('images/brand-mark.png') }}">
+    @foreach($alternateLocales as $alternateLocale)
+        <meta property="og:locale:alternate" content="{{ $ogLocales[$alternateLocale] ?? 'en_US' }}">
+    @endforeach
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $meta['title'] }}">
     <meta name="twitter:description" content="{{ $meta['description'] }}">
@@ -40,6 +81,7 @@
         <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName() ?? 'home', array_filter(array_merge(request()->route()?->parameters() ?? [], ['locale' => $alternateLocale]))) }}">
     @endforeach
     <link rel="alternate" hreflang="x-default" href="{{ route('home', ['locale' => 'en']) }}">
+    <link rel="icon" href="{{ asset('images/brand-mark.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -60,6 +102,7 @@
     @endforeach
 </head>
 <body class="{{ ($isRtl ?? false) ? 'is-rtl' : '' }}">
+    <a href="#main-content" class="skip-link">{{ __('brand.ui.layout.skip_to_content') }}</a>
     <div class="site-shell">
         <header class="site-header">
             <div class="container header-panel">
@@ -74,12 +117,10 @@
                         </span>
                     </a>
 
-                    <nav class="desktop-nav" aria-label="Primary">
-                        <a href="{{ route('about', ['locale' => $locale]) }}">{{ $landing['nav']['about'] }}</a>
-                        <a href="{{ route('services.index', ['locale' => $locale]) }}">{{ $landing['nav']['services'] }}</a>
-                        <a href="{{ route('projects.index', ['locale' => $locale]) }}">{{ $landing['nav']['projects'] }}</a>
-                        <a href="{{ route('skills', ['locale' => $locale]) }}">{{ $landing['nav']['expertise'] }}</a>
-                        <a href="{{ route('contact.create', ['locale' => $locale]) }}">{{ $landing['nav']['contact'] }}</a>
+                    <nav class="desktop-nav" aria-label="{{ $landing['nav']['navigate'] }}">
+                        @foreach($primaryNav as $item)
+                            <a href="{{ $item['url'] }}" @class(['nav-link', 'is-active' => $item['active']]) @if($item['active']) aria-current="page" @endif>{{ $item['label'] }}</a>
+                        @endforeach
                     </nav>
 
                     <div class="header-actions">
@@ -96,7 +137,7 @@
                                 @endforeach
                             </div>
                         </details>
-                        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+                        <button type="button" class="theme-toggle" data-theme-toggle aria-label="{{ $site['theme']['toggle'] }}">
                             <svg data-theme-icon="sun" viewBox="0 0 24 24" aria-hidden="true">
                                 <circle cx="12" cy="12" r="4"></circle>
                                 <path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.5-7.5L17 5m-10 14-1.5 1.5m13 0L17 19m-10-14L5.5 3.5"></path>
@@ -110,16 +151,14 @@
                 </div>
 
                 <details class="mobile-nav">
-                    <summary>Menu</summary>
+                    <summary>{{ __('brand.ui.layout.menu') }}</summary>
                     <div class="mobile-nav-panel">
-                        <a href="{{ route('about', ['locale' => $locale]) }}">{{ $landing['nav']['about'] }}</a>
-                        <a href="{{ route('services.index', ['locale' => $locale]) }}">{{ $landing['nav']['services'] }}</a>
-                        <a href="{{ route('projects.index', ['locale' => $locale]) }}">{{ $landing['nav']['projects'] }}</a>
-                        <a href="{{ route('skills', ['locale' => $locale]) }}">{{ $landing['nav']['expertise'] }}</a>
+                        @foreach($primaryNav as $item)
+                            <a href="{{ $item['url'] }}" @class(['nav-link', 'is-active' => $item['active']]) @if($item['active']) aria-current="page" @endif>{{ $item['label'] }}</a>
+                        @endforeach
+                        <a href="{{ route('contact.create', ['locale' => $locale]) }}" @class(['nav-link', 'is-active' => str_starts_with($currentRouteName, 'contact.')]) @if(str_starts_with($currentRouteName, 'contact.')) aria-current="page" @endif>{{ $landing['nav']['contact'] }}</a>
                         <a href="{{ route('industries', ['locale' => $locale]) }}">{{ $landing['nav']['industries'] }}</a>
-                        <a href="{{ route('blog.index', ['locale' => $locale]) }}">{{ $landing['nav']['insights'] }}</a>
                         <a href="{{ route('availability', ['locale' => $locale]) }}">{{ $landing['nav']['hire'] }}</a>
-                        <a href="{{ route('contact.create', ['locale' => $locale]) }}">{{ $landing['nav']['contact'] }}</a>
                         <details class="locale-menu mobile-locale-menu">
                             <summary class="locale-trigger">
                                 <span>{{ $landing['nav']['language'] }}: {{ $localeLabels[$locale] ?? strtoupper($locale) }}</span>
@@ -133,7 +172,7 @@
                                 @endforeach
                             </div>
                         </details>
-                        <button type="button" class="theme-toggle mobile-theme" data-theme-toggle aria-label="Toggle theme">
+                        <button type="button" class="theme-toggle mobile-theme" data-theme-toggle aria-label="{{ $site['theme']['toggle'] }}">
                             <svg data-theme-icon="sun" viewBox="0 0 24 24" aria-hidden="true">
                                 <circle cx="12" cy="12" r="4"></circle>
                                 <path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.5-7.5L17 5m-10 14-1.5 1.5m13 0L17 19m-10-14L5.5 3.5"></path>
@@ -148,7 +187,7 @@
             </div>
         </header>
 
-        <main>
+        <main id="main-content">
             @yield('content')
         </main>
 
@@ -173,7 +212,7 @@
                         <h4>{{ $landing['nav']['reach_out'] }}</h4>
                         <a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a>
                         <a href="tel:+212610090070">{{ $site['phone'] }}</a>
-                        <a href="https://wa.me/212610090070" target="_blank" rel="noopener">WhatsApp</a>
+                        <a href="https://wa.me/212610090070" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
                         <a href="https://github.com/youssefyouyoudev" target="_blank" rel="noopener">GitHub</a>
                         <a href="https://linkedin.com/in/youssefyouyoudev" target="_blank" rel="noopener">LinkedIn</a>
                         <div class="footer-locales">
@@ -184,12 +223,16 @@
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <p>&copy; {{ now()->year }} {{ $site['name'] }}. Built for modern client acquisition.</p>
+                    <p>{{ __('brand.ui.layout.footer_bottom', ['year' => now()->year, 'name' => $site['name'], 'location' => $site['location']]) }}</p>
                 </div>
             </div>
         </footer>
     </div>
 
-    <a href="https://wa.me/212610090070" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>
+    <a href="https://wa.me/212610090070" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="{{ $site['actions']['whatsapp'] }}">{{ $site['actions']['whatsapp'] }}</a>
+    <div class="mobile-cta-bar" aria-label="Quick actions">
+        <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary">{{ $landing['nav']['start_project'] }}</a>
+        <a href="{{ $site['whatsapp_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
+    </div>
 </body>
 </html>

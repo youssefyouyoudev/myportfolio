@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    @php
-        $faqs = [
-            ['question' => 'Is this suitable for an existing business or a new product?', 'answer' => 'Both. The right approach depends on current systems, technical debt, urgency, and what the business needs next.'],
-            ['question' => 'Do you handle architecture and deployment too?', 'answer' => 'Yes. Architecture, implementation, deployment, and production readiness can all be part of the engagement.'],
-            ['question' => 'Can this evolve after launch?', 'answer' => 'Yes. The point is to build a system that can be improved, extended, and maintained without becoming fragile.'],
-        ];
-    @endphp
+    @php($servicesUi = trans('brand.ui.services'))
 
     <section class="inner-hero">
         <div class="container narrow">
             <span class="eyebrow">{{ __('brand.common.service') }}</span>
             <h1 class="page-title">{{ $page['title'] }}</h1>
             <p class="page-copy">{{ $page['summary'] }}</p>
+            <div class="hero-pills">
+                @foreach($page['stack'] as $item)
+                    <span>{{ $item }}</span>
+                @endforeach
+            </div>
         </div>
     </section>
 
@@ -53,10 +52,10 @@
 
     <section class="section">
         <div class="container">
-            <x-site.section-heading :eyebrow="__('brand.common.process')" :title="__('brand.common.how_the_work_moves')" />
+            <x-site.section-heading :eyebrow="__('brand.common.process')" :title="__('brand.common.how_the_work_moves')" :copy="$servicesUi['show_process_copy']" />
             <div class="process-grid">
                 @foreach($page['process'] as $index => $item)
-                    <article class="panel process-card">
+                    <article class="panel process-card" data-reveal>
                         <span class="process-step">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
                         <h3>{{ $item }}</h3>
                     </article>
@@ -67,10 +66,10 @@
 
     <section class="section section-soft">
         <div class="container">
-            <x-site.section-heading eyebrow="FAQ" title="Common questions around this service." />
+            <x-site.section-heading :eyebrow="$servicesUi['show_faq_eyebrow']" :title="$servicesUi['show_faq_title']" />
             <div class="faq-list">
-                @foreach($faqs as $faq)
-                    <details class="panel faq-item">
+                @foreach($servicesUi['show_faqs'] as $faq)
+                    <details class="panel faq-item" data-reveal>
                         <summary>{{ $faq['question'] }}</summary>
                         <p>{{ $faq['answer'] }}</p>
                     </details>
@@ -78,7 +77,7 @@
             </div>
             <div class="section-cta">
                 <div>
-                    <span class="eyebrow">Need this service?</span>
+                    <span class="eyebrow">{{ $servicesUi['show_need_eyebrow'] }}</span>
                     <h2>{{ $page['title'] }}</h2>
                     <p>{{ $page['business_value'] }}</p>
                 </div>
