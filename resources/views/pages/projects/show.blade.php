@@ -41,6 +41,20 @@
                     <p>{{ $page['note'] }}</p>
                     <div class="spotlight-details">
                         <div>
+                            <strong>{{ __('brand.common.built_for') }}</strong>
+                            <p>{{ $page['client'] ?? $page['note'] }}</p>
+                        </div>
+                        <div>
+                            <strong>{{ __('brand.common.role') }}</strong>
+                            <p>{{ $page['role'] }}</p>
+                        </div>
+                        <div>
+                            <strong>{{ __('brand.common.outcome') }}</strong>
+                            <p>{{ $page['outcome'] }}</p>
+                        </div>
+                    </div>
+                    <div class="spotlight-details">
+                        <div>
                             <strong>{{ __('brand.common.challenge') }}</strong>
                             <p>{{ $page['challenge'] }}</p>
                         </div>
@@ -61,10 +75,10 @@
     <section class="section section-soft">
         <div class="container split-layout">
             <article class="panel">
-                <h2>{{ __('brand.common.role') }}</h2>
+                <h2>{{ __('brand.common.built_for') }}</h2>
+                <p>{{ $page['client'] ?? $page['note'] }}</p>
+                <h3>{{ __('brand.common.role') }}</h3>
                 <p>{{ $page['role'] }}</p>
-                <h3>{{ __('brand.common.outcome') }}</h3>
-                <p>{{ $page['outcome'] }}</p>
             </article>
             <article class="panel">
                 <h2>{{ __('brand.common.features') }}</h2>

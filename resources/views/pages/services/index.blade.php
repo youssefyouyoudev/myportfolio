@@ -33,7 +33,7 @@
                                 <span>{{ $item }}</span>
                             @endforeach
                         </div>
-                        <a href="{{ route('services.show', ['locale' => app()->getLocale(), 'service' => $service['slug']]) }}" class="btn btn-secondary">{{ $site['actions']['view_case_study'] }}</a>
+                        <a href="{{ route('services.show', ['locale' => app()->getLocale(), 'service' => $service['slug']]) }}" class="btn btn-secondary">{{ $site['actions']['view_service'] }}</a>
                     </article>
                 @endforeach
             </div>

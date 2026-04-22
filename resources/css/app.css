@@ -1681,7 +1681,30 @@ body.is-rtl .simple-list {
     right: 1rem;
     bottom: 1rem;
     z-index: 60;
-    min-width: 122px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--border) 62%);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 88%, #0f172a 12%), color-mix(in srgb, var(--accent-strong) 78%, #071018 22%));
+    color: #03110b;
+    box-shadow: 0 18px 40px rgba(0, 255, 136, 0.22);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.whatsapp-fab:hover,
+.whatsapp-fab:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 44px rgba(0, 255, 136, 0.28);
+    filter: saturate(1.05);
+}
+
+.whatsapp-fab svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
 }
 
 .mobile-cta-bar {

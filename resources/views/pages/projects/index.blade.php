@@ -50,6 +50,20 @@
                         </div>
                         <div class="spotlight-details">
                             <div>
+                                <strong>{{ __('brand.common.built_for') }}</strong>
+                                <p>{{ $featured['client'] ?? $featured['note'] }}</p>
+                            </div>
+                            <div>
+                                <strong>{{ __('brand.common.role') }}</strong>
+                                <p>{{ $featured['role'] }}</p>
+                            </div>
+                            <div>
+                                <strong>{{ __('brand.common.outcome') }}</strong>
+                                <p>{{ $featured['outcome'] }}</p>
+                            </div>
+                        </div>
+                        <div class="spotlight-details">
+                            <div>
                                 <strong>{{ __('brand.common.challenge') }}</strong>
                                 <p>{{ $featured['challenge'] }}</p>
                             </div>
@@ -82,8 +96,10 @@
                                     <span>{{ $item }}</span>
                                 @endforeach
                             </div>
+                            <p><strong>{{ __('brand.common.built_for') }}:</strong> {{ $project['client'] ?? $project['note'] }}</p>
                             <p><strong>{{ __('brand.common.challenge') }}:</strong> {{ $project['challenge'] }}</p>
                             <p><strong>{{ __('brand.common.solution') }}:</strong> {{ $project['solution'] }}</p>
+                            <p><strong>{{ __('brand.common.outcome') }}:</strong> {{ $project['outcome'] }}</p>
                             <a href="{{ route('projects.show', ['locale' => app()->getLocale(), 'project' => $project['slug']]) }}" class="text-link">{{ __('brand.site.actions.view_case_study') }}</a>
                         </div>
                     </article>

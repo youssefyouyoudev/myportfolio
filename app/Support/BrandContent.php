@@ -63,8 +63,8 @@ class BrandContent
     {
         $base = [
             'seo' => [
-                'title' => 'Youssef Youyou | Senior Full-Stack Developer in Morocco for SaaS, Web Apps, and AI Systems',
-                'description' => 'Senior Full-Stack Developer in Morocco building scalable web apps, SaaS platforms, APIs, mobile products, dashboards, and AI-powered systems for modern businesses.',
+                'title' => 'Youssef Youyou | Senior Full-Stack Developer in Morocco for Websites, Web Apps, Dashboards, APIs, and SaaS',
+                'description' => 'Senior Full-Stack Developer in Morocco building business-ready websites, custom web apps, dashboards, APIs, and SaaS systems for serious companies and founders.',
                 'keywords' => 'senior full-stack developer Morocco, Laravel developer Morocco, React developer Morocco, SaaS developer Morocco, API developer Morocco, web developer Nador',
                 'type' => 'website',
             ],
@@ -95,17 +95,17 @@ class BrandContent
                 'language_short' => 'Lang',
             ],
             'hero' => [
-                'eyebrow' => 'Senior Full-Stack Developer | Web, SaaS, Mobile, AI',
-                'title' => 'Senior Full-Stack Developer building scalable web apps, SaaS, and AI-powered systems',
-                'copy' => 'I help businesses build high-performance applications, automate processes, and scale with modern technologies.',
-                'pills' => ['5+ years experience', 'Web apps, SaaS, mobile, desktop, APIs', 'Business-focused technical partner'],
+                'eyebrow' => 'Senior Full-Stack Developer in Morocco',
+                'title' => 'I build business-ready websites, web apps, dashboards, APIs, and SaaS systems.',
+                'copy' => 'I help companies, founders, and Moroccan businesses launch faster, improve operations, and ship digital products that feel credible from the first click.',
+                'pills' => ['5+ years experience', '20+ happy clients / 25+ completed projects', 'Laravel, React, APIs, SaaS'],
                 'metrics' => [
-                    ['title' => 'Senior execution', 'copy' => 'Serious product delivery from concept to production.'],
-                    ['title' => 'AI to deployment', 'copy' => 'Architecture, interfaces, automation, and infrastructure in one flow.'],
-                    ['title' => 'Built for growth', 'copy' => 'Systems designed to support users, teams, and business expansion.'],
+                    ['title' => 'Business websites', 'copy' => 'Sites built to improve trust, clarity, and lead flow.'],
+                    ['title' => 'Custom platforms', 'copy' => 'Dashboards, internal tools, APIs, and SaaS systems built around real workflows.'],
+                    ['title' => 'Clean delivery', 'copy' => 'Architecture, UI, deployment, and support handled as one serious build process.'],
                 ],
             ],
-            'proof_strip' => ['5+ years experience', '20+ happy clients', '25+ completed projects', '10+ large systems', 'Web, SaaS, mobile, desktop, AI'],
+            'proof_strip' => ['5+ years experience', '20+ happy clients', '25+ completed projects', '10+ large systems', 'Available for Morocco and international work'],
             'services_intro' => [
                 'eyebrow' => 'Services',
                 'title' => 'Systems built for businesses that need more than a basic website.',
@@ -133,8 +133,8 @@ class BrandContent
             ],
             'projects_intro' => [
                 'eyebrow' => 'Selected Work',
-                'title' => 'Project types that show real technical range.',
-                'copy' => 'Presented like product work: clear purpose, visible system thinking, and modern visual structure instead of generic portfolio tiles.',
+                'title' => 'Featured builds with clear business context, technical ownership, and delivery focus.',
+                'copy' => 'These case studies are framed to show what was being built, what problem had to be solved, what stack was used, and how the work moved the product forward.',
             ],
             'projects' => [
                 ['title' => 'ERP Systems', 'description' => 'Large internal platforms for operations, inventory, finance, and role-based workflows.', 'stack' => ['Laravel', 'React', 'PostgreSQL'], 'preview' => 'preview-erp'],
@@ -145,9 +145,9 @@ class BrandContent
                 ['title' => 'Backend Platforms', 'description' => 'High-performance API systems for integrations, automation, and multi-product delivery.', 'stack' => ['Python', 'Flask', 'MongoDB'], 'preview' => 'preview-api'],
             ],
             'authority_intro' => [
-                'eyebrow' => 'Authority',
-                'title' => 'A stronger business impression in seconds.',
-                'copy' => 'The structure below is there to create immediate confidence: seniority, volume, and product-level capability without dragging the visitor through a resume.',
+                'eyebrow' => 'Proof',
+                'title' => 'Credibility should be easy to verify at a glance.',
+                'copy' => 'One concise proof section is stronger than repeating the same claims. These numbers stay consistent, and the project work shows what they mean in practice.',
             ],
             'stats' => [
                 ['value' => 5, 'suffix' => '+', 'label' => 'Years of experience'],
@@ -157,8 +157,8 @@ class BrandContent
             ],
             'why_intro' => [
                 'eyebrow' => 'Why Choose Me',
-                'title' => 'Built for clients who want one serious developer who can own the system.',
-                'copy' => 'This positioning is simple on purpose: modern execution, reliable systems, and product decisions made with business value in mind.',
+                'title' => 'Built for clients who want one technical partner who can own the system end to end.',
+                'copy' => 'The work is not just code delivery. It is scope clarity, architecture, interface quality, dependable communication, and launch-ready execution.',
             ],
             'reasons' => [
                 ['title' => 'Full-stack depth', 'copy' => 'Frontend, backend, database, infrastructure, and product thinking in one execution layer.'],
@@ -191,8 +191,8 @@ class BrandContent
             ],
             'process_intro' => [
                 'eyebrow' => 'Process',
-                'title' => 'A modern build flow from idea to scale.',
-                'copy' => 'Clear steps reduce friction, keep the project moving, and make the working relationship feel professional from day one.',
+                'title' => 'A clear build process from first brief to launch.',
+                'copy' => 'Simple steps keep scope clearer, decisions faster, and delivery more professional from day one.',
             ],
             'process' => [
                 ['step' => '01', 'title' => 'Understand', 'copy' => 'Map the business goal, user flow, blockers, and technical constraints.'],
@@ -209,8 +209,8 @@ class BrandContent
             ],
             'contact_intro' => [
                 'eyebrow' => 'Contact',
-                'title' => 'Start the conversation with a serious technical partner.',
-                'copy' => 'Tell me what you want to build, what is slowing your business down, and what kind of system you need next.',
+                'title' => 'Start with a short brief and the next step gets easier.',
+                'copy' => 'Tell me what you want to build, what is blocking growth, and what kind of system or delivery support you need next.',
             ],
             'contact_badges' => ['Fast response', 'Business-first thinking', 'Scalable execution'],
             'faq_intro' => [

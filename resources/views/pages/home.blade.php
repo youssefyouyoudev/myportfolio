@@ -178,11 +178,10 @@
             <div class="card-grid service-grid">
                 @foreach($services as $service)
                     <article class="panel service-card" data-reveal>
-                        <span class="service-icon">{{ strtoupper(substr($service['title'], 0, 2)) }}</span>
                         <h3>{{ $service['title'] }}</h3>
                         <p>{{ $service['summary'] }}</p>
                         <strong>{{ $service['business_value'] }}</strong>
-                        <a href="{{ route('services.show', ['locale' => $locale, 'service' => $service['slug']]) }}" class="text-link">Explore service</a>
+                        <a href="{{ route('services.show', ['locale' => $locale, 'service' => $service['slug']]) }}" class="text-link">{{ $site['actions']['view_service'] }}</a>
                     </article>
                 @endforeach
             </div>
@@ -214,6 +213,20 @@
                             @foreach($spotlightProject['stack'] as $item)
                                 <span>{{ $item }}</span>
                             @endforeach
+                        </div>
+                        <div class="spotlight-details">
+                            <div>
+                                <strong>{{ __('brand.common.built_for') }}</strong>
+                                <p>{{ $spotlightProject['client'] ?? $spotlightProject['note'] }}</p>
+                            </div>
+                            <div>
+                                <strong>{{ __('brand.common.role') }}</strong>
+                                <p>{{ $spotlightProject['role'] }}</p>
+                            </div>
+                            <div>
+                                <strong>{{ __('brand.common.outcome') }}</strong>
+                                <p>{{ $spotlightProject['outcome'] }}</p>
+                            </div>
                         </div>
                         <div class="spotlight-details">
                             <div>
@@ -252,6 +265,8 @@
                                     <span>{{ $item }}</span>
                                 @endforeach
                             </div>
+                            <p><strong>{{ __('brand.common.built_for') }}:</strong> {{ $project['client'] ?? $project['note'] }}</p>
+                            <p><strong>{{ __('brand.common.role') }}:</strong> {{ $project['role'] }}</p>
                             <p><strong>{{ __('brand.common.outcome') }}:</strong> {{ $project['outcome'] }}</p>
                             <a href="{{ route('projects.show', ['locale' => $locale, 'project' => $project['slug']]) }}" class="text-link">{{ $site['actions']['view_case_study'] }}</a>
                         </div>
@@ -324,7 +339,7 @@
             <div class="proof-grid">
                 @foreach($page['stats'] as $stat)
                     <article class="panel stat-card" data-reveal>
-                        <strong><span data-counter="{{ $stat['value'] }}">0</span>{{ $stat['suffix'] }}</strong>
+                        <strong><span data-counter="{{ $stat['value'] }}">{{ $stat['value'] }}</span>{{ $stat['suffix'] }}</strong>
                         <span>{{ $stat['label'] }}</span>
                     </article>
                 @endforeach

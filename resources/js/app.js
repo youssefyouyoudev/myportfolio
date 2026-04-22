@@ -82,41 +82,9 @@ if ('IntersectionObserver' in window && revealItems.length) {
     revealItems.forEach((item) => item.classList.add('is-visible'));
 }
 
-const counters = document.querySelectorAll('[data-counter]');
-
-if ('IntersectionObserver' in window && counters.length) {
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting || entry.target.dataset.counted === 'true') {
-                return;
-            }
-
-            entry.target.dataset.counted = 'true';
-            const target = Number(entry.target.dataset.counter || 0);
-            const duration = 1200;
-            const start = performance.now();
-
-            const tick = (timestamp) => {
-                const progress = Math.min((timestamp - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                entry.target.textContent = Math.round(target * eased).toString();
-
-                if (progress < 1) {
-                    window.requestAnimationFrame(tick);
-                }
-            };
-
-            window.requestAnimationFrame(tick);
-            counterObserver.unobserve(entry.target);
-        });
-    }, { threshold: 0.35 });
-
-    counters.forEach((counter) => counterObserver.observe(counter));
-} else {
-    counters.forEach((counter) => {
-        counter.textContent = counter.dataset.counter ?? counter.textContent;
-    });
-}
+document.querySelectorAll('[data-counter]').forEach((counter) => {
+    counter.textContent = counter.dataset.counter ?? counter.textContent;
+});
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
     if (!localStorage.getItem(storageKey)) {
