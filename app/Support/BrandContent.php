@@ -59,6 +59,127 @@ class BrandContent
         return self::landing($locale);
     }
 
+    public static function homeShowcase(string $locale): array
+    {
+        $projects = array_values(self::projectCatalog($locale));
+
+        return [
+            'hero' => [
+                'eyebrow' => 'Premium full-stack delivery for serious businesses',
+                'title' => 'Websites, SaaS platforms, dashboards, and custom business software built to win trust fast.',
+                'copy' => 'I help B2B and B2C brands launch polished digital products that look credible, feel premium, and support real business workflows from the first release.',
+                'pills' => [
+                    'Morocco and international client work',
+                    'Business websites, SaaS, CRM, ERP, dashboards',
+                    'Design, development, and deployment in one flow',
+                ],
+                'trust' => [
+                    'Available for founder-led products, agencies, and established SMEs',
+                    'Arabic, French, and English client communication',
+                    'Fast intake through email and WhatsApp',
+                ],
+                'actions' => [
+                    'primary' => 'Start a Project',
+                    'secondary' => 'View Case Studies',
+                    'tertiary' => 'Chat on WhatsApp',
+                ],
+                'metrics' => [
+                    ['value' => '5+', 'label' => 'Years building production-ready systems'],
+                    ['value' => '25+', 'label' => 'Projects across web apps, dashboards, and product sites'],
+                    ['value' => 'B2B / B2C', 'label' => 'Positioning built for both sales and operations'],
+                ],
+            ],
+            'trust_strip' => [
+                'Premium presentation that feels client-ready',
+                'Real products instead of generic portfolio placeholders',
+                'Strong fit for SaaS, internal tools, CRM, ERP, and conversion-led websites',
+                'Built in Morocco, ready for international briefs',
+            ],
+            'services' => [
+                [
+                    'title' => 'Business websites',
+                    'copy' => 'Conversion-focused sites that make the business look established, trustworthy, and worth contacting.',
+                    'value' => 'Stronger first impression and cleaner lead generation.',
+                ],
+                [
+                    'title' => 'Custom web apps',
+                    'copy' => 'Purpose-built systems for workflows, client portals, dashboards, and operational visibility.',
+                    'value' => 'Less manual work and a clearer internal process.',
+                ],
+                [
+                    'title' => 'SaaS platforms',
+                    'copy' => 'Premium product experiences with onboarding, admin systems, and scalable architecture.',
+                    'value' => 'A product that feels ready to sell, demo, and grow.',
+                ],
+                [
+                    'title' => 'CRM / ERP systems',
+                    'copy' => 'Role-based tools for sales, inventory, teams, finance, and business operations.',
+                    'value' => 'Better control, reporting, and day-to-day execution.',
+                ],
+                [
+                    'title' => 'Dashboards and internal tools',
+                    'copy' => 'Readable interfaces for analytics, team activity, approvals, and operational metrics.',
+                    'value' => 'Decision-ready visibility without clutter.',
+                ],
+                [
+                    'title' => 'API and automation layers',
+                    'copy' => 'Backend workflows, integrations, and system glue that keep products moving cleanly.',
+                    'value' => 'Stronger foundations for scale, sync, and future features.',
+                ],
+            ],
+            'proof' => [
+                [
+                    'title' => 'I design for trust, not just aesthetics',
+                    'copy' => 'The interface has to look premium enough for a buyer and stay practical enough for real usage after launch.',
+                ],
+                [
+                    'title' => 'I build around business context',
+                    'copy' => 'Pricing, onboarding, admin flows, proof, and contact friction are treated as part of the product, not afterthoughts.',
+                ],
+                [
+                    'title' => 'I can own the full stack end to end',
+                    'copy' => 'Strategy, UI, backend logic, responsive behavior, and launch readiness move together in one system.',
+                ],
+            ],
+            'why' => [
+                [
+                    'title' => 'Product thinking with execution',
+                    'copy' => 'Useful when you need someone who can translate a business goal into UX, architecture, and shipping decisions.',
+                ],
+                [
+                    'title' => 'Premium UI without agency bloat',
+                    'copy' => 'The end result should look deliberate, modern, and commercially credible without slowing delivery down.',
+                ],
+                [
+                    'title' => 'Built for real operations',
+                    'copy' => 'Strong fit for teams dealing with bookings, leads, inventory, approvals, invoicing, and admin-heavy workflows.',
+                ],
+                [
+                    'title' => 'Clear communication and fast iteration',
+                    'copy' => 'Clients should always understand what is being built, why it matters, and what the next decision is.',
+                ],
+            ],
+            'stack' => [
+                ['title' => 'Backend', 'items' => ['Laravel', 'PHP', 'REST APIs', 'Authentication', 'Queues', 'Business logic']],
+                ['title' => 'Frontend', 'items' => ['Blade', 'Tailwind CSS', 'React', 'Responsive UI', 'Design systems', 'Motion polish']],
+                ['title' => 'Data and ops', 'items' => ['MySQL', 'PostgreSQL', 'Deployment', 'VPS hosting', 'Performance', 'SEO']],
+                ['title' => 'Business systems', 'items' => ['SaaS architecture', 'CRM flows', 'ERP modules', 'Dashboards', 'Automation', 'Admin UX']],
+            ],
+            'process' => [
+                ['step' => '01', 'title' => 'Position the product', 'copy' => 'Clarify what the product sells, who it serves, and what trust signals it needs.'],
+                ['step' => '02', 'title' => 'Design the experience', 'copy' => 'Map the key flows, visual hierarchy, and the screens that carry the business value.'],
+                ['step' => '03', 'title' => 'Build the system', 'copy' => 'Ship clean frontend and backend layers that support the experience without feeling fragile.'],
+                ['step' => '04', 'title' => 'Launch with confidence', 'copy' => 'Refine responsiveness, polish the details, and make the final result feel ready for clients.'],
+            ],
+            'cta' => [
+                'eyebrow' => 'Need a stronger product presence?',
+                'title' => 'Let us turn the next build into a serious business asset.',
+                'copy' => 'Ideal for product launches, redesigns, SaaS platforms, dashboards, CRM systems, and premium websites that need to convert better.',
+            ],
+            'projects' => $projects,
+        ];
+    }
+
     public static function landing(string $locale): array
     {
         $base = [
@@ -390,15 +511,258 @@ class BrandContent
 
     public static function projectsIndex(string $locale): array
     {
-        $page = self::get($locale, 'projects.index');
-        $page['items'] = array_values(self::projectCatalog($locale));
-
-        return $page;
+        return [
+            'seo' => [
+                'title' => 'Case Studies | Youssef Youyou',
+                'description' => 'Premium case studies from SaaS, CRM, streaming, ERP, and billing projects by Youssef Youyou.',
+                'keywords' => 'portfolio case studies Morocco, SaaS designer developer Morocco, CRM ERP developer Morocco',
+                'type' => 'website',
+            ],
+            'eyebrow' => 'Selected work',
+            'title' => 'Case studies framed like products, not random portfolio cards.',
+            'copy' => 'Each project is presented with business context, problem framing, product direction, and a cleaner visual story so clients can see real capability fast.',
+            'items' => array_values(self::projectCatalog($locale)),
+        ];
     }
 
     public static function projectCatalog(string $locale): array
     {
-        return self::addSlugs(self::get($locale, 'projects.items'));
+        return self::addSlugs([
+            'ecarsauto' => [
+                'title' => 'eCarsAuto',
+                'label' => 'Fleet SaaS / Car rental platform',
+                'summary' => 'A premium SaaS experience built to help Moroccan car rental agencies replace booking chaos with a cleaner, more sellable operating system.',
+                'client' => 'Car rental agencies, mobility founders, and operators selling to the Moroccan market.',
+                'audience' => 'Agencies that need a stronger online offer, cleaner booking flow, and better internal control.',
+                'challenge' => 'Make a local-market fleet product feel premium enough to trust while still solving day-to-day agency operations.',
+                'solution' => 'I framed the product like a serious SaaS business: strong landing-page conversion, polished visuals, trial-led CTAs, and a system narrative around bookings, fleet, pricing, and customer management.',
+                'role' => 'Brand direction, product positioning, UI/UX design, full-stack implementation, and conversion-focused page architecture.',
+                'stack' => ['Laravel', 'Blade', 'Tailwind CSS', 'MySQL', 'Responsive SaaS UI'],
+                'features' => [
+                    'Fleet and booking management flows',
+                    'Pricing and plan presentation for agencies',
+                    'WhatsApp-friendly conversion path',
+                    'Premium product framing for demos and sales',
+                    'Mobile-friendly customer and operator experience',
+                ],
+                'outcome' => 'A portfolio piece that reads like a real vertical SaaS product and positions the concept as a business-ready platform instead of generic rental software.',
+                'note' => 'Best used as a flagship example of SaaS positioning, sales-focused design, and full-stack product presentation.',
+                'metrics' => [
+                    ['label' => 'Positioning', 'value' => 'Morocco-first SaaS'],
+                    ['label' => 'Primary goal', 'value' => 'Drive trials and demos'],
+                    ['label' => 'System type', 'value' => 'Bookings + fleet + admin'],
+                ],
+                'media' => [
+                    'theme' => 'ecarsauto',
+                    'logo' => [
+                        'src' => asset('images/projects/ecarsauto-logo.png'),
+                        'alt' => 'eCarsAuto logo',
+                    ],
+                    'cover' => [
+                        'src' => asset('images/projects/ecarsauto-case-study.png'),
+                        'alt' => 'eCarsAuto SaaS landing page and product presentation',
+                    ],
+                    'gallery' => [
+                        [
+                            'src' => asset('images/projects/ecarsauto-case-study.png'),
+                            'alt' => 'eCarsAuto case study visual showing landing page, pricing, and agency-facing product screens',
+                        ],
+                        [
+                            'src' => asset('images/projects/ecarsauto-logo.png'),
+                            'alt' => 'eCarsAuto brand logo',
+                        ],
+                    ],
+                ],
+            ],
+            'waslacrm' => [
+                'title' => 'WaslaCRM',
+                'label' => 'CRM / Lead operations system',
+                'summary' => 'A CRM concept focused on helping Moroccan sales and service teams centralize leads, follow-up, and performance in one cleaner interface.',
+                'client' => 'Sales-led businesses and local teams managing leads across WhatsApp, calls, and manual follow-up.',
+                'audience' => 'Companies that need a more disciplined sales process without losing the local-market feel.',
+                'challenge' => 'Create a CRM brand and product direction that feels practical, local, and credible for business buyers.',
+                'solution' => 'I shaped the project around visibility, sales momentum, and operational clarity so the brand communicates measurable growth instead of generic software language.',
+                'role' => 'Brand identity, product messaging, workflow planning, dashboard structure, and full-stack-ready case-study presentation.',
+                'stack' => ['Laravel', 'CRM workflows', 'Lead pipelines', 'Role permissions', 'Dashboard UX'],
+                'features' => [
+                    'Lead capture and sales pipeline structure',
+                    'Follow-up visibility for local teams',
+                    'Performance-ready dashboard direction',
+                    'Branding built around growth and trust',
+                    'Foundation for CRM, messaging, and reporting modules',
+                ],
+                'outcome' => 'A sharper CRM concept that shows how product branding and workflow clarity can make a sales system feel easier to trust.',
+                'note' => 'Best presented as a positioning and product-thinking case for local business software.',
+                'metrics' => [
+                    ['label' => 'Use case', 'value' => 'Lead follow-up'],
+                    ['label' => 'Buyer type', 'value' => 'SMEs and sales teams'],
+                    ['label' => 'Core promise', 'value' => 'Better visibility'],
+                ],
+                'media' => [
+                    'theme' => 'waslacrm',
+                    'logo' => [
+                        'src' => asset('images/projects/waslacrm-logo.png'),
+                        'alt' => 'WaslaCRM logo',
+                    ],
+                    'gallery' => [
+                        [
+                            'src' => asset('images/projects/waslacrm-logo.png'),
+                            'alt' => 'WaslaCRM brand mark',
+                        ],
+                    ],
+                ],
+            ],
+            'rifimedia-tv' => [
+                'title' => 'Rifi Media TV',
+                'label' => 'Streaming platform / OTT experience',
+                'summary' => 'A multi-device streaming brand and product concept combining campaign visuals, device mockups, and premium landing-page direction.',
+                'client' => 'Media and streaming ventures that need a stronger public-facing presentation and a more productized offer.',
+                'audience' => 'Subscribers comparing services quickly and expecting trust, speed, and polished visuals before buying.',
+                'challenge' => 'Make the platform feel more like a real entertainment product than a generic IPTV landing page.',
+                'solution' => 'I used stronger brand surfaces, multi-device mockups, and clearer product framing to show the service as a premium streaming experience across TV, tablet, and mobile.',
+                'role' => 'Brand system, landing-page direction, device presentation, UI storytelling, and premium case-study framing.',
+                'stack' => ['Laravel', 'Responsive product pages', 'Brand systems', 'Streaming UI concepts', 'Conversion UX'],
+                'features' => [
+                    'Multi-device product presentation',
+                    'Campaign and landing visuals for paid acquisition',
+                    'Premium device mockups for trust',
+                    'Brand variants for Rifi Media and Rifi Media TV',
+                    'Landing-page direction in dark and light surfaces',
+                ],
+                'outcome' => 'A more polished streaming brand presence that feels marketable, premium, and better suited to convert subscribers.',
+                'note' => 'Strongest when shown as a combination of brand design, UI storytelling, and conversion-focused landing work.',
+                'metrics' => [
+                    ['label' => 'Channels promise', 'value' => '10,000+ global'],
+                    ['label' => 'Surfaces', 'value' => 'TV, tablet, mobile'],
+                    ['label' => 'Primary goal', 'value' => 'Subscriber conversion'],
+                ],
+                'media' => [
+                    'theme' => 'rifimedia',
+                    'logo' => [
+                        'src' => asset('images/projects/rifimedia-tv-logo.png'),
+                        'alt' => 'Rifi Media TV logo',
+                    ],
+                    'cover' => [
+                        'src' => asset('images/projects/rifimedia-tv-ui.png'),
+                        'alt' => 'Rifi Media TV UI mockup on television, tablet, and phone',
+                    ],
+                    'gallery' => [
+                        [
+                            'src' => asset('images/projects/rifimedia-tv-ui.png'),
+                            'alt' => 'Rifi Media TV multi-device UI showcase',
+                        ],
+                        [
+                            'src' => asset('images/projects/rifimedia-logo.png'),
+                            'alt' => 'Rifi Media brand logo',
+                        ],
+                        [
+                            'src' => asset('images/projects/rif-iptv-campaign.png'),
+                            'alt' => 'RIF IPTV campaign artwork for sports and global channels',
+                        ],
+                        [
+                            'src' => asset('images/projects/rif-iptv-site-dark.png'),
+                            'alt' => 'RIF IPTV dark landing page screenshot',
+                        ],
+                        [
+                            'src' => asset('images/projects/rif-iptv-site-fr.png'),
+                            'alt' => 'RIF IPTV French landing page screenshot',
+                        ],
+                    ],
+                ],
+            ],
+            'erp-plus' => [
+                'title' => 'ERP Plus',
+                'label' => 'ERP dashboard / Internal operations',
+                'summary' => 'A modular ERP dashboard concept for HR, inventory, finance, and collaboration workflows inside one organized admin environment.',
+                'client' => 'Operations-heavy businesses that need visibility across teams, inventory, finance, and project activity.',
+                'audience' => 'Managers and operators replacing fragmented tools with a more unified internal system.',
+                'challenge' => 'Present a complex internal product in a way that feels organized, readable, and enterprise-ready instead of overwhelming.',
+                'solution' => 'I structured the case study around module clarity, KPI readability, and role-based operations so the dashboard story stays business-focused.',
+                'role' => 'Dashboard planning, product framing, admin UX direction, and system-level case-study positioning.',
+                'stack' => ['Laravel', 'Admin dashboards', 'Role-based modules', 'Reporting', 'Operational UX'],
+                'features' => [
+                    'HR, inventory, finance, and collaboration modules',
+                    'KPI cards and activity monitoring',
+                    'Role-based navigation for internal teams',
+                    'Designed for admin-heavy workflows',
+                    'Scalable structure for multi-module operations',
+                ],
+                'outcome' => 'A cleaner ERP case study that communicates control, visibility, and operational maturity without drowning the visitor in complexity.',
+                'note' => 'Presented as an ERP-style system for organizations that need one operational source of truth.',
+                'metrics' => [
+                    ['label' => 'Modules', 'value' => 'HR, inventory, finance'],
+                    ['label' => 'Primary goal', 'value' => 'Operational visibility'],
+                    ['label' => 'Buyer type', 'value' => 'Internal teams'],
+                ],
+                'media' => [
+                    'theme' => 'erpplus',
+                    'logo' => [
+                        'src' => asset('images/projects/erpplus-logo.png'),
+                        'alt' => 'ERP Plus logo',
+                    ],
+                    'cover' => [
+                        'src' => asset('images/projects/erpplus-dashboard.png'),
+                        'alt' => 'ERP Plus dashboard overview',
+                    ],
+                    'gallery' => [
+                        [
+                            'src' => asset('images/projects/erpplus-dashboard.png'),
+                            'alt' => 'ERP Plus dashboard showing modules, KPIs, and activity tracking',
+                        ],
+                        [
+                            'src' => asset('images/projects/erpplus-logo.png'),
+                            'alt' => 'ERP Plus brand logo',
+                        ],
+                    ],
+                ],
+            ],
+            'invoix' => [
+                'title' => 'Invoix',
+                'label' => 'Billing / invoicing platform',
+                'summary' => 'A billing-focused product concept aimed at turning invoicing into a clearer, more professional business workflow.',
+                'client' => 'Small businesses and operators who need better structure around invoices, receipts, and day-to-day finance tasks.',
+                'audience' => 'Teams that want invoicing software that feels simpler, faster, and more presentable to clients.',
+                'challenge' => 'Make an invoicing product feel more modern and business-ready than a basic utility app.',
+                'solution' => 'I framed the product around simplicity, speed, and a cleaner visual hierarchy so the brand reads like a practical business tool rather than a placeholder concept.',
+                'role' => 'Landing-page direction, product messaging, interface hierarchy, and case-study presentation.',
+                'stack' => ['Laravel', 'Billing flows', 'Landing pages', 'Responsive UI', 'Product UX'],
+                'features' => [
+                    'Invoice and receipt workflow direction',
+                    'Cleaner business-facing landing presentation',
+                    'Straightforward CTA and product explanation',
+                    'A foundation for billing dashboards and admin tools',
+                    'Positioned for B2B business utility',
+                ],
+                'outcome' => 'A billing product concept presented with more trust, cleaner hierarchy, and a stronger commercial feel.',
+                'note' => 'Works well as a case study for B2B utility software, landing-page clarity, and interface simplification.',
+                'metrics' => [
+                    ['label' => 'Use case', 'value' => 'Invoices and receipts'],
+                    ['label' => 'Primary goal', 'value' => 'Speed and clarity'],
+                    ['label' => 'Market fit', 'value' => 'SMEs and service teams'],
+                ],
+                'media' => [
+                    'theme' => 'invoix',
+                    'logo' => [
+                        'src' => asset('images/projects/invoix-logo.png'),
+                        'alt' => 'Invoix logo',
+                    ],
+                    'cover' => [
+                        'src' => asset('images/projects/invoix-landing.png'),
+                        'alt' => 'Invoix landing page hero section',
+                    ],
+                    'gallery' => [
+                        [
+                            'src' => asset('images/projects/invoix-landing.png'),
+                            'alt' => 'Invoix landing page showcasing invoicing product positioning',
+                        ],
+                        [
+                            'src' => asset('images/projects/invoix-logo.png'),
+                            'alt' => 'Invoix wordmark logo',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
     }
 
     public static function project(string $locale, string $slug): ?array

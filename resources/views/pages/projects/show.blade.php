@@ -2,60 +2,81 @@
 
 @section('content')
     @php
+        $gallery = collect($page['media']['gallery'] ?? []);
+        $primaryImage = $gallery->first();
+        $secondaryImages = $gallery->slice(1, 3);
         $projectsUi = trans('brand.ui.projects');
-        $previewClasses = [
-            'syncflow-social' => 'preview-saas',
-            'secure-auth-suite' => 'preview-school',
-            'business-management-platform' => 'preview-dashboard',
-            'automation-dashboard-suite' => 'preview-api',
-            'react-frontend-performance' => 'preview-mobile',
-        ];
     @endphp
 
-    <section class="inner-hero">
-        <div class="container narrow">
-            <span class="eyebrow">{{ $page['label'] }}</span>
-            <h1 class="page-title">{{ $page['title'] }}</h1>
-            <p class="page-copy">{{ $page['summary'] }}</p>
-            <div class="hero-pills">
-                @foreach($page['stack'] as $item)
-                    <span>{{ $item }}</span>
-                @endforeach
+    <section class="inner-hero portfolio-page-hero">
+        <div class="container case-study-hero-layout">
+            <div>
+                <span class="eyebrow">{{ $page['label'] }}</span>
+                <h1 class="page-title">{{ $page['title'] }}</h1>
+                <p class="page-copy">{{ $page['summary'] }}</p>
+                <div class="stack-list">
+                    @foreach($page['stack'] as $item)
+                        <span>{{ $item }}</span>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="case-study-hero-art case-theme-{{ $page['media']['theme'] ?? 'default' }}">
+                <div class="case-study-frame">
+                    @if(isset($page['media']['logo']['src']))
+                        <div class="case-study-logo-surface">
+                            <img src="{{ $page['media']['logo']['src'] }}" alt="{{ $page['media']['logo']['alt'] }}" loading="eager">
+                        </div>
+                    @endif
+
+                    @if($primaryImage)
+                        <div class="case-study-image">
+                            <img src="{{ $primaryImage['src'] }}" alt="{{ $primaryImage['alt'] }}" loading="eager" fetchpriority="high">
+                        </div>
+                    @else
+                        <div class="case-study-placeholder case-study-placeholder-{{ $page['media']['theme'] ?? 'default' }}">
+                            <div class="placeholder-window">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="placeholder-chart">
+                                <i></i><i></i><i></i><i></i>
+                            </div>
+                            <div class="placeholder-list">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </section>
 
     <section class="section">
         <div class="container">
-            <article class="panel project-spotlight">
-                <div class="spotlight-visual {{ $previewClasses[$page['slug']] ?? 'preview-dashboard' }}">
-                    <div class="preview-surface">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="spotlight-copy">
+            <div class="case-study-overview-grid">
+                <article class="panel case-study-overview-card">
                     <span class="eyebrow">{{ __('brand.common.context') }}</span>
                     <h2>{{ $projectsUi['context_title'] }}</h2>
                     <p>{{ $page['note'] }}</p>
-                    <div class="spotlight-details">
+
+                    <div class="case-meta-grid">
                         <div>
                             <strong>{{ __('brand.common.built_for') }}</strong>
-                            <p>{{ $page['client'] ?? $page['note'] }}</p>
+                            <p>{{ $page['audience'] }}</p>
                         </div>
                         <div>
                             <strong>{{ __('brand.common.role') }}</strong>
                             <p>{{ $page['role'] }}</p>
                         </div>
-                        <div>
-                            <strong>{{ __('brand.common.outcome') }}</strong>
-                            <p>{{ $page['outcome'] }}</p>
-                        </div>
                     </div>
-                    <div class="spotlight-details">
+
+                    <div class="case-meta-grid">
                         <div>
-                            <strong>{{ __('brand.common.challenge') }}</strong>
+                            <strong>{{ __('brand.common.problem') }}</strong>
                             <p>{{ $page['challenge'] }}</p>
                         </div>
                         <div>
@@ -63,33 +84,53 @@
                             <p>{{ $page['solution'] }}</p>
                         </div>
                     </div>
-                    <div class="project-footer">
-                        <p>{{ $page['outcome'] }}</p>
+
+                    <div class="case-study-actions">
                         <a href="{{ route('contact.create', ['locale' => app()->getLocale()]) }}" class="btn btn-primary">{{ $projectsUi['discuss_similar'] }}</a>
+                        <p>{{ $page['outcome'] }}</p>
                     </div>
-                </div>
-            </article>
+                </article>
+
+                <article class="panel case-study-metrics-card">
+                    <span class="eyebrow">{{ __('brand.common.outcome') }}</span>
+                    <h2>{{ $page['outcome'] }}</h2>
+                    <div class="case-metric-row stacked">
+                        @foreach($page['metrics'] as $metric)
+                            <div class="case-metric-card">
+                                <strong>{{ $metric['value'] }}</strong>
+                                <span>{{ $metric['label'] }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                    <ul class="simple-list case-feature-list">
+                        @foreach($page['features'] as $feature)
+                            <li>{{ $feature }}</li>
+                        @endforeach
+                    </ul>
+                </article>
+            </div>
         </div>
     </section>
 
-    <section class="section section-soft">
-        <div class="container split-layout">
-            <article class="panel">
-                <h2>{{ __('brand.common.built_for') }}</h2>
-                <p>{{ $page['client'] ?? $page['note'] }}</p>
-                <h3>{{ __('brand.common.role') }}</h3>
-                <p>{{ $page['role'] }}</p>
-            </article>
-            <article class="panel">
-                <h2>{{ __('brand.common.features') }}</h2>
-                <ul class="simple-list">
-                    @foreach($page['features'] as $feature)
-                        <li>{{ $feature }}</li>
+    @if($secondaryImages->isNotEmpty())
+        <section class="section section-soft">
+            <div class="container">
+                <x-site.section-heading
+                    eyebrow="Visual proof"
+                    title="Screens, brand assets, and supporting visuals"
+                    copy="These images make the project feel more concrete by showing the brand system, UI surface, and how the product is framed in-market."
+                />
+
+                <div class="case-gallery-grid">
+                    @foreach($secondaryImages as $image)
+                        <figure class="panel case-gallery-card" data-reveal>
+                            <img src="{{ $image['src'] }}" alt="{{ $image['alt'] }}" loading="lazy">
+                        </figure>
                     @endforeach
-                </ul>
-            </article>
-        </div>
-    </section>
+                </div>
+            </div>
+        </section>
+    @endif
 
     <section class="section">
         <div class="container narrow">

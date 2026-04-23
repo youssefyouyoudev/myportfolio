@@ -22,6 +22,7 @@ class SiteController extends Controller
 
         return view('pages.home', [
             'page' => $page,
+            'showcase' => BrandContent::homeShowcase($locale),
             'seo' => array_merge($page['seo'], [
                 'schema' => array_merge([BrandContent::personSchema($locale)], $serviceSchemas),
             ]),

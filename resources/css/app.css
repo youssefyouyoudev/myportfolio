@@ -48,10 +48,13 @@ body {
     margin: 0;
     min-width: 320px;
     background:
+        radial-gradient(circle at top left, rgba(0, 255, 136, 0.08), transparent 26rem),
+        radial-gradient(circle at top right, rgba(86, 132, 255, 0.08), transparent 30rem),
         linear-gradient(180deg, rgba(0, 212, 111, 0.08), transparent 24rem),
         linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, #000 12%) 100%);
     color: var(--text);
-    font-family: Inter, system-ui, sans-serif;
+    font-family: Manrope, system-ui, sans-serif;
+    line-height: 1.65;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -98,7 +101,7 @@ code {
 }
 
 .container {
-    width: min(1180px, calc(100% - 32px));
+    width: min(1200px, calc(100% - 40px));
     margin: 0 auto;
 }
 
@@ -239,7 +242,7 @@ html[data-theme='light'] .header-panel {
 .site-footer h3,
 .site-footer h4,
 .section-cta h2 {
-    font-family: Poppins, Inter, system-ui, sans-serif;
+    font-family: Sora, Manrope, system-ui, sans-serif;
 }
 
 .brand-copy strong {
@@ -456,24 +459,28 @@ textarea:focus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 46px;
-    padding: 0.82rem 1.15rem;
-    border-radius: 8px;
+    min-height: 52px;
+    padding: 0.95rem 1.35rem;
+    border-radius: 999px;
     font-weight: 700;
+    letter-spacing: -0.01em;
     border: 1px solid transparent;
-    transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
 }
 
 .btn-primary {
     background: linear-gradient(180deg, var(--accent-strong), var(--accent));
     color: #04120a;
-    box-shadow: 0 18px 40px color-mix(in srgb, var(--accent) 26%, transparent 74%);
+    box-shadow:
+        0 18px 40px color-mix(in srgb, var(--accent) 26%, transparent 74%),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 .btn-secondary {
     background: color-mix(in srgb, var(--surface-strong) 92%, transparent 8%);
     border-color: var(--border);
     color: var(--text);
+    backdrop-filter: blur(18px);
 }
 
 .text-link {
@@ -584,7 +591,7 @@ textarea:focus {
 .footer-bottom p,
 .section-cta p {
     color: var(--muted);
-    line-height: 1.72;
+    line-height: 1.76;
 }
 
 .hero-copy p {
@@ -614,6 +621,15 @@ textarea:focus {
 
 .hero-actions {
     margin: 1.25rem 0;
+}
+
+.hero-actions .btn-primary,
+.section-cta .btn-primary {
+    min-width: 13rem;
+}
+
+.cta-actions .btn {
+    min-width: 12rem;
 }
 
 .hero-trustline {
@@ -725,7 +741,7 @@ body.is-rtl .stage-list {
 .metric-card,
 .section-cta,
 .trust-badge {
-    border-radius: 8px;
+    border-radius: 24px;
     border: 1px solid var(--border);
     background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%),
@@ -735,7 +751,7 @@ body.is-rtl .stage-list {
 
 .metric-card,
 .panel {
-    padding: 1.3rem;
+    padding: 1.5rem;
 }
 
 html[data-theme='light'] .panel,
@@ -973,22 +989,25 @@ html[data-theme='light'] .code-card pre {
 }
 
 .section {
-    padding: 1rem 0 4.5rem;
+    padding: clamp(4.75rem, 8vw, 7rem) 0;
 }
 
 .section-soft {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 35%, transparent 65%), transparent);
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 35%, transparent 65%), transparent),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 45%);
 }
 
 .section-heading {
-    max-width: 760px;
-    margin-bottom: 1.5rem;
+    max-width: 840px;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
 }
 
 .section-title {
-    margin: 0 0 0.8rem;
-    font-size: clamp(1.9rem, 3vw, 3.2rem);
-    line-height: 1.1;
+    margin: 0 0 1rem;
+    font-size: clamp(2.15rem, 3.2vw, 3.55rem);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
 }
 
 .section-inline-cta {
@@ -1007,7 +1026,8 @@ html[data-theme='light'] .code-card pre {
 .page-copy,
 .section-copy {
     margin: 0;
-    font-size: 1.02rem;
+    max-width: 60ch;
+    font-size: 1.05rem;
 }
 
 .service-grid {
@@ -1723,6 +1743,654 @@ body.is-rtl .simple-list {
     box-shadow: var(--shadow-strong);
 }
 
+.portfolio-hero {
+    padding-top: clamp(3rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 6vw, 5rem);
+}
+
+.portfolio-hero-grid,
+.case-study-overview-grid,
+.portfolio-service-grid,
+.portfolio-secondary-grid,
+.portfolio-proof-grid,
+.portfolio-why-grid,
+.case-gallery-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.portfolio-hero-grid {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+}
+
+.portfolio-hero-copy h1 {
+    margin: 0 0 1.2rem;
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.94;
+    letter-spacing: -0.055em;
+    max-width: 12ch;
+}
+
+.portfolio-hero-copy p {
+    margin-bottom: 1.5rem;
+    max-width: 62ch;
+    font-size: clamp(1.05rem, 1.6vw, 1.14rem);
+}
+
+.portfolio-pills {
+    margin-bottom: 1.15rem;
+}
+
+.portfolio-trust-list {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0 0 1.6rem;
+}
+
+.portfolio-trust-list span {
+    color: var(--muted);
+    padding-left: 1.1rem;
+    position: relative;
+}
+
+.portfolio-trust-list span::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--accent-strong);
+    box-shadow: 0 0 16px rgba(0, 255, 136, 0.3);
+}
+
+body.is-rtl .portfolio-trust-list span {
+    padding-left: 0;
+    padding-right: 1.1rem;
+}
+
+body.is-rtl .portfolio-trust-list span::before {
+    left: auto;
+    right: 0;
+}
+
+.portfolio-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.portfolio-stat-card {
+    min-height: 100%;
+}
+
+.portfolio-stat-card strong {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 1.7rem;
+    color: var(--text);
+}
+
+.portfolio-stat-card span {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.portfolio-hero-stage {
+    position: relative;
+    min-height: 45rem;
+}
+
+.hero-stage-panel,
+.hero-stage-note,
+.hero-brand-chip,
+.case-study-frame,
+.case-study-logo-surface,
+.case-study-image,
+.case-study-placeholder,
+.case-metric-card {
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: color-mix(in srgb, var(--surface-strong) 96%, transparent 4%);
+    box-shadow: var(--shadow-soft);
+}
+
+.hero-stage-panel {
+    position: absolute;
+    overflow: hidden;
+    backdrop-filter: blur(18px);
+}
+
+.hero-stage-panel img,
+.case-study-image img,
+.case-gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-stage-primary {
+    inset: 0 0 8.5rem 2.5rem;
+    padding: 1.1rem;
+    transform: rotate(-3deg);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent),
+        linear-gradient(135deg, rgba(255, 109, 109, 0.16), rgba(93, 135, 255, 0.18));
+}
+
+.hero-stage-primary img {
+    border-radius: 24px;
+}
+
+.hero-stage-secondary {
+    width: min(23rem, 54%);
+    right: 0;
+    bottom: 5rem;
+    padding: 0.8rem;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent),
+        linear-gradient(135deg, rgba(9, 219, 176, 0.16), rgba(0, 0, 0, 0));
+}
+
+.hero-stage-secondary img {
+    border-radius: 20px;
+}
+
+.hero-stage-note {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: min(26rem, calc(100% - 4rem));
+    padding: 1.35rem 1.4rem;
+    background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 58%),
+        color-mix(in srgb, var(--surface-strong) 97%, transparent 3%);
+}
+
+.hero-stage-note .eyebrow {
+    margin-bottom: 0.75rem;
+}
+
+.hero-stage-note h2 {
+    margin: 0 0 0.7rem;
+    font-size: 1.38rem;
+    line-height: 1.18;
+}
+
+.hero-stage-note p {
+    margin: 0;
+}
+
+.hero-brand-rail {
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    display: grid;
+    gap: 0.85rem;
+    width: min(16rem, 34%);
+}
+
+.hero-brand-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.8rem 0.95rem;
+}
+
+.hero-brand-chip img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 0.35rem;
+}
+
+.hero-brand-chip span {
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.portfolio-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.portfolio-strip span {
+    display: flex;
+    align-items: center;
+    min-height: 82px;
+    padding: 1.15rem 1.25rem;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface-strong) 92%, transparent 8%);
+    color: var(--muted);
+    box-shadow: var(--shadow-soft);
+    line-height: 1.65;
+}
+
+.portfolio-service-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.35rem;
+}
+
+.portfolio-service-card,
+.portfolio-proof-card,
+.secondary-case-card,
+.case-study-overview-card,
+.case-study-metrics-card,
+.case-gallery-card {
+    border-radius: 32px;
+}
+
+.portfolio-service-card,
+.portfolio-proof-card,
+.secondary-case-card,
+.contact-expectation,
+.direct-link-card {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 44%),
+        color-mix(in srgb, var(--surface-strong) 94%, transparent 6%);
+}
+
+.portfolio-service-card .eyebrow,
+.secondary-case-card .eyebrow {
+    margin-bottom: 0.9rem;
+}
+
+.portfolio-service-card h3,
+.portfolio-proof-card h3,
+.secondary-case-card h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.22rem;
+    line-height: 1.2;
+}
+
+.case-study-stack {
+    display: grid;
+    gap: 1.9rem;
+}
+
+.case-study-block {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 2rem;
+    padding: 1.9rem;
+    overflow: hidden;
+    border-radius: 36px;
+    align-items: center;
+}
+
+.case-study-media {
+    min-width: 0;
+}
+
+.case-study-frame {
+    position: relative;
+    min-height: 100%;
+    padding: 1.1rem;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 28%),
+        color-mix(in srgb, var(--surface-strong) 96%, transparent 4%);
+}
+
+.case-study-frame::before {
+    content: '';
+    position: absolute;
+    inset: 1rem;
+    border-radius: 24px;
+    border: 1px solid color-mix(in srgb, var(--text) 6%, transparent 94%);
+    pointer-events: none;
+}
+
+.case-study-frame::after {
+    content: '';
+    position: absolute;
+    inset: auto -15% -25% 30%;
+    height: 180px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 24%, transparent 76%), transparent 72%);
+    filter: blur(26px);
+    pointer-events: none;
+}
+
+.case-study-logo-surface {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    width: fit-content;
+    max-width: min(15rem, 52%);
+    padding: 0.85rem 0.95rem;
+    background: rgba(255, 255, 255, 0.92);
+    z-index: 2;
+    box-shadow: 0 18px 40px rgba(15, 23, 39, 0.12);
+}
+
+.case-study-logo-surface img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 88px;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.case-study-image {
+    min-height: 24rem;
+    margin-top: 0;
+    overflow: hidden;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.case-study-image.compact {
+    min-height: 15rem;
+    margin-top: 0;
+}
+
+.case-study-image img {
+    object-position: center top;
+}
+
+.case-study-copy {
+    display: grid;
+    gap: 1.15rem;
+    align-content: start;
+}
+
+.case-study-copy h2,
+.case-study-copy h3 {
+    margin: 0;
+    font-size: clamp(1.55rem, 2.4vw, 2.2rem);
+}
+
+.case-summary {
+    font-size: 1.06rem;
+}
+
+.case-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.05rem;
+}
+
+.case-meta-grid strong {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--text);
+}
+
+.case-meta-grid p {
+    margin: 0;
+}
+
+.case-metric-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.case-metric-row.stacked {
+    grid-template-columns: 1fr;
+}
+
+.case-metric-card {
+    padding: 1.1rem 1rem;
+    border-radius: 22px;
+}
+
+.case-metric-card strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+}
+
+.case-metric-card span {
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.case-feature-list {
+    margin-top: 0;
+}
+
+.case-study-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.35rem;
+}
+
+.case-study-actions p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 34rem;
+}
+
+.portfolio-secondary-grid,
+.portfolio-proof-grid,
+.portfolio-why-grid,
+.case-gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.secondary-case-card {
+    display: grid;
+    gap: 1.15rem;
+    padding: 1.45rem;
+}
+
+.secondary-case-visual {
+    min-height: 15rem;
+}
+
+.case-study-placeholder {
+    display: grid;
+    gap: 1rem;
+    min-height: 100%;
+    padding: 1.25rem;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent),
+        linear-gradient(135deg, rgba(93, 135, 255, 0.16), rgba(0, 212, 111, 0.08));
+}
+
+.case-study-placeholder-ecarsauto {
+    background:
+        radial-gradient(circle at top right, rgba(255, 82, 115, 0.22), transparent 34%),
+        linear-gradient(135deg, rgba(112, 170, 255, 0.16), rgba(255, 255, 255, 0.03));
+}
+
+.case-study-placeholder-waslacrm {
+    background:
+        radial-gradient(circle at top right, rgba(88, 220, 77, 0.22), transparent 34%),
+        linear-gradient(135deg, rgba(32, 44, 82, 0.18), rgba(255, 255, 255, 0.03));
+}
+
+.case-study-placeholder-rifimedia {
+    background:
+        radial-gradient(circle at top right, rgba(255, 204, 63, 0.2), transparent 36%),
+        linear-gradient(135deg, rgba(42, 91, 255, 0.18), rgba(0, 0, 0, 0));
+}
+
+.case-study-placeholder-erpplus {
+    background:
+        radial-gradient(circle at top right, rgba(138, 92, 246, 0.22), transparent 34%),
+        linear-gradient(135deg, rgba(104, 170, 255, 0.16), rgba(255, 255, 255, 0.04));
+}
+
+.case-study-placeholder-invoix {
+    background:
+        radial-gradient(circle at top right, rgba(255, 145, 98, 0.22), transparent 34%),
+        linear-gradient(135deg, rgba(74, 131, 246, 0.16), rgba(255, 255, 255, 0.04));
+}
+
+.placeholder-window,
+.placeholder-list,
+.placeholder-table {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.placeholder-window {
+    grid-template-columns: repeat(3, 12px);
+    align-items: center;
+}
+
+.placeholder-window span,
+.placeholder-list span,
+.placeholder-table span,
+.placeholder-chart i {
+    display: block;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+}
+
+.placeholder-window span {
+    width: 12px;
+    height: 12px;
+}
+
+.placeholder-chart {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.8rem;
+    align-items: end;
+    min-height: 9rem;
+}
+
+.placeholder-chart i:nth-child(1) { height: 48%; }
+.placeholder-chart i:nth-child(2) { height: 82%; }
+.placeholder-chart i:nth-child(3) { height: 64%; }
+.placeholder-chart i:nth-child(4) { height: 92%; }
+
+.placeholder-list span {
+    height: 14px;
+}
+
+.placeholder-list span:nth-child(2) {
+    width: 78%;
+}
+
+.placeholder-list span:nth-child(3) {
+    width: 56%;
+}
+
+.placeholder-table span {
+    height: 18px;
+}
+
+.placeholder-table span:nth-child(1) {
+    width: 92%;
+}
+
+.placeholder-table span:nth-child(2) {
+    width: 100%;
+}
+
+.placeholder-table span:nth-child(3) {
+    width: 84%;
+}
+
+.placeholder-table span:nth-child(4) {
+    width: 70%;
+}
+
+.portfolio-stack-layout {
+    gap: 1.5rem;
+}
+
+.portfolio-banner {
+    border-radius: 36px;
+    background:
+        radial-gradient(circle at top left, rgba(0, 255, 136, 0.12), transparent 26rem),
+        linear-gradient(125deg, color-mix(in srgb, var(--surface-strong) 96%, transparent 4%), color-mix(in srgb, var(--surface) 92%, transparent 8%));
+}
+
+.section-cta {
+    gap: 1.25rem;
+    padding: 1.75rem;
+}
+
+.section-cta .eyebrow {
+    margin-bottom: 0.9rem;
+}
+
+.section-cta h2 {
+    max-width: 15ch;
+}
+
+.portfolio-contact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.portfolio-page-hero {
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: 1.5rem;
+}
+
+.case-study-hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.case-study-hero-art {
+    min-width: 0;
+}
+
+.case-study-overview-grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    align-items: start;
+}
+
+.case-gallery-card {
+    overflow: hidden;
+    padding: 0.8rem;
+}
+
+.case-gallery-card img {
+    border-radius: 24px;
+}
+
+.case-theme-ecarsauto {
+    background:
+        radial-gradient(circle at top right, rgba(255, 88, 120, 0.14), transparent 34%),
+        linear-gradient(135deg, rgba(121, 169, 255, 0.08), transparent 58%);
+}
+
+.case-theme-waslacrm {
+    background:
+        radial-gradient(circle at top right, rgba(92, 220, 88, 0.16), transparent 34%),
+        linear-gradient(135deg, rgba(37, 48, 82, 0.16), transparent 58%);
+}
+
+.case-theme-rifimedia {
+    background:
+        radial-gradient(circle at top right, rgba(255, 214, 84, 0.14), transparent 34%),
+        linear-gradient(135deg, rgba(42, 96, 255, 0.12), transparent 58%);
+}
+
+.case-theme-erpplus {
+    background:
+        radial-gradient(circle at top right, rgba(159, 118, 255, 0.14), transparent 34%),
+        linear-gradient(135deg, rgba(65, 170, 255, 0.12), transparent 58%);
+}
+
+.case-theme-invoix {
+    background:
+        radial-gradient(circle at top right, rgba(255, 136, 104, 0.15), transparent 34%),
+        linear-gradient(135deg, rgba(52, 122, 255, 0.12), transparent 58%);
+}
+
 [data-reveal] {
     opacity: 0;
     transform: translateY(18px);
@@ -1768,7 +2436,8 @@ body.is-rtl .simple-list {
     }
 
     .btn:hover {
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        filter: saturate(1.03);
     }
 
     .btn-secondary:hover {
@@ -1797,8 +2466,14 @@ body.is-rtl .simple-list {
     .direct-link-card:hover,
     .trust-summary-card:hover,
     .insight-card:hover,
-    .project-spotlight:hover {
-        transform: translateY(-2px);
+    .project-spotlight:hover,
+    .portfolio-service-card:hover,
+    .portfolio-proof-card:hover,
+    .secondary-case-card:hover,
+    .case-study-block:hover,
+    .case-gallery-card:hover,
+    .contact-expectation:hover {
+        transform: translateY(-4px);
         border-color: color-mix(in srgb, var(--accent) 36%, var(--border) 64%);
         box-shadow: var(--shadow-strong);
     }
@@ -1860,7 +2535,11 @@ body.is-rtl .simple-list {
     .split-layout,
     .footer-grid,
     .hero-meta-grid,
-    .project-spotlight {
+    .project-spotlight,
+    .portfolio-hero-grid,
+    .case-study-block,
+    .case-study-hero-layout,
+    .case-study-overview-grid {
         grid-template-columns: 1fr;
     }
 
@@ -1898,6 +2577,21 @@ body.is-rtl .simple-list {
         flex-direction: column;
         align-items: flex-start;
     }
+
+    .portfolio-hero-stage {
+        min-height: 40rem;
+    }
+
+    .hero-stage-primary {
+        inset: 0 0 7rem 0;
+        transform: none;
+    }
+
+    .hero-stage-secondary {
+        width: min(19rem, 50%);
+        right: 0.5rem;
+        bottom: 5rem;
+    }
 }
 
 @media (max-width: 1220px) {
@@ -1912,8 +2606,13 @@ body.is-rtl .simple-list {
     .stack-grid,
     .proof-grid,
     .process-grid,
-    .logo-placeholder-strip {
+    .logo-placeholder-strip,
+    .portfolio-strip {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .portfolio-proof-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .service-grid,
@@ -1924,7 +2623,12 @@ body.is-rtl .simple-list {
     .result-grid,
     .insight-grid,
     .trust-summary-grid,
-    .contact-direct-grid {
+    .contact-direct-grid,
+    .portfolio-service-grid,
+    .portfolio-proof-grid,
+    .portfolio-why-grid,
+    .portfolio-secondary-grid,
+    .case-gallery-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -1945,12 +2649,24 @@ body.is-rtl .simple-list {
     .logo-placeholder-strip,
     .card-grid.two,
     .card-grid.three,
-    .card-grid.four {
+    .card-grid.four,
+    .portfolio-service-grid,
+    .portfolio-proof-grid,
+    .portfolio-why-grid,
+    .portfolio-secondary-grid,
+    .case-gallery-grid,
+    .portfolio-contact-grid,
+    .portfolio-strip {
         grid-template-columns: 1fr;
     }
 
     .process-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .case-meta-grid,
+    .case-metric-row {
+        grid-template-columns: 1fr;
     }
 
     .mobile-cta-bar {
@@ -1994,12 +2710,56 @@ body.is-rtl .simple-list {
     .reason-grid,
     .process-grid,
     .form-grid,
-    .badge-grid {
+    .badge-grid,
+    .portfolio-stat-grid {
         grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 4rem 0;
+    }
+
+    .section-cta {
+        padding: 1.35rem;
     }
 
     .hero-stage {
         min-height: 27rem;
+    }
+
+    .portfolio-hero-copy h1 {
+        font-size: clamp(2.55rem, 11vw, 4rem);
+    }
+
+    .portfolio-hero-stage {
+        min-height: 33rem;
+    }
+
+    .hero-stage-secondary {
+        width: 70%;
+        bottom: 7.5rem;
+    }
+
+    .hero-stage-note {
+        width: calc(100% - 1rem);
+        padding: 1.1rem 1.15rem;
+    }
+
+    .case-study-block,
+    .secondary-case-card {
+        padding: 1rem;
+        border-radius: 24px;
+    }
+
+    .case-study-image {
+        min-height: 17rem;
+    }
+
+    .case-study-logo-surface {
+        top: 0.9rem;
+        left: 0.9rem;
+        max-width: min(11rem, 60%);
+        padding: 0.72rem 0.8rem;
     }
 
     .dashboard-card {
@@ -2030,6 +2790,17 @@ body.is-rtl .simple-list {
     .btn,
     .form-actions .btn {
         width: 100%;
+    }
+
+    .hero-actions,
+    .cta-actions {
+        width: 100%;
+    }
+
+    .cta-actions .btn,
+    .hero-actions .btn-primary,
+    .section-cta .btn-primary {
+        min-width: 0;
     }
 
     .matrix-row,
