@@ -10,22 +10,29 @@
 
     <p class="contact-form-note">{{ __('brand.ui.contact.form_note') }}</p>
 
+    <div class="form-honeypot" aria-hidden="true">
+        <label>
+            <span>Website</span>
+            <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </label>
+    </div>
+
     <div class="form-grid">
         <label class="field">
             <span>{{ $form['name'] }}</span>
-            <input type="text" name="name" value="{{ old('name') }}" required>
+            <input type="text" name="name" value="{{ old('name') }}" autocomplete="name" maxlength="120" required>
             @error('name')<small>{{ $message }}</small>@enderror
         </label>
 
         <label class="field">
             <span>{{ $form['email'] }}</span>
-            <input type="email" name="email" value="{{ old('email') }}" required>
+            <input type="email" name="email" value="{{ old('email') }}" autocomplete="email" inputmode="email" maxlength="150" required>
             @error('email')<small>{{ $message }}</small>@enderror
         </label>
 
         <label class="field">
             <span>{{ $form['company'] }}</span>
-            <input type="text" name="company" value="{{ old('company') }}">
+            <input type="text" name="company" value="{{ old('company') }}" autocomplete="organization" maxlength="120">
             @error('company')<small>{{ $message }}</small>@enderror
         </label>
 
@@ -65,7 +72,7 @@
 
     <label class="field">
         <span>{{ $form['message'] }}</span>
-        <textarea name="message" rows="6" placeholder="{{ $form['message_placeholder'] }}" required>{{ old('message') }}</textarea>
+        <textarea name="message" rows="6" placeholder="{{ $form['message_placeholder'] }}" maxlength="2000" required>{{ old('message') }}</textarea>
         @error('message')<small>{{ $message }}</small>@enderror
     </label>
 

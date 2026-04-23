@@ -2,7 +2,7 @@
     $locale = app()->getLocale();
     $site = \App\Support\BrandContent::site($locale);
     $landing = \App\Support\BrandContent::landing($locale);
-    $meta = array_merge($site['default_seo'], $seo ?? []);
+    $meta = $seo ?? [];
     $homeUrl = route('home', ['locale' => $locale]);
     $alternateLocales = \App\Support\BrandContent::supportedLocales();
     $currentRouteName = \Illuminate\Support\Facades\Route::currentRouteName() ?? 'home';
@@ -62,31 +62,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $meta['title'] }}</title>
-    <meta name="description" content="{{ $meta['description'] }}">
-    <meta name="keywords" content="{{ $meta['keywords'] }}">
-    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
-    <meta name="theme-color" content="#050816">
-    <meta property="og:site_name" content="{{ $site['name'] }}">
-    <meta property="og:locale" content="{{ $ogLocales[$locale] ?? 'en_US' }}">
-    <meta property="og:title" content="{{ $meta['title'] }}">
-    <meta property="og:description" content="{{ $meta['description'] }}">
-    <meta property="og:type" content="{{ $meta['type'] ?? 'website' }}">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ asset('images/brand-mark.png') }}">
-    @foreach($alternateLocales as $alternateLocale)
-        <meta property="og:locale:alternate" content="{{ $ogLocales[$alternateLocale] ?? 'en_US' }}">
-    @endforeach
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $meta['title'] }}">
-    <meta name="twitter:description" content="{{ $meta['description'] }}">
-    <meta name="twitter:image" content="{{ asset('images/brand-mark.png') }}">
-    <link rel="canonical" href="{{ url()->current() }}">
-    @foreach($alternateLocales as $alternateLocale)
-        <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName() ?? 'home', array_filter(array_merge(request()->route()?->parameters() ?? [], ['locale' => $alternateLocale]))) }}">
-    @endforeach
-    <link rel="alternate" hreflang="x-default" href="{{ route('home', ['locale' => 'en']) }}">
-    <link rel="icon" href="{{ asset('images/brand-mark.png') }}">
+    @include('layouts.partials.seo', [
+        'site' => $site,
+        'meta' => $meta,
+        'locale' => $locale,
+        'ogLocales' => $ogLocales,
+        'alternateLocales' => $alternateLocales,
+    ])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -102,9 +84,6 @@
         })();
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @foreach(($meta['schema'] ?? []) as $schema)
-        <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
-    @endforeach
 </head>
 <body class="{{ ($isRtl ?? false) ? 'is-rtl' : '' }}">
     <a href="#main-content" class="skip-link">{{ __('brand.ui.layout.skip_to_content') }}</a>
@@ -215,11 +194,12 @@
                     </div>
                     <div class="footer-column">
                         <h4>{{ $landing['nav']['reach_out'] }}</h4>
-                        <a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a>
-                        <a href="tel:+212610090070">{{ $site['phone'] }}</a>
-                        <a href="https://wa.me/212610090070" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
-                        <a href="https://github.com/youssefyouyoudev" target="_blank" rel="noopener">GitHub</a>
-                        <a href="https://linkedin.com/in/youssefyouyoudev" target="_blank" rel="noopener">LinkedIn</a>
+                        <a href="{{ $site['email_link'] }}">{{ $site['email'] }}</a>
+                        <a href="{{ $site['phone_link'] }}">{{ $site['phone'] }}</a>
+                        <a href="{{ $site['whatsapp_url'] }}" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
+                        @foreach($site['socials'] as $social)
+                            <a href="{{ $social['url'] }}" target="_blank" rel="noopener">{{ $social['label'] }}</a>
+                        @endforeach
                         <div class="footer-locales">
                             @foreach($localeLabels as $supportedLocale => $label)
                                 <a href="{{ $localeLinks[$supportedLocale] }}">{{ $label }}</a>

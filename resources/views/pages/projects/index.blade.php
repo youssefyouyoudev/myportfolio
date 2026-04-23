@@ -21,35 +21,7 @@
                 @foreach($featured as $project)
                     <article class="panel case-study-block case-theme-{{ $project['media']['theme'] ?? 'default' }}" data-reveal>
                         <div class="case-study-media">
-                            <div class="case-study-frame">
-                                @if(isset($project['media']['logo']['src']))
-                                    <div class="case-study-logo-surface">
-                                        <img src="{{ $project['media']['logo']['src'] }}" alt="{{ $project['media']['logo']['alt'] }}" loading="lazy">
-                                    </div>
-                                @endif
-
-                                @if(isset($project['media']['cover']['src']))
-                                    <div class="case-study-image">
-                                        <img src="{{ $project['media']['cover']['src'] }}" alt="{{ $project['media']['cover']['alt'] }}" loading="lazy">
-                                    </div>
-                                @else
-                                    <div class="case-study-placeholder case-study-placeholder-{{ $project['media']['theme'] ?? 'default' }}">
-                                        <div class="placeholder-window">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <div class="placeholder-chart">
-                                            <i></i><i></i><i></i><i></i>
-                                        </div>
-                                        <div class="placeholder-list">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
+                            <x-site.project-frame :project="$project" />
                         </div>
 
                         <div class="case-study-copy">
@@ -93,25 +65,7 @@
                 @foreach($secondary as $project)
                     <article class="panel secondary-case-card case-theme-{{ $project['media']['theme'] ?? 'default' }}" data-reveal>
                         <div class="secondary-case-visual">
-                            @if(isset($project['media']['cover']['src']))
-                                <div class="case-study-image compact">
-                                    <img src="{{ $project['media']['cover']['src'] }}" alt="{{ $project['media']['cover']['alt'] }}" loading="lazy">
-                                </div>
-                            @else
-                                <div class="case-study-placeholder case-study-placeholder-{{ $project['media']['theme'] ?? 'default' }}">
-                                    <div class="placeholder-window">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                    <div class="placeholder-table">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                </div>
-                            @endif
+                            <x-site.project-frame :project="$project" compact />
                         </div>
                         <div class="project-copy">
                             <span class="eyebrow">{{ $project['label'] }}</span>

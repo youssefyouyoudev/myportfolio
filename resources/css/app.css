@@ -1557,6 +1557,18 @@ body.is-rtl .spotlight-visual {
     font-size: 0.94rem;
 }
 
+.form-honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .contact-form {
     background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%),
@@ -1655,6 +1667,11 @@ body.is-rtl .simple-list {
     border-radius: 8px;
     background: color-mix(in srgb, var(--accent-soft) 90%, transparent 10%);
     border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent 76%);
+}
+
+.status-banner-error {
+    background: color-mix(in srgb, rgba(255, 117, 117, 0.18) 90%, transparent 10%);
+    border-color: rgba(255, 117, 117, 0.32);
 }
 
 .site-footer {

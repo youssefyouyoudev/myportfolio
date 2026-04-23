@@ -14,9 +14,16 @@ class ProjectController extends Controller
 
         return view('pages.projects.index', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [BrandContent::personSchema($locale)],
+                asset('images/projects/ecarsauto-case-study.png'),
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'Projects', 'url' => route('projects.index', ['locale' => $locale])],
+                ]
+            ),
         ]);
     }
 
@@ -34,9 +41,20 @@ class ProjectController extends Controller
             'page' => $page,
             'previous' => $previous,
             'next' => $next,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [
+                    BrandContent::personSchema($locale),
+                    BrandContent::projectSchema($page, route('projects.show', ['locale' => $locale, 'project' => $project])),
+                ],
+                $page['media']['cover']['src'] ?? $page['media']['logo']['src'] ?? null,
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'Projects', 'url' => route('projects.index', ['locale' => $locale])],
+                    ['name' => $page['title'], 'url' => route('projects.show', ['locale' => $locale, 'project' => $project])],
+                ]
+            ),
         ]);
     }
 }

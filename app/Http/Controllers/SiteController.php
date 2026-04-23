@@ -23,9 +23,12 @@ class SiteController extends Controller
         return view('pages.home', [
             'page' => $page,
             'showcase' => BrandContent::homeShowcase($locale),
-            'seo' => array_merge($page['seo'], [
-                'schema' => array_merge([BrandContent::personSchema($locale)], $serviceSchemas),
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                array_merge([BrandContent::personSchema($locale)], $serviceSchemas),
+                asset('images/projects/ecarsauto-case-study.png')
+            ),
         ]);
     }
 
@@ -36,9 +39,16 @@ class SiteController extends Controller
 
         return view('pages.about', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [BrandContent::personSchema($locale)],
+                null,
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'About', 'url' => route('about', ['locale' => $locale])],
+                ]
+            ),
         ]);
     }
 
@@ -49,9 +59,16 @@ class SiteController extends Controller
 
         return view('pages.skills', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [BrandContent::personSchema($locale)],
+                null,
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'Expertise', 'url' => route('skills', ['locale' => $locale])],
+                ]
+            ),
         ]);
     }
 
@@ -62,9 +79,16 @@ class SiteController extends Controller
 
         return view('pages.experience', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [BrandContent::personSchema($locale)],
+                null,
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'Experience', 'url' => route('experience', ['locale' => $locale])],
+                ]
+            ),
         ]);
     }
 
@@ -75,9 +99,16 @@ class SiteController extends Controller
 
         return view('pages.resume', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [BrandContent::personSchema($locale)],
+                asset('images/youyou-portrait.png'),
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'Resume', 'url' => route('resume', ['locale' => $locale])],
+                ]
+            ),
         ]);
     }
 
@@ -95,9 +126,16 @@ class SiteController extends Controller
 
         return view('pages.site.show', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => $schema,
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                $schema,
+                null,
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => $page['title'], 'url' => url()->current()],
+                ]
+            ),
         ]);
     }
 
@@ -109,9 +147,16 @@ class SiteController extends Controller
 
         return view('pages.seo.location', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [BrandContent::personSchema($locale)],
+                asset('images/youyou-portrait.png'),
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => $page['title'], 'url' => url()->current()],
+                ]
+            ),
         ]);
     }
 

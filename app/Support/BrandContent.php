@@ -28,13 +28,22 @@ class BrandContent
 
         $site['logo'] = asset('images/brand-mark.png');
         $site['portrait'] = asset('images/youyou-portrait.png');
+        $site['social_image'] = asset('images/youyou-portrait.png');
         $site['website_url'] = config('app.url');
         $site['whatsapp_url'] = 'https://wa.me/212610090070';
         $site['phone_link'] = 'tel:+212610090070';
         $site['email_link'] = 'mailto:contact@youssefyouyou.com';
         $site['github_url'] = 'https://github.com/youssefyouyoudev';
         $site['linkedin_url'] = 'https://linkedin.com/in/youssefyouyoudev';
+        $site['socials'] = [
+            ['label' => 'GitHub', 'url' => $site['github_url']],
+            ['label' => 'LinkedIn', 'url' => $site['linkedin_url']],
+        ];
         $site['cv_url'] = route('resume', ['locale' => $locale]);
+        $site['default_seo'] = array_merge($site['default_seo'] ?? [], [
+            'image' => $site['social_image'],
+            'image_alt' => $site['name'].' portrait and personal brand image',
+        ]);
         $site['nav'] = [
             ['label' => $site['navigation']['home'], 'url' => route('home', ['locale' => $locale])],
             ['label' => $site['navigation']['about'], 'url' => route('about', ['locale' => $locale])],
@@ -1015,6 +1024,33 @@ class BrandContent
         return self::sitePageCatalog($locale)[$slug] ?? null;
     }
 
+    public static function buildSeo(
+        string $locale,
+        array $seo = [],
+        array $schema = [],
+        ?string $image = null,
+        array $breadcrumbs = []
+    ): array {
+        $site = self::site($locale);
+        $resolved = array_merge($site['default_seo'], $seo);
+        $resolved['image'] = $image ?? $seo['image'] ?? $site['social_image'];
+        $resolved['image_alt'] = $seo['image_alt'] ?? $site['name'].' portfolio preview';
+
+        $schemaGraph = [
+            self::websiteSchema($locale),
+            self::organizationSchema($locale),
+            ...$schema,
+        ];
+
+        if ($breadcrumbs !== []) {
+            $schemaGraph[] = self::breadcrumbSchema($breadcrumbs);
+        }
+
+        $resolved['schema'] = array_values(array_filter($schemaGraph));
+
+        return $resolved;
+    }
+
     public static function personSchema(string $locale = 'en'): array
     {
         $site = self::site($locale);
@@ -1057,6 +1093,46 @@ class BrandContent
         ];
     }
 
+    public static function organizationSchema(string $locale = 'en'): array
+    {
+        $site = self::site($locale);
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'ProfessionalService',
+            'name' => $site['name'],
+            'url' => $site['website_url'],
+            'image' => $site['social_image'],
+            'logo' => $site['logo'],
+            'description' => $site['tagline'],
+            'email' => 'contact@youssefyouyou.com',
+            'telephone' => '+212610090070',
+            'areaServed' => ['Morocco', 'Europe', 'Remote'],
+            'sameAs' => [
+                $site['github_url'],
+                $site['linkedin_url'],
+            ],
+        ];
+    }
+
+    public static function websiteSchema(string $locale = 'en'): array
+    {
+        $site = self::site($locale);
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'name' => $site['name'],
+            'url' => $site['website_url'],
+            'inLanguage' => $locale,
+            'description' => $site['tagline'],
+            'publisher' => [
+                '@type' => 'Person',
+                'name' => $site['name'],
+            ],
+        ];
+    }
+
     public static function serviceSchema(array $service, string $url): array
     {
         return [
@@ -1094,6 +1170,25 @@ class BrandContent
         ];
     }
 
+    public static function projectSchema(array $project, string $url): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'SoftwareApplication',
+            'name' => $project['title'],
+            'applicationCategory' => $project['label'],
+            'operatingSystem' => 'Web',
+            'description' => $project['summary'],
+            'url' => $url,
+            'image' => $project['media']['cover']['src'] ?? $project['media']['logo']['src'] ?? null,
+            'featureList' => $project['features'] ?? [],
+            'creator' => [
+                '@type' => 'Person',
+                'name' => 'Youssef Youyou',
+            ],
+        ];
+    }
+
     public static function faqSchema(array $items): array
     {
         return [
@@ -1109,6 +1204,24 @@ class BrandContent
                     ],
                 ],
                 $items
+            ),
+        ];
+    }
+
+    public static function breadcrumbSchema(array $items): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => array_map(
+                static fn (array $item, int $index): array => [
+                    '@type' => 'ListItem',
+                    'position' => $index + 1,
+                    'name' => $item['name'],
+                    'item' => $item['url'],
+                ],
+                $items,
+                array_keys($items)
             ),
         ];
     }

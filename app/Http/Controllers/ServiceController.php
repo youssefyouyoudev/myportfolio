@@ -14,9 +14,16 @@ class ServiceController extends Controller
 
         return view('pages.services.index', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [BrandContent::personSchema($locale)],
-            ]),
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [BrandContent::personSchema($locale)],
+                asset('images/youyou-portrait.png'),
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'Services', 'url' => route('services.index', ['locale' => $locale])],
+                ]
+            ),
         ]);
     }
 
@@ -28,12 +35,20 @@ class ServiceController extends Controller
 
         return view('pages.services.show', [
             'page' => $page,
-            'seo' => array_merge($page['seo'], [
-                'schema' => [
+            'seo' => BrandContent::buildSeo(
+                $locale,
+                $page['seo'],
+                [
                     BrandContent::personSchema($locale),
                     BrandContent::serviceSchema($page, route('services.show', ['locale' => $locale, 'service' => $service])),
                 ],
-            ]),
+                asset('images/youyou-portrait.png'),
+                [
+                    ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
+                    ['name' => 'Services', 'url' => route('services.index', ['locale' => $locale])],
+                    ['name' => $page['title'], 'url' => route('services.show', ['locale' => $locale, 'service' => $service])],
+                ]
+            ),
         ]);
     }
 }

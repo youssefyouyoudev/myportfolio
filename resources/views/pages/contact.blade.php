@@ -74,7 +74,12 @@
 
             <div>
                 @if(session('status'))
-                    <div class="status-banner">{{ session('status') }}</div>
+                    <div class="status-banner" role="status" aria-live="polite">{{ session('status') }}</div>
+                @endif
+                @if($errors->any())
+                    <div class="status-banner status-banner-error" role="alert">
+                        Please review the highlighted fields and try again.
+                    </div>
                 @endif
                 <x-site.contact-form />
             </div>

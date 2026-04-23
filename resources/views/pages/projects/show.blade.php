@@ -3,7 +3,6 @@
 @section('content')
     @php
         $gallery = collect($page['media']['gallery'] ?? []);
-        $primaryImage = $gallery->first();
         $secondaryImages = $gallery->slice(1, 3);
         $projectsUi = trans('brand.ui.projects');
     @endphp
@@ -22,35 +21,7 @@
             </div>
 
             <div class="case-study-hero-art case-theme-{{ $page['media']['theme'] ?? 'default' }}">
-                <div class="case-study-frame">
-                    @if(isset($page['media']['logo']['src']))
-                        <div class="case-study-logo-surface">
-                            <img src="{{ $page['media']['logo']['src'] }}" alt="{{ $page['media']['logo']['alt'] }}" loading="eager">
-                        </div>
-                    @endif
-
-                    @if($primaryImage)
-                        <div class="case-study-image">
-                            <img src="{{ $primaryImage['src'] }}" alt="{{ $primaryImage['alt'] }}" loading="eager" fetchpriority="high">
-                        </div>
-                    @else
-                        <div class="case-study-placeholder case-study-placeholder-{{ $page['media']['theme'] ?? 'default' }}">
-                            <div class="placeholder-window">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="placeholder-chart">
-                                <i></i><i></i><i></i><i></i>
-                            </div>
-                            <div class="placeholder-list">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    @endif
-                </div>
+                <x-site.project-frame :project="$page" eager loading="eager" />
             </div>
         </div>
     </section>
