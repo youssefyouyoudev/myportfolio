@@ -254,3 +254,20 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (ev
         applyTheme(event.matches ? 'dark' : 'light', false);
     }
 });
+
+// ── Back-to-top button ──────────────────────────────────────────
+const backToTop = document.querySelector('[data-back-top]');
+
+if (backToTop) {
+    const syncBackTop = () => {
+        backToTop.classList.toggle('is-visible', window.scrollY > 400);
+    };
+
+    syncBackTop();
+    window.addEventListener('scroll', syncBackTop, { passive: true });
+
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+

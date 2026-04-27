@@ -32,33 +32,33 @@
     $primaryNav = [
         [
             'label' => $landing['nav']['services'],
-            'url' => route('services.index', ['locale' => $locale]),
+            'url'   => route('services.index', ['locale' => $locale]),
             'active' => str_starts_with($currentRouteName, 'services.'),
         ],
         [
             'label' => $landing['nav']['projects'],
-            'url' => route('projects.index', ['locale' => $locale]),
+            'url'   => route('projects.index', ['locale' => $locale]),
             'active' => str_starts_with($currentRouteName, 'projects.'),
         ],
         [
-            'label' => $landing['nav']['expertise'],
-            'url' => route('skills', ['locale' => $locale]),
-            'active' => in_array($currentRouteName, ['skills', 'expertise', 'tech-stack'], true),
+            'label' => $landing['nav']['process'],
+            'url'   => route('process.page', ['locale' => $locale]),
+            'active' => in_array($currentRouteName, ['process.page'], true),
         ],
         [
             'label' => $landing['nav']['about'],
-            'url' => route('about', ['locale' => $locale]),
+            'url'   => route('about', ['locale' => $locale]),
             'active' => $currentRouteName === 'about',
         ],
         [
             'label' => $landing['nav']['insights'],
-            'url' => route('blog.index', ['locale' => $locale]),
+            'url'   => route('blog.index', ['locale' => $locale]),
             'active' => str_starts_with($currentRouteName, 'blog.'),
         ],
         [
-            'label' => $landing['nav']['hire'],
-            'url' => route('availability', ['locale' => $locale]),
-            'active' => in_array($currentRouteName, ['availability', 'hire-me'], true),
+            'label' => 'Contact',
+            'url'   => route('contact.create', ['locale' => $locale]),
+            'active' => str_starts_with($currentRouteName, 'contact.'),
         ],
     ];
 @endphp
@@ -144,7 +144,7 @@
                             <strong>{{ $site['availability_badge']['label'] }}</strong>
                             <span>{{ $site['availability_badge']['detail'] }}</span>
                         </a>
-                        <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary header-cta">{{ $landing['nav']['start_project'] }}</a>
+                        <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary header-cta" id="nav-cta-start">{{ $landing['nav']['start_project'] }}</a>
                     </div>
                 </div>
 

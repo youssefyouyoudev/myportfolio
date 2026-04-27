@@ -75,67 +75,188 @@ class BrandContent
 
         return [
             'hero' => [
-                'eyebrow' => 'Full-stack delivery for teams that need the work to hold up',
-                'title' => 'Websites, SaaS platforms, dashboards, and custom business software built to win trust fast.',
-                'copy' => 'I help B2B and B2C brands launch digital products that earn trust quickly and support real business workflows from the first release.',
+                'eyebrow' => 'Senior Full-Stack Developer — Web, Mobile & Desktop',
+                'title' => 'I build the software. You grow the business.',
+                'copy' => 'I handle conception, architecture, full-stack development, AI integration, and project management — so you get a working product, not just code.',
+                'trust_strip' => '6+ years · 20+ products shipped · Web · Mobile · Desktop · AI · B2B & B2C · Morocco & International',
                 'pills' => [
                     'Morocco and international client work',
-                    'Business websites, SaaS, CRM, ERP, dashboards',
-                    'Design, development, and deployment in one flow',
+                    'Web · Mobile · Desktop · AI',
+                    'B2B & B2C · Full product lifecycle',
                 ],
                 'trust' => [
                     'Available for founder-led products, agencies, and established SMEs',
-                    'Arabic, French, and English client communication',
-                    'Fast intake through email and WhatsApp',
+                    'Arabic, French, English, Spanish, German',
+                    'Fast response via email and WhatsApp',
                 ],
                 'actions' => [
-                    'primary' => 'Start a Project',
-                    'secondary' => 'View Case Studies',
-                    'tertiary' => 'Chat on WhatsApp',
+                    'primary' => 'Start a Project →',
+                    'secondary' => 'See the Work ↓',
+                    'tertiary' => 'WhatsApp',
                 ],
                 'metrics' => [
-                    ['value' => '5+', 'label' => 'Years building production-ready systems'],
-                    ['value' => '25+', 'label' => 'Projects across web apps, dashboards, and product sites'],
-                    ['value' => 'B2B / B2C', 'label' => 'Positioning built for both sales and operations'],
+                    ['value' => '20+', 'label' => 'Products shipped'],
+                    ['value' => 'Since 2019', 'label' => 'Shipping across Morocco and international teams'],
+                    ['value' => 'EN / FR / AR / ES / DE', 'label' => 'Multilingual communication'],
                 ],
             ],
             'trust_strip' => [
-                'Presentation that makes the offer easier to trust',
-                'Real products instead of generic portfolio placeholders',
-                'Strong fit for SaaS, internal tools, CRM, ERP, and conversion-led websites',
-                'Built in Morocco, ready for international briefs',
+                '6+ years active delivery',
+                '20+ products shipped',
+                'Web · Mobile · Desktop',
+                'AI & Automation',
+                'B2B & B2C',
+                'Morocco & International',
             ],
+            // 6 full service cards with bullets — drives the services section
+            'services_full' => [
+                [
+                    'icon' => 'WEB',
+                    'title' => 'Web Applications',
+                    'outcome' => 'Custom web apps, SaaS platforms, dashboards, and internal tools built to handle real business load.',
+                    'bullets' => [
+                        'Full-stack Laravel / Next.js / React builds',
+                        'Admin panels, APIs, user portals',
+                        'Deployed, documented, and handed over clean',
+                    ],
+                ],
+                [
+                    'icon' => 'MOB',
+                    'title' => 'Mobile Applications',
+                    'outcome' => 'iOS and Android apps built natively or cross-platform — consumer-ready or enterprise-grade.',
+                    'bullets' => [
+                        'Kotlin, Flutter, React Native, Swift',
+                        'Offline-first, biometric auth, push notifications',
+                        'App Store and Play Store deployment',
+                    ],
+                ],
+                [
+                    'icon' => 'DSK',
+                    'title' => 'Desktop Applications',
+                    'outcome' => 'Offline-first desktop software for Windows, Mac, or Linux — POS systems, productivity tools, internal ops.',
+                    'bullets' => [
+                        'Electron, Tauri, C# WPF',
+                        'Printer, scanner, and hardware integrations',
+                        'SQLite local data, sync with cloud backend',
+                    ],
+                ],
+                [
+                    'icon' => 'AI',
+                    'title' => 'AI Agents & Automation',
+                    'outcome' => 'Custom AI workflows, LLM-powered features, and automation pipelines that remove manual steps from your business.',
+                    'bullets' => [
+                        'OpenAI, Claude, LangChain, RAG pipelines',
+                        'Chatbots, document processors, decision agents',
+                        'n8n / Make automation flows',
+                    ],
+                ],
+                [
+                    'icon' => 'ARC',
+                    'title' => 'Conception & Architecture',
+                    'outcome' => 'Turn a rough idea into a clear product spec, UX wireframes, and a technical blueprint — before any code is written.',
+                    'bullets' => [
+                        'Business requirement mapping',
+                        'UX wireframes and user flows',
+                        'Tech stack selection and architecture decisions',
+                    ],
+                ],
+                [
+                    'icon' => 'PM',
+                    'title' => 'Project Management',
+                    'outcome' => 'I lead delivery — scope, timeline, team communication, and client updates — so you don\'t have to manage developers.',
+                    'bullets' => [
+                        'Fixed-scope or ongoing delivery',
+                        'Weekly updates, clear milestones',
+                        'Work with existing teams or I bring the right people',
+                    ],
+                ],
+            ],
+            // Simplified service cards for the original services section
             'services' => [
                 [
-                    'title' => 'Business websites',
-                    'copy' => 'Conversion-focused sites that make the business look established, trustworthy, and worth contacting.',
-                    'value' => 'Stronger first impression and cleaner lead generation.',
+                    'title' => 'Web Applications',
+                    'copy' => 'Full-stack Laravel / Next.js / React builds. Admin panels, APIs, user portals.',
+                    'value' => 'Custom web apps, SaaS platforms, and dashboards built to handle real business load.',
                 ],
                 [
-                    'title' => 'Custom web apps',
-                    'copy' => 'Purpose-built systems for workflows, client portals, dashboards, and operational visibility.',
-                    'value' => 'Less manual work and a clearer internal process.',
+                    'title' => 'Mobile Applications',
+                    'copy' => 'Kotlin, Flutter, React Native, Swift. App Store and Play Store deployment.',
+                    'value' => 'iOS and Android apps built natively or cross-platform — consumer-ready or enterprise-grade.',
                 ],
                 [
-                    'title' => 'SaaS platforms',
-                    'copy' => 'Product experiences with onboarding, admin systems, and scalable architecture.',
-                    'value' => 'A product that feels ready to sell, demo, and grow.',
+                    'title' => 'Desktop Applications',
+                    'copy' => 'Electron, Tauri, C# WPF. SQLite local data, sync with cloud backend.',
+                    'value' => 'Offline-first desktop software for Windows, Mac, or Linux — POS, productivity, internal ops.',
                 ],
                 [
-                    'title' => 'CRM / ERP systems',
-                    'copy' => 'Role-based tools for sales, inventory, teams, finance, and business operations.',
-                    'value' => 'Better control, reporting, and day-to-day execution.',
+                    'title' => 'AI Agents & Automation',
+                    'copy' => 'OpenAI, Claude, LangChain, RAG pipelines. n8n / Make automation flows.',
+                    'value' => 'Custom AI workflows and automation pipelines that remove manual steps from your business.',
                 ],
                 [
-                    'title' => 'Dashboards and internal tools',
-                    'copy' => 'Readable interfaces for analytics, team activity, approvals, and operational metrics.',
-                    'value' => 'Decision-ready visibility without clutter.',
+                    'title' => 'Conception & Architecture',
+                    'copy' => 'Business requirement mapping. UX wireframes, user flows, tech stack selection.',
+                    'value' => 'Turn a rough idea into a clear product spec and technical blueprint — before any code.',
                 ],
                 [
-                    'title' => 'API and automation layers',
-                    'copy' => 'Backend workflows, integrations, and system glue that keep products moving cleanly.',
-                    'value' => 'Stronger foundations for scale, sync, and future features.',
+                    'title' => 'Project Management',
+                    'copy' => 'Fixed-scope or ongoing delivery. Weekly updates, clear milestones.',
+                    'value' => 'I lead delivery — scope, timeline, and team communication — so you don\'t manage developers.',
                 ],
+            ],
+            // B2B / B2C split section
+            'who_i_work_with' => [
+                'b2b' => [
+                    'title' => 'Agencies & companies',
+                    'copy' => 'You have clients, deadlines, and not enough senior developers. I plug in as a delivery partner — scoped, reliable, no hand-holding needed.',
+                    'ideal_for' => [
+                        'Agencies needing a white-label developer',
+                        'Startups building v1',
+                        'SMEs digitalizing operations',
+                        'Product teams needing contractor support',
+                    ],
+                ],
+                'b2c' => [
+                    'title' => 'Founders & entrepreneurs',
+                    'copy' => 'You have an idea, a business, or a process that needs a product. I take you from zero — conception, build, and launch.',
+                    'ideal_for' => [
+                        'App idea founders',
+                        'Solopreneurs automating their workflow',
+                        'Local businesses going digital',
+                        'Side projects that need to ship',
+                    ],
+                ],
+            ],
+            // 4-step process
+            'process' => [
+                [
+                    'step' => '01',
+                    'title' => 'Brief',
+                    'copy' => 'Share your idea, problem, or goal. A short message is enough to start.',
+                ],
+                [
+                    'step' => '02',
+                    'title' => 'Scope',
+                    'copy' => 'I map out what needs to be built, how long it takes, and what it costs — no vague estimates.',
+                ],
+                [
+                    'step' => '03',
+                    'title' => 'Build',
+                    'copy' => 'I build it. You get weekly updates, a staging environment to test, and zero surprises.',
+                ],
+                [
+                    'step' => '04',
+                    'title' => 'Launch',
+                    'copy' => 'We ship. I stay available for fixes, improvements, and the next version.',
+                ],
+            ],
+            // By-the-numbers stats (shown when no real testimonials)
+            'stats_numbers' => [
+                ['value' => '20+', 'label' => 'Products shipped'],
+                ['value' => '3', 'label' => 'Platforms covered'],
+                ['value' => '6+', 'label' => 'Years of active delivery'],
+                ['value' => '10+', 'label' => 'Stacks mastered'],
+                ['value' => '5', 'label' => 'Languages spoken'],
             ],
             'proof' => [
                 [
@@ -151,40 +272,10 @@ class BrandContent
                     'copy' => 'Strategy, UI, backend logic, responsive behavior, and launch readiness move together in one system.',
                 ],
             ],
-            'why' => [
-                [
-                    'title' => 'Product thinking with execution',
-                    'copy' => 'Useful when you need someone who can translate a business goal into UX, architecture, and shipping decisions.',
-                ],
-                [
-                    'title' => 'Deliberate UI without agency bloat',
-                    'copy' => 'The end result should look deliberate, modern, and commercially credible without slowing delivery down.',
-                ],
-                [
-                    'title' => 'Built for real operations',
-                    'copy' => 'Strong fit for teams dealing with bookings, leads, inventory, approvals, invoicing, and admin-heavy workflows.',
-                ],
-                [
-                    'title' => 'Clear communication and fast iteration',
-                    'copy' => 'Clients should always understand what is being built, why it matters, and what the next decision is.',
-                ],
-            ],
-            'stack' => [
-                ['title' => 'Backend', 'items' => ['Laravel', 'PHP', 'REST APIs', 'Authentication', 'Queues', 'Business logic']],
-                ['title' => 'Frontend', 'items' => ['Blade', 'Tailwind CSS', 'React', 'Responsive UI', 'Design systems', 'Motion polish']],
-                ['title' => 'Data and ops', 'items' => ['MySQL', 'PostgreSQL', 'Deployment', 'VPS hosting', 'Performance', 'SEO']],
-                ['title' => 'Business systems', 'items' => ['SaaS architecture', 'CRM flows', 'ERP modules', 'Dashboards', 'Automation', 'Admin UX']],
-            ],
-            'process' => [
-                ['step' => '01', 'title' => 'Position the product', 'copy' => 'Clarify what the product sells, who it serves, and what trust signals it needs.'],
-                ['step' => '02', 'title' => 'Design the experience', 'copy' => 'Map the key flows, visual hierarchy, and the screens that carry the business value.'],
-                ['step' => '03', 'title' => 'Build the system', 'copy' => 'Ship clean frontend and backend layers that support the experience without feeling fragile.'],
-                ['step' => '04', 'title' => 'Launch with confidence', 'copy' => 'Refine responsiveness, polish the details, and make the final result feel ready for clients.'],
-            ],
             'cta' => [
-                'eyebrow' => 'Need a stronger product presence?',
-                'title' => 'Let us turn the next build into an asset the business can lean on.',
-                'copy' => 'Ideal for product launches, redesigns, SaaS platforms, dashboards, CRM systems, and websites that need to convert better.',
+                'eyebrow' => 'Ready to build?',
+                'title' => 'Tell me what you\'re building.',
+                'copy' => 'Whether it\'s a rough idea or a detailed spec — I\'ll reply within 24 hours with a clear next step.',
             ],
             'projects' => $projects,
         ];
@@ -194,34 +285,34 @@ class BrandContent
     {
         $base = [
             'seo' => [
-                'title' => 'Youssef Youyou | Senior Full-Stack Developer in Morocco for Websites, Web Apps, Dashboards, APIs, and SaaS',
-                'description' => 'Senior Full-Stack Developer in Morocco building websites, custom web apps, dashboards, APIs, and SaaS systems for companies and founders who need real delivery.',
-                'keywords' => 'senior full-stack developer Morocco, Laravel developer Morocco, React developer Morocco, SaaS developer Morocco, API developer Morocco, web developer Nador',
+                'title' => 'Youssef Youyou — Full-Stack Developer for Web, Mobile & Desktop Apps | Morocco',
+                'description' => 'Senior Full-Stack Developer in Morocco building web apps, mobile apps, desktop software, and AI systems for B2B and B2C clients. 6+ years, 20+ products shipped.',
+                'keywords' => 'full-stack developer Morocco, web mobile desktop developer Morocco, Laravel React Flutter developer, AI automation developer Morocco, developer Nador',
                 'type' => 'website',
             ],
             'nav' => [
                 'services' => 'Services',
                 'stack' => 'Stack',
-                'projects' => 'Projects',
+                'projects' => 'Work',
                 'proof' => 'Proof',
-                'process' => 'Process',
+                'process' => 'How it works',
                 'contact' => 'Contact',
                 'about' => 'About',
                 'expertise' => 'Expertise',
                 'industries' => 'Industries',
-                'insights' => 'Insights',
-                'hire' => 'Hire Me',
+                'insights' => 'Blog',
+                'hire' => 'How it works',
                 'faq' => 'FAQ',
                 'privacy' => 'Privacy',
                 'terms' => 'Terms',
                 'trust' => 'Trust',
-                'start_project' => 'Start a Project',
+                'start_project' => 'Start a project →',
                 'tech_stack' => 'Tech Stack',
                 'navigate' => 'Navigate',
                 'reach_out' => 'Reach Out',
-                'footer_eyebrow' => 'Senior systems builder',
-                'footer_title' => 'I build powerful, scalable systems that help businesses grow.',
-                'footer_copy' => 'Web apps, SaaS platforms, mobile and desktop applications, APIs, backend systems, and AI-enabled workflows designed for serious business use.',
+                'footer_eyebrow' => 'Full-stack product builder',
+                'footer_title' => 'I build the software. You grow the business.',
+                'footer_copy' => 'Web apps, mobile apps, desktop software, AI agents, and automation — from conception to launch, across Morocco and internationally.',
                 'language' => 'Language',
                 'language_short' => 'Lang',
             ],
