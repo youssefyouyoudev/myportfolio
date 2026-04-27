@@ -7,14 +7,29 @@
     @endphp
 
     <section class="inner-hero">
-        <div class="container narrow">
-            <span class="eyebrow">{{ $page['eyebrow'] }}</span>
-            <h1 class="page-title">{{ $page['title'] }}</h1>
-            <p class="page-copy">{{ $page['intro'] }}</p>
-            <div class="hero-pills">
-                @foreach($aboutUi['pills'] as $pill)
-                    <span>{{ $pill }}</span>
-                @endforeach
+        <div class="container">
+            <x-breadcrumb :items="$seo['breadcrumbs'] ?? []" />
+            <div class="about-hero-grid">
+                <div>
+                    <span class="eyebrow">{{ $page['eyebrow'] }}</span>
+                    <h1 class="page-title">{{ $page['title'] }}</h1>
+                    <p class="page-copy">{{ $page['intro'] }}</p>
+                    <div class="hero-pills">
+                        @foreach($aboutUi['pills'] as $pill)
+                            <span>{{ $pill }}</span>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="panel about-photo-panel">
+                    <img
+                        src="{{ asset('images/youssef-youyou.jpg') }}"
+                        alt="Youssef Youyou, senior full-stack developer based in Nador, Morocco"
+                        width="720"
+                        height="880"
+                        loading="lazy"
+                        class="about-photo"
+                    >
+                </div>
             </div>
         </div>
     </section>

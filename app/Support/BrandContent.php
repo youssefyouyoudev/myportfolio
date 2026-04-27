@@ -27,7 +27,7 @@ class BrandContent
         $site = self::get($locale, 'site');
 
         $site['logo'] = asset('images/brand-mark.png');
-        $site['portrait'] = asset('images/youyou-portrait.png');
+        $site['portrait'] = asset('images/youssef-youyou.jpg');
         $site['social_image'] = asset('images/youyou-portrait.png');
         $site['website_url'] = config('app.url');
         $site['whatsapp_url'] = 'https://wa.me/212610090070';
@@ -40,6 +40,7 @@ class BrandContent
             ['label' => 'LinkedIn', 'url' => $site['linkedin_url']],
         ];
         $site['cv_url'] = route('resume', ['locale' => $locale]);
+        $site['availability_badge'] = self::availabilityBadge();
         $site['default_seo'] = array_merge($site['default_seo'] ?? [], [
             'image' => $site['social_image'],
             'image_alt' => $site['name'].' portrait and personal brand image',
@@ -74,9 +75,9 @@ class BrandContent
 
         return [
             'hero' => [
-                'eyebrow' => 'Premium full-stack delivery for serious businesses',
+                'eyebrow' => 'Full-stack delivery for teams that need the work to hold up',
                 'title' => 'Websites, SaaS platforms, dashboards, and custom business software built to win trust fast.',
-                'copy' => 'I help B2B and B2C brands launch polished digital products that look credible, feel premium, and support real business workflows from the first release.',
+                'copy' => 'I help B2B and B2C brands launch digital products that earn trust quickly and support real business workflows from the first release.',
                 'pills' => [
                     'Morocco and international client work',
                     'Business websites, SaaS, CRM, ERP, dashboards',
@@ -99,7 +100,7 @@ class BrandContent
                 ],
             ],
             'trust_strip' => [
-                'Premium presentation that feels client-ready',
+                'Presentation that makes the offer easier to trust',
                 'Real products instead of generic portfolio placeholders',
                 'Strong fit for SaaS, internal tools, CRM, ERP, and conversion-led websites',
                 'Built in Morocco, ready for international briefs',
@@ -117,7 +118,7 @@ class BrandContent
                 ],
                 [
                     'title' => 'SaaS platforms',
-                    'copy' => 'Premium product experiences with onboarding, admin systems, and scalable architecture.',
+                    'copy' => 'Product experiences with onboarding, admin systems, and scalable architecture.',
                     'value' => 'A product that feels ready to sell, demo, and grow.',
                 ],
                 [
@@ -139,7 +140,7 @@ class BrandContent
             'proof' => [
                 [
                     'title' => 'I design for trust, not just aesthetics',
-                    'copy' => 'The interface has to look premium enough for a buyer and stay practical enough for real usage after launch.',
+                    'copy' => 'The interface has to earn buyer trust and stay practical enough for real usage after launch.',
                 ],
                 [
                     'title' => 'I build around business context',
@@ -156,7 +157,7 @@ class BrandContent
                     'copy' => 'Useful when you need someone who can translate a business goal into UX, architecture, and shipping decisions.',
                 ],
                 [
-                    'title' => 'Premium UI without agency bloat',
+                    'title' => 'Deliberate UI without agency bloat',
                     'copy' => 'The end result should look deliberate, modern, and commercially credible without slowing delivery down.',
                 ],
                 [
@@ -182,8 +183,8 @@ class BrandContent
             ],
             'cta' => [
                 'eyebrow' => 'Need a stronger product presence?',
-                'title' => 'Let us turn the next build into a serious business asset.',
-                'copy' => 'Ideal for product launches, redesigns, SaaS platforms, dashboards, CRM systems, and premium websites that need to convert better.',
+                'title' => 'Let us turn the next build into an asset the business can lean on.',
+                'copy' => 'Ideal for product launches, redesigns, SaaS platforms, dashboards, CRM systems, and websites that need to convert better.',
             ],
             'projects' => $projects,
         ];
@@ -194,7 +195,7 @@ class BrandContent
         $base = [
             'seo' => [
                 'title' => 'Youssef Youyou | Senior Full-Stack Developer in Morocco for Websites, Web Apps, Dashboards, APIs, and SaaS',
-                'description' => 'Senior Full-Stack Developer in Morocco building business-ready websites, custom web apps, dashboards, APIs, and SaaS systems for serious companies and founders.',
+                'description' => 'Senior Full-Stack Developer in Morocco building websites, custom web apps, dashboards, APIs, and SaaS systems for companies and founders who need real delivery.',
                 'keywords' => 'senior full-stack developer Morocco, Laravel developer Morocco, React developer Morocco, SaaS developer Morocco, API developer Morocco, web developer Nador',
                 'type' => 'website',
             ],
@@ -226,7 +227,7 @@ class BrandContent
             ],
             'hero' => [
                 'eyebrow' => 'Senior Full-Stack Developer in Morocco',
-                'title' => 'I build business-ready websites, web apps, dashboards, APIs, and SaaS systems.',
+                'title' => 'I build websites, web apps, dashboards, APIs, and SaaS systems that help teams move.',
                 'copy' => 'I help companies, founders, and Moroccan businesses launch faster, improve operations, and ship digital products that feel credible from the first click.',
                 'pills' => ['5+ years experience', '20+ happy clients / 25+ completed projects', 'Laravel, React, APIs, SaaS'],
                 'metrics' => [
@@ -292,7 +293,7 @@ class BrandContent
             ],
             'reasons' => [
                 ['title' => 'Full-stack depth', 'copy' => 'Frontend, backend, database, infrastructure, and product thinking in one execution layer.'],
-                ['title' => 'Business-ready systems', 'copy' => 'Built around growth, operations, and real usage instead of surface-level design.'],
+                ['title' => 'Systems built for real usage', 'copy' => 'Built around growth, operations, and real usage instead of surface-level design.'],
                 ['title' => 'Performance mindset', 'copy' => 'Fast loading, efficient flows, and clean implementation where quality is visible.'],
                 ['title' => 'Scalable architecture', 'copy' => 'Strong system structure that supports future features, integrations, and larger teams.'],
                 ['title' => 'Security awareness', 'copy' => 'Authentication, access control, API structure, and production decisions handled with care.'],
@@ -944,13 +945,13 @@ class BrandContent
                 'title' => 'Practical answers before a project begins.',
                 'intro' => 'Questions around scope, stack, timeline, support, deployment, and modernization usually come up early. This page answers them clearly.',
                 'faq' => [
-                    ['question' => 'What do you build?', 'answer' => 'Websites, web applications, SaaS platforms, mobile apps, desktop tools, APIs, dashboards, ERP-like systems, automation workflows, and AI-enabled features.'],
-                    ['question' => 'Do you work internationally?', 'answer' => 'Yes. I work with clients in Morocco and internationally where scope, communication, and execution quality matter.'],
-                    ['question' => 'How do projects start?', 'answer' => 'Usually with a clear project brief, discovery conversation, goals, priorities, and technical constraints.'],
-                    ['question' => 'Do you provide support after launch?', 'answer' => 'Yes, depending on the project and support expectations.'],
-                    ['question' => 'Can you deploy and manage servers?', 'answer' => 'Yes. Deployment, hosting, VPS environments, and production readiness are part of the offer when needed.'],
-                    ['question' => 'Can you build AI-enabled systems?', 'answer' => 'Yes, especially when AI improves workflows, automation, internal tooling, or product usefulness.'],
-                    ['question' => 'Can you modernize an existing application?', 'answer' => 'Yes. I can improve design, performance, architecture, deployment flow, and maintainability without rebuilding everything by default.'],
+                    ['question' => 'Do you work with international clients?', 'answer' => 'Yes. Most collaborations are remote-friendly, and I regularly structure projects for teams in Morocco, Europe, and elsewhere.'],
+                    ['question' => 'What is your typical project timeline?', 'answer' => 'Smaller websites can move in a few weeks, while custom products and internal systems usually run four to eight weeks depending on scope.'],
+                    ['question' => 'Do you do maintenance after launch?', 'answer' => 'Yes. I can stay involved for fixes, improvements, monitoring, and the next round of product decisions once the first release is live.'],
+                    ['question' => 'Can I hire you as a contractor?', 'answer' => 'Yes. I work on fixed-scope builds, ongoing delivery, and contractor-style support when the fit is clear.'],
+                    ['question' => 'What do you need before giving a next step?', 'answer' => 'A short brief with the business goal, the current blocker, the expected timeline, and any relevant links is enough to start.'],
+                    ['question' => 'Can you improve an existing Laravel or WordPress site?', 'answer' => 'Yes. I can step into an existing product, tighten the UX, modernize the code, and improve performance without forcing a rebuild by default.'],
+                    ['question' => 'Do you handle deployment and infrastructure too?', 'answer' => 'Yes. Deployment, VPS setup, release flow, and production polish can be part of the project when needed.'],
                 ],
                 'cta' => ['title' => 'Still have a project-specific question?', 'copy' => 'The fastest path is to send the context directly.'],
                 'seo' => [
@@ -971,8 +972,9 @@ class BrandContent
                     ['title' => 'Best-fit engagements', 'copy' => 'Products with real business logic, operational complexity, integrations, security, and scale requirements.'],
                 ],
                 'sections' => [
-                    ['title' => 'Best fit', 'paragraphs' => ['Serious projects. Clear goals. Teams that value technical quality, communication, and product thinking.']],
-                    ['title' => 'What to send', 'list' => ['Project or role summary', 'Scope or challenge', 'Timeline expectations', 'Any relevant links or existing system context']],
+                    ['title' => 'Current status', 'paragraphs' => [self::availabilityBadge()['label'].'. '.self::availabilityBadge()['detail'].'.']],
+                    ['title' => 'Typical project duration', 'paragraphs' => ['Most focused builds run '.config('portfolio.availability.typical_duration', '4 to 8 weeks').', depending on how much product definition already exists and how many moving parts need to be cleaned up.']],
+                    ['title' => 'How to get in the queue', 'list' => ['Send a short brief with the business goal and the blocker you want solved.', 'Include any timing, budget range, or existing product links that matter.', 'I reply with a clear next step before we commit to scope or a build window.']],
                 ],
                 'cta' => ['title' => 'Ready to talk about a role, project, or system build?', 'copy' => 'Send the essentials and I can respond with clarity.'],
                 'seo' => [
@@ -1047,6 +1049,7 @@ class BrandContent
         }
 
         $resolved['schema'] = array_values(array_filter($schemaGraph));
+        $resolved['breadcrumbs'] = $breadcrumbs;
 
         return $resolved;
     }
@@ -1130,6 +1133,11 @@ class BrandContent
                 '@type' => 'Person',
                 'name' => $site['name'],
             ],
+            'potentialAction' => [
+                '@type' => 'SearchAction',
+                'target' => rtrim($site['website_url'], '/').'/'.$locale.'/blog?search={search_term_string}',
+                'query-input' => 'required name=search_term_string',
+            ],
         ];
     }
 
@@ -1174,18 +1182,38 @@ class BrandContent
     {
         return [
             '@context' => 'https://schema.org',
-            '@type' => 'SoftwareApplication',
+            '@type' => 'CreativeWork',
             'name' => $project['title'],
-            'applicationCategory' => $project['label'],
-            'operatingSystem' => 'Web',
+            'genre' => $project['label'],
             'description' => $project['summary'],
             'url' => $url,
             'image' => $project['media']['cover']['src'] ?? $project['media']['logo']['src'] ?? null,
+            'dateCreated' => $project['built_at'] ?? null,
             'featureList' => $project['features'] ?? [],
             'creator' => [
                 '@type' => 'Person',
                 'name' => 'Youssef Youyou',
             ],
+        ];
+    }
+
+    public static function availabilityBadge(): array
+    {
+        $status = config('portfolio.availability.status', 'available');
+        $acceptingFrom = config('portfolio.availability.accepting_from');
+
+        if ($status === 'booked' && filled($acceptingFrom)) {
+            return [
+                'label' => 'Currently booked',
+                'detail' => 'Accepting projects from '.$acceptingFrom,
+                'state' => 'booked',
+            ];
+        }
+
+        return [
+            'label' => 'Currently available for new projects',
+            'detail' => 'Replying within 24 hours for qualified briefs',
+            'state' => 'available',
         ];
     }
 

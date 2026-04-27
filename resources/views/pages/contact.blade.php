@@ -25,6 +25,7 @@
 
     <section class="inner-hero">
         <div class="container narrow">
+            <x-breadcrumb :items="$seo['breadcrumbs'] ?? []" />
             <span class="eyebrow">{{ $page['eyebrow'] }}</span>
             <h1 class="page-title">{{ $page['title'] }}</h1>
             <p class="page-copy">{{ $page['copy'] }}</p>
@@ -74,10 +75,10 @@
 
             <div>
                 @if(session('status'))
-                    <div class="status-banner" role="status" aria-live="polite">{{ session('status') }}</div>
+                    <div class="status-banner" role="status" aria-live="polite" data-toast-success="{{ session('status') }}">{{ session('status') }}</div>
                 @endif
                 @if($errors->any())
-                    <div class="status-banner status-banner-error" role="alert">
+                    <div class="status-banner status-banner-error" role="alert" data-toast-error="Please review the highlighted fields and try again.">
                         Please review the highlighted fields and try again.
                     </div>
                 @endif

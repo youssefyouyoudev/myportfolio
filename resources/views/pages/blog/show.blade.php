@@ -3,9 +3,11 @@
 @section('content')
     <section class="inner-hero">
         <div class="container narrow">
+            <x-breadcrumb :items="$seo['breadcrumbs'] ?? []" />
             <span class="eyebrow">{{ __('brand.common.article') }}</span>
             <h1 class="page-title">{{ $page['title'] }}</h1>
             <p class="page-copy">{{ $page['excerpt'] }}</p>
+            <p class="article-meta">{{ $page['published_at'] }} · {{ $page['reading_time'] }} min read</p>
         </div>
     </section>
 

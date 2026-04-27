@@ -4,12 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\ClientLogo;
 use App\Models\Lead;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\SeoMeta;
 use App\Models\Service;
 use App\Models\Tag;
+use App\Models\Testimonial;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,6 +31,8 @@ class DatabaseSeeder extends Seeder
         $this->seedServices();
         $this->seedProjects();
         $this->seedPosts();
+        $this->seedTestimonials();
+        $this->seedClientLogos();
         $this->seedLeads();
         $this->seedSeoMeta();
     }
@@ -475,9 +479,12 @@ MD,
 
         foreach ($projects as $project) {
             $seoData = Arr::only($project, ['seo_title', 'seo_description']);
-            $projectData = Arr::except($project, ['tag_slugs', 'seo_title', 'seo_description']);
+            $projectData = array_merge(
+                $this->projectProofDefaults($project['title'], $project['slug']),
+                Arr::except($project, ['tag_slugs', 'seo_title', 'seo_description'])
+            );
 
-            $model = Project::query()->firstOrCreate(
+            $model = Project::query()->updateOrCreate(
                 ['slug' => $project['slug']],
                 $projectData
             );
@@ -505,6 +512,133 @@ MD,
                 );
             }
         }
+    }
+
+    private function seedTestimonials(): void
+    {
+        $testimonials = [
+            [
+                // TODO: replace with a real approved client testimonial.
+                'client_name' => 'Salma El Idrissi',
+                'client_title' => 'Operations Director',
+                'client_company' => 'Atlas Booking Group',
+                'quote' => 'Youssef turned a slow booking workflow into a cleaner system our team could actually rely on day to day.',
+                'is_featured' => true,
+                'status' => 'draft',
+                'published' => false,
+                'position' => 1,
+            ],
+            [
+                // TODO: replace with a real approved client testimonial.
+                'client_name' => 'Martin Vogel',
+                'client_title' => 'Product Lead',
+                'client_company' => 'Northline Metrics',
+                'quote' => 'He connected product decisions to implementation details quickly, which helped us ship without losing clarity.',
+                'is_featured' => true,
+                'status' => 'draft',
+                'published' => false,
+                'position' => 2,
+            ],
+            [
+                // TODO: replace with a real approved client testimonial.
+                'client_name' => 'Imane Bennis',
+                'client_title' => 'Founder',
+                'client_company' => 'RiadFlow Studio',
+                'quote' => 'The project felt structured from the first call, and the final product made the business easier to explain and easier to run.',
+                'is_featured' => true,
+                'status' => 'draft',
+                'published' => false,
+                'position' => 3,
+            ],
+        ];
+
+        foreach ($testimonials as $testimonial) {
+            Testimonial::query()->updateOrCreate(
+                ['client_name' => $testimonial['client_name']],
+                array_merge($testimonial, [
+                    'name' => $testimonial['client_name'],
+                    'role' => $testimonial['client_title'],
+                    'company' => $testimonial['client_company'],
+                    'featured' => $testimonial['is_featured'],
+                    'published_at' => $testimonial['published'] ? now() : null,
+                ])
+            );
+        }
+    }
+
+    private function seedClientLogos(): void
+    {
+        $logos = [
+            // TODO: replace with real approved client logos only after verification and written permission.
+            ['name' => 'Atlas Booking Group', 'slug' => 'atlas-booking-group', 'image_path' => 'images/logos/atlas-booking-group.svg', 'sort_order' => 1],
+            ['name' => 'Northline Metrics', 'slug' => 'northline-metrics', 'image_path' => 'images/logos/northline-metrics.svg', 'sort_order' => 2],
+            ['name' => 'RiadFlow Studio', 'slug' => 'riadflow-studio', 'image_path' => 'images/logos/riadflow-studio.svg', 'sort_order' => 3],
+            ['name' => 'Sahara Health Labs', 'slug' => 'sahara-health-labs', 'image_path' => 'images/logos/sahara-health-labs.svg', 'sort_order' => 4],
+            ['name' => 'BluePort Systems', 'slug' => 'blueport-systems', 'image_path' => 'images/logos/blueport-systems.svg', 'sort_order' => 5],
+        ];
+
+        foreach ($logos as $logo) {
+            ClientLogo::query()->updateOrCreate(
+                ['slug' => $logo['slug']],
+                array_merge($logo, [
+                    'alt_text' => $logo['name'].' logo',
+                    'is_featured' => true,
+                    'verified' => false,
+                    'permission_given' => false,
+                ])
+            );
+        }
+    }
+
+    private function projectProofDefaults(string $title, string $slug): array
+    {
+        return [
+            // TODO: replace with a real client name or set is_nda to true before publishing publicly.
+            'client_name' => match ($slug) {
+                'menapay-billing-suite' => 'MenaPay',
+                'atlas-logistics-portal' => 'Atlas Logistics',
+                'orbipay-finops-console' => 'OrbiPay',
+                default => $title.' Client',
+            },
+            // TODO: replace with the actual client industry wording used by the client.
+            'client_industry' => match ($slug) {
+                'menapay-billing-suite', 'orbipay-finops-console' => 'Fintech / SaaS',
+                'atlas-logistics-portal' => 'Logistics',
+                default => 'B2B software',
+            },
+            // TODO: replace with a verifiable result headline once the client approves the wording.
+            'result_headline' => match ($slug) {
+                'menapay-billing-suite' => 'Gave finance teams a cleaner billing system for multi-market growth.',
+                'atlas-logistics-portal' => 'Reduced shipment follow-up friction with real-time visibility for carriers and shippers.',
+                'orbipay-finops-console' => 'Turned usage billing and dunning into a workflow finance teams could manage without engineering.',
+                default => 'Delivered a clearer workflow and a stronger operational baseline.',
+            },
+            'is_concept' => false,
+            'is_nda' => false,
+            // TODO: set screenshot paths once real project captures are available.
+            'screenshot_path' => null,
+            'screenshot_webp_path' => null,
+            // TODO: replace with the actual build date or year.
+            'built_at' => '2025-01-01',
+            // TODO: replace with a real editorial setup for this case study.
+            'context' => 'This project was shaped around delivery constraints, stakeholder priorities, and the need to improve a real operational workflow.',
+            'problem_long' => 'The starting point was a workflow with too much manual follow-up, too little visibility, or too much friction for the team using it every day.',
+            'solution_long' => 'The solution combined product framing, interface decisions, and backend implementation so the system could support the workflow with less manual effort.',
+            'outcome_long' => 'The final outcome was a clearer internal process, a more reliable product surface, and a stronger base for future iteration.',
+            // TODO: replace with real, client-approved result cards for this project.
+            'result_1_label' => 'Launch time',
+            'result_1_value' => 'Planned per scope',
+            'result_2_label' => 'Performance score',
+            'result_2_value' => 'Measured after launch',
+            'result_3_label' => 'Client outcome',
+            'result_3_value' => 'Operational clarity improved',
+            'metric_one_label' => 'Launch time',
+            'metric_one_value' => '6 weeks',
+            'metric_two_label' => 'Performance score',
+            'metric_two_value' => '94/100',
+            'metric_three_label' => 'Client outcome',
+            'metric_three_value' => 'Less manual work across core operations',
+        ];
     }
 
     // -------------------------------------------------------------------------

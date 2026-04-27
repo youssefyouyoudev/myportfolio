@@ -8,6 +8,7 @@
 
     <section class="inner-hero">
         <div class="container narrow">
+            <x-breadcrumb :items="$seo['breadcrumbs'] ?? []" />
             <span class="eyebrow">{{ $page['eyebrow'] }}</span>
             <h1 class="page-title">{{ $page['title'] }}</h1>
             <p class="page-copy">{{ $page['copy'] }}</p>

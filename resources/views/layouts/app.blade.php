@@ -55,6 +55,11 @@
             'url' => route('blog.index', ['locale' => $locale]),
             'active' => str_starts_with($currentRouteName, 'blog.'),
         ],
+        [
+            'label' => $landing['nav']['hire'],
+            'url' => route('availability', ['locale' => $locale]),
+            'active' => in_array($currentRouteName, ['availability', 'hire-me'], true),
+        ],
     ];
 @endphp
 <!DOCTYPE html>
@@ -69,6 +74,10 @@
         'ogLocales' => $ogLocales,
         'alternateLocales' => $alternateLocales,
     ])
+    <link rel="preload" href="{{ asset('images/brand-mark.png') }}" as="image">
+    @if(($currentRouteName ?? null) === 'home')
+        <link rel="preload" href="{{ asset('images/youssef-youyou.jpg') }}" as="image">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -83,6 +92,7 @@
             root.style.colorScheme = theme;
         })();
     </script>
+    @stack('structured-data')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="{{ ($isRtl ?? false) ? 'is-rtl' : '' }}">
@@ -93,7 +103,7 @@
                 <div class="header-row">
                     <a href="{{ $homeUrl }}" class="brand-lockup" aria-label="{{ $site['name'] }}">
                         <span class="brand-mark">
-                            <img src="{{ asset('images/brand-mark.png') }}" alt="{{ $site['name'] }}">
+                            <img src="{{ asset('images/brand-mark.png') }}" alt="{{ $site['name'] }}" width="40" height="40" loading="eager" fetchpriority="high">
                         </span>
                         <span class="brand-copy">
                             <strong>{{ $site['name'] }}</strong>
@@ -130,6 +140,10 @@
                                 <path d="M21 13.2A8.8 8.8 0 0 1 10.8 3a9 9 0 1 0 10.2 10.2Z"></path>
                             </svg>
                         </button>
+                        <a href="{{ route('availability', ['locale' => $locale]) }}" class="header-status">
+                            <strong>{{ $site['availability_badge']['label'] }}</strong>
+                            <span>{{ $site['availability_badge']['detail'] }}</span>
+                        </a>
                         <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary header-cta">{{ $landing['nav']['start_project'] }}</a>
                     </div>
                 </div>
@@ -196,9 +210,9 @@
                         <h4>{{ $landing['nav']['reach_out'] }}</h4>
                         <a href="{{ $site['email_link'] }}">{{ $site['email'] }}</a>
                         <a href="{{ $site['phone_link'] }}">{{ $site['phone'] }}</a>
-                        <a href="{{ $site['whatsapp_url'] }}" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
+                        <a href="{{ $site['whatsapp_url'] }}" target="_blank" rel="noopener" aria-label="WhatsApp {{ $site['phone'] }}">{{ $site['actions']['whatsapp'] }}</a>
                         @foreach($site['socials'] as $social)
-                            <a href="{{ $social['url'] }}" target="_blank" rel="noopener">{{ $social['label'] }}</a>
+                            <a href="{{ $social['url'] }}" target="_blank" rel="noopener" aria-label="{{ $social['label'] }}">{{ $social['label'] }}</a>
                         @endforeach
                         <div class="footer-locales">
                             @foreach($localeLabels as $supportedLocale => $label)
@@ -214,7 +228,7 @@
         </footer>
     </div>
 
-    <a href="https://wa.me/212610090070" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="{{ $site['actions']['whatsapp'] }}">
+    <a href="https://wa.me/212610090070" class="whatsapp-fab" data-delayed-whatsapp target="_blank" rel="noopener" aria-label="{{ $site['actions']['whatsapp'] }}">
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M19.05 4.94A9.93 9.93 0 0 0 12 2a10 10 0 0 0-8.66 15l-1.3 4.74 4.87-1.28A10 10 0 1 0 19.05 4.94Zm-7.05 15.39a8.27 8.27 0 0 1-4.22-1.16l-.3-.18-2.89.76.77-2.82-.19-.3A8.34 8.34 0 1 1 12 20.33Zm4.58-6.26c-.25-.12-1.47-.73-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.36-1.7-.14-.25-.02-.38.1-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.76-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.06s.89 2.39 1.02 2.56c.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.41.51.59.19 1.12.16 1.54.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29Z"></path>
         </svg>

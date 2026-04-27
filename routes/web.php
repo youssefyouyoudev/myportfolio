@@ -1,14 +1,13 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\LeadController;
-use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageController;
+use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\LeadFinderController as AdminLeadFinderController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
-use App\Http\Controllers\Admin\SeoMetaController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
-use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProjectController;
@@ -77,18 +76,22 @@ Route::middleware('setLocale')->prefix('{locale?}')
             ->name('admin.')
             ->group(function (): void {
                 Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-
-                Route::resource('categories', CategoryController::class)->except(['show']);
-                Route::resource('tags', TagController::class)->except(['show']);
-                Route::resource('services', AdminServiceController::class)->except(['show']);
+                Route::resource('messages', AdminContactMessageController::class)
+                    ->parameters(['messages' => 'message'])
+                    ->only(['index', 'show', 'destroy']);
+                Route::patch('messages/{message}/toggle-read', [AdminContactMessageController::class, 'toggleRead'])
+                    ->name('messages.toggle-read');
+                Route::resource('leads', AdminLeadController::class)
+                    ->parameters(['leads' => 'lead']);
+                Route::patch('leads/{lead}/review', [AdminLeadController::class, 'review'])->name('leads.review');
+                Route::patch('leads/{lead}/mark-hot', [AdminLeadController::class, 'markHot'])->name('leads.mark-hot');
+                Route::get('lead-finder', [AdminLeadFinderController::class, 'index'])->name('lead-finder.index');
+                Route::post('lead-finder/search', [AdminLeadFinderController::class, 'search'])->name('lead-finder.search');
+                Route::post('lead-finder/import', [AdminLeadFinderController::class, 'import'])->name('lead-finder.import');
                 Route::resource('projects', AdminProjectController::class)->except(['show']);
-                Route::resource('posts', PostController::class)->except(['show']);
-                Route::resource('leads', LeadController::class)->only(['index', 'show', 'destroy']);
-                Route::resource('seo', SeoMetaController::class)->except(['show']);
-                Route::resource('tasks', TaskController::class)->except(['show']);
-                Route::get('tasks-kanban', [TaskController::class, 'kanban'])->name('tasks.kanban');
-                Route::get('tasks-gantt', [TaskController::class, 'gantt'])->name('tasks.gantt');
-                Route::patch('tasks/{task}/move', [TaskController::class, 'move'])->whereNumber('task')->name('tasks.move');
+                Route::resource('posts', AdminPostController::class)->except(['show']);
+                Route::resource('services', AdminServiceController::class)->except(['show']);
+                Route::resource('testimonials', AdminTestimonialController::class)->except(['show']);
             });
     });
 

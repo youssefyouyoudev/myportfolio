@@ -1,6 +1,7 @@
 <?php
 
 use App\Jobs\GenerateRecurringTasksJob;
+use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -28,5 +29,23 @@ Artisan::command('admin:grant {email}', function (string $email) {
     $user->update(['is_admin' => true]);
     $this->info("{$user->email} is now an admin.");
 })->purpose('Grant admin access to an existing user');
+
+Artisan::command('testimonial:publish {id}', function (int $id) {
+    $testimonial = Testimonial::find($id);
+
+    if (! $testimonial) {
+        $this->error('Testimonial not found.');
+
+        return;
+    }
+
+    $testimonial->forceFill([
+        'published' => true,
+        'status' => 'published',
+        'published_at' => $testimonial->published_at ?? now(),
+    ])->save();
+
+    $this->info("Testimonial {$testimonial->id} is now published.");
+})->purpose('Publish a testimonial once the client has approved it');
 
 Schedule::command('tasks:generate-recurring')->dailyAt('00:05');

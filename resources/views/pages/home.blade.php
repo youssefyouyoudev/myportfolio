@@ -1,44 +1,49 @@
 @extends('layouts.app')
 
+@push('structured-data')
+    @foreach($homeStructuredData ?? [] as $schema)
+        <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+    @endforeach
+@endpush
+
 @section('content')
     @php
         $locale = app()->getLocale();
         $site = \App\Support\BrandContent::site($locale);
         $projects = collect($showcase['projects']);
-        $featuredProjects = collect([
-            $projects->firstWhere('slug', 'ecarsauto'),
-            $projects->firstWhere('slug', 'rifimedia-tv'),
-            $projects->firstWhere('slug', 'waslacrm'),
-        ])->filter();
-        $secondaryProjects = collect([
-            $projects->firstWhere('slug', 'erp-plus'),
-            $projects->firstWhere('slug', 'invoix'),
-        ])->filter();
+        $featuredProjects = collect($showcase['featured_projects'] ?? $projects->take(3)->all())->filter()->values();
+        $secondaryProjects = collect($showcase['secondary_projects'] ?? $projects->slice(3, 2)->all())->filter()->values();
     @endphp
 
     <section class="hero portfolio-hero">
-        <div class="container portfolio-hero-grid">
-            <div class="portfolio-hero-copy" data-reveal>
-                <span class="eyebrow">{{ $showcase['hero']['eyebrow'] }}</span>
-                <h1>{{ $showcase['hero']['title'] }}</h1>
-                <p>{{ $showcase['hero']['copy'] }}</p>
+        <div class="container hero-split-grid">
+            <div class="hero-portrait-panel panel" data-reveal>
+                <img
+                    src="{{ asset('images/youssef-youyou.jpg') }}"
+                    alt="Youssef Youyou, senior full-stack developer based in Nador, Morocco"
+                    class="hero-portrait"
+                    width="720"
+                    height="880"
+                    loading="eager"
+                    fetchpriority="high"
+                >
+            </div>
 
-                <div class="hero-pills portfolio-pills">
-                    @foreach($showcase['hero']['pills'] as $pill)
-                        <span>{{ $pill }}</span>
-                    @endforeach
-                </div>
+            <div class="portfolio-hero-copy" data-reveal>
+                <span class="eyebrow">Senior full-stack developer in Nador, Morocco</span>
+                <h1>I turn business problems into software that ships.</h1>
+                <p>I help Moroccan and international teams launch Laravel apps, conversion-focused websites, and internal systems that make sales, ops, and delivery move faster.</p>
+
+                <p class="hero-intro-paragraph">I'm Youssef Youyou, a full-stack developer based in Nador who likes projects with real business constraints, messy workflows, and a clear before-and-after. I work best with founders, agencies, SMEs, and product teams that need one person to connect interface decisions to backend logic. The work I'm proudest of is shipping systems that remove manual steps, tighten the customer journey, and give a team something reliable to grow on. That could be a client-facing product, a booking flow, or the internal tool everyone depends on by Friday afternoon.</p>
 
                 <div class="hero-actions">
-                    <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary">{{ $showcase['hero']['actions']['primary'] }}</a>
-                    <a href="#featured-work" class="btn btn-secondary">{{ $showcase['hero']['actions']['secondary'] }}</a>
-                    <a href="{{ $site['whatsapp_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener">{{ $showcase['hero']['actions']['tertiary'] }}</a>
+                    <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary">Start a Project -&gt;</a>
+                    <a href="{{ route('projects.index', ['locale' => $locale]) }}#featured-work" class="btn btn-secondary">See the Work &darr;</a>
                 </div>
 
-                <div class="portfolio-trust-list">
-                    @foreach($showcase['hero']['trust'] as $item)
-                        <span>{{ $item }}</span>
-                    @endforeach
+                <div class="availability-pill availability-pill-{{ $site['availability_badge']['state'] }}">
+                    <strong>{{ $site['availability_badge']['label'] }}</strong>
+                    <span>{{ $site['availability_badge']['detail'] }}</span>
                 </div>
 
                 <div class="portfolio-stat-grid">
@@ -50,48 +55,48 @@
                     @endforeach
                 </div>
             </div>
-
-            <div class="portfolio-hero-stage" data-reveal>
-                <div class="hero-stage-panel hero-stage-primary">
-                    <img
-                        src="{{ asset('images/projects/ecarsauto-case-study.png') }}"
-                        alt="eCarsAuto premium SaaS showcase"
-                        loading="eager"
-                        fetchpriority="high"
-                    >
-                </div>
-
-                <div class="hero-stage-panel hero-stage-secondary">
-                    <img
-                        src="{{ asset('images/projects/rifimedia-tv-ui.png') }}"
-                        alt="Rifi Media TV interface mockup"
-                        loading="lazy"
-                    >
-                </div>
-
-                <div class="hero-stage-note panel">
-                    <span class="eyebrow">Real project proof</span>
-                    <h2>From landing pages to internal systems.</h2>
-                    <p>The portfolio now leads with actual products, brand systems, dashboards, and SaaS directions instead of generic placeholders.</p>
-                </div>
-            </div>
         </div>
     </section>
 
     <section class="section trust-strip">
-        <div class="container portfolio-strip">
-            @foreach($showcase['trust_strip'] as $item)
-                <span>{{ $item }}</span>
-            @endforeach
+        <div class="container">
+            @if($showClientLogos)
+                <span class="eyebrow">Trusted by</span>
+                <x-client-logos :items="$clientLogos" />
+            @else
+                <x-site.section-heading
+                    eyebrow="Recent work includes"
+                    title="The portfolio can stay credible even before every logo is publishable."
+                    copy="Until there are at least three verified logos with permission to publish, this section stays focused on the types of products shipped."
+                />
+                <div class="stack-list">
+                    @foreach($recentWorkTypes as $type)
+                        <span>{{ $type }}</span>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
+
+    @if(collect($testimonials)->isNotEmpty())
+        <section class="section section-soft">
+            <div class="container">
+                <x-site.section-heading
+                    eyebrow="Client feedback"
+                    title="What clients say once the work is in use."
+                    copy="Only published testimonials with real approval appear here."
+                />
+                <x-testimonials :items="$testimonials" />
+            </div>
+        </section>
+    @endif
 
     <section class="section" id="services">
         <div class="container">
             <x-site.section-heading
                 eyebrow="What I build"
-                title="A stronger offer for businesses that need more than a simple portfolio site."
-                copy="The value is not only clean code. It is clearer positioning, better user flow, and software that supports the business after the first launch."
+                title="Software shaped around sales friction, operations, and growth."
+                copy="Each offer here is shorter on promises and clearer on outcomes, because the real signal is how the work changes the business after launch."
             />
 
             <div class="portfolio-service-grid">
@@ -109,22 +114,48 @@
     <section class="section section-soft" id="featured-work">
         <div class="container">
             <x-site.section-heading
-                eyebrow="Featured work"
-                title="Case studies that present the work like real products."
-                copy="Each flagship project now carries a sharper story: what it solves, who it serves, how it is positioned, and why the build feels commercially credible."
+                eyebrow="Selected projects"
+                title="Case studies with clients, context, and measurable outcomes."
+                copy="The strongest portfolio pieces feel like work that had stakeholders, constraints, and something concrete to improve."
             />
 
             <div class="case-study-stack">
-                @foreach($featuredProjects as $index => $project)
+                @foreach($featuredProjects as $project)
                     <article class="panel case-study-block case-theme-{{ $project['media']['theme'] ?? 'default' }}" data-reveal>
-                        <div class="case-study-media @if($index % 2 === 1) is-reversed @endif">
+                        <div class="case-study-media">
                             <x-site.project-frame :project="$project" />
                         </div>
 
                         <div class="case-study-copy">
-                            <span class="eyebrow">{{ $project['label'] }}</span>
+                            <div class="case-study-meta-line">
+                                <span class="eyebrow">{{ $project['label'] }}</span>
+                                @if($project['is_nda'] ?? false)
+                                    <span class="case-badge">Under NDA - details available on request</span>
+                                @elseif($project['is_concept'] ?? false)
+                                    <span class="case-badge">Concept / Portfolio piece</span>
+                                @endif
+                            </div>
+
                             <h3>{{ $project['title'] }}</h3>
                             <p class="case-summary">{{ $project['summary'] }}</p>
+
+                            <div class="case-meta-grid">
+                                    @if($project['is_nda'] ?? false)
+                                        <div>
+                                            <strong>Access</strong>
+                                            <p>Under NDA - details available on request.</p>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <strong>Client</strong>
+                                            <p>{{ $project['client'] ?? 'Private client' }}</p>
+                                        </div>
+                                        <div>
+                                            <strong>Industry</strong>
+                                            <p>{{ $project['client_industry'] ?? 'Digital product' }}</p>
+                                        </div>
+                                    @endif
+                                </div>
 
                             <div class="case-meta-grid">
                                 <div>
@@ -132,26 +163,20 @@
                                     <p>{{ $project['challenge'] }}</p>
                                 </div>
                                 <div>
-                                    <strong>{{ __('brand.common.built_for') }}</strong>
-                                    <p>{{ $project['audience'] }}</p>
-                                </div>
-                            </div>
-
-                            <div class="case-meta-grid">
-                                <div>
                                     <strong>{{ __('brand.common.solution') }}</strong>
                                     <p>{{ $project['solution'] }}</p>
                                 </div>
-                                <div>
-                                    <strong>{{ __('brand.common.role') }}</strong>
-                                    <p>{{ $project['role'] }}</p>
-                                </div>
                             </div>
+
+                            <p class="result-headline">{{ $project['result_headline'] ?? $project['outcome'] ?? 'A stronger build with clearer delivery outcomes.' }}</p>
 
                             <div class="stack-list">
                                 @foreach($project['stack'] as $item)
                                     <span>{{ $item }}</span>
                                 @endforeach
+                                @if(! empty($project['built_at']))
+                                    <span>{{ $project['built_at'] }}</span>
+                                @endif
                             </div>
 
                             <div class="case-metric-row">
@@ -163,15 +188,11 @@
                                 @endforeach
                             </div>
 
-                            <ul class="simple-list case-feature-list">
-                                @foreach($project['features'] as $feature)
-                                    <li>{{ $feature }}</li>
-                                @endforeach
-                            </ul>
-
                             <div class="case-study-actions">
                                 <a href="{{ route('projects.show', ['locale' => $locale, 'project' => $project['slug']]) }}" class="btn btn-primary">{{ $site['actions']['view_case_study'] }}</a>
-                                <p>{{ $project['outcome'] }}</p>
+                                @if(! empty($project['live_url']))
+                                    <a href="{{ $project['live_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View Live -&gt;</a>
+                                @endif
                             </div>
                         </div>
                     </article>
@@ -183,9 +204,9 @@
     <section class="section">
         <div class="container">
             <x-site.section-heading
-                eyebrow="More systems"
-                title="Additional product directions that show breadth beyond one niche."
-                copy="These projects help position you clearly for CRM, ERP, invoicing, operations, and internal software work alongside the more visual flagship builds."
+                eyebrow="More work"
+                title="Additional builds that show range without pretending every project is the same."
+                copy="Some projects are quieter, more operational, or still under NDA. They still deserve honest framing."
             />
 
             <div class="portfolio-secondary-grid">
@@ -195,17 +216,31 @@
                             <x-site.project-frame :project="$project" compact />
                         </div>
                         <div class="project-copy">
-                            <span class="eyebrow">{{ $project['label'] }}</span>
+                            <div class="case-study-meta-line">
+                                <span class="eyebrow">{{ $project['label'] }}</span>
+                                @if($project['is_nda'] ?? false)
+                                    <span class="case-badge">Under NDA - details available on request</span>
+                                @elseif($project['is_concept'] ?? false)
+                                    <span class="case-badge">Concept / Portfolio piece</span>
+                                @endif
+                            </div>
                             <h3>{{ $project['title'] }}</h3>
                             <p>{{ $project['summary'] }}</p>
+                            <p><strong>Result:</strong> {{ $project['result_headline'] ?? $project['outcome'] ?? 'A clearer project story with stronger business context.' }}</p>
                             <div class="stack-list">
                                 @foreach($project['stack'] as $item)
                                     <span>{{ $item }}</span>
                                 @endforeach
+                                @if(! empty($project['built_at']))
+                                    <span>{{ $project['built_at'] }}</span>
+                                @endif
                             </div>
-                            <p><strong>{{ __('brand.common.problem') }}:</strong> {{ $project['challenge'] }}</p>
-                            <p><strong>{{ __('brand.common.solution') }}:</strong> {{ $project['solution'] }}</p>
-                            <a href="{{ route('projects.show', ['locale' => $locale, 'project' => $project['slug']]) }}" class="text-link">{{ $site['actions']['view_case_study'] }}</a>
+                            <div class="case-inline-actions">
+                                <a href="{{ route('projects.show', ['locale' => $locale, 'project' => $project['slug']]) }}" class="text-link">{{ $site['actions']['view_case_study'] }}</a>
+                                @if(! empty($project['live_url']))
+                                    <a href="{{ $project['live_url'] }}" class="text-link" target="_blank" rel="noopener noreferrer">View Live -&gt;</a>
+                                @endif
+                            </div>
                         </div>
                     </article>
                 @endforeach
@@ -214,135 +249,44 @@
     </section>
 
     <section class="section section-soft">
-        <div class="container">
-            <x-site.section-heading
-                eyebrow="Why clients hire me"
-                title="The portfolio now positions you as a partner who can own both the polish and the system."
-                copy="The strongest lead-generation portfolios remove doubt quickly: strong visuals, sharp business framing, and clear signals that the developer understands real operations."
-            />
-
-            <div class="portfolio-proof-grid">
-                @foreach($showcase['proof'] as $card)
-                    <article class="panel portfolio-proof-card" data-reveal>
-                        <h3>{{ $card['title'] }}</h3>
-                        <p>{{ $card['copy'] }}</p>
-                    </article>
-                @endforeach
-            </div>
-
-            <div class="portfolio-why-grid">
-                @foreach($showcase['why'] as $item)
-                    <article class="panel reason-card" data-reveal>
-                        <h3>{{ $item['title'] }}</h3>
-                        <p>{{ $item['copy'] }}</p>
-                    </article>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="stack">
-        <div class="container split-showcase portfolio-stack-layout">
-            <div>
-                <x-site.section-heading
-                    eyebrow="Tech stack"
-                    title="A practical stack for websites, dashboards, SaaS products, and internal tools."
-                    copy="You are not being positioned as a generic coder. You are being positioned as someone who can ship business-ready systems across frontend, backend, database, and deployment layers."
-                />
-            </div>
-
-            <div class="stack-grid">
-                @foreach($showcase['stack'] as $group)
-                    <article class="panel stack-card" data-reveal>
-                        <h3>{{ $group['title'] }}</h3>
-                        <div class="stack-list">
-                            @foreach($group['items'] as $item)
-                                <span>{{ $item }}</span>
-                            @endforeach
-                        </div>
-                    </article>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <section class="section section-soft" id="process">
-        <div class="container">
-            <x-site.section-heading
-                eyebrow="Process"
-                title="A straightforward build process that makes the work feel premium from the first conversation."
-                copy="Good projects usually win before launch because the positioning, structure, and delivery quality are clear early."
-            />
-
-            <div class="process-grid">
-                @foreach($showcase['process'] as $item)
-                    <article class="panel process-card" data-reveal>
-                        <span class="process-step">{{ $item['step'] }}</span>
-                        <h3>{{ $item['title'] }}</h3>
-                        <p>{{ $item['copy'] }}</p>
-                    </article>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <section class="section final-cta">
-        <div class="container">
-            <div class="section-cta portfolio-banner">
-                <div>
-                    <span class="eyebrow">{{ $showcase['cta']['eyebrow'] }}</span>
-                    <h2>{{ $showcase['cta']['title'] }}</h2>
-                    <p>{{ $showcase['cta']['copy'] }}</p>
-                </div>
-                <div class="cta-actions">
-                    <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary">{{ $site['actions']['contact_me'] }}</a>
-                    <a href="{{ $site['whatsapp_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="contact">
         <div class="container contact-layout">
             <div class="contact-column">
                 <x-site.section-heading
                     eyebrow="Contact"
-                    title="Tell me what you want to build and I will reply with a practical next step."
-                    copy="Best fit for businesses that need a premium website, a custom web app, a dashboard, SaaS direction, or a stronger internal system."
+                    title="Tell me what needs fixing, shipping, or untangling."
+                    copy="A short brief is enough to start. The fastest way to get a useful reply is to share the business goal, what is blocked today, and the timing that matters."
                 />
 
-                <div class="contact-direct-grid portfolio-contact-grid">
-                    <a href="{{ $site['email_link'] }}" class="panel direct-link-card" data-reveal>
-                        <span>Email</span>
-                        <strong>{{ $site['email'] }}</strong>
-                        <p>Best for detailed briefs, scope, budget, and project context.</p>
-                    </a>
-
-                    <a href="{{ $site['whatsapp_url'] }}" class="panel direct-link-card" target="_blank" rel="noopener" data-reveal>
-                        <span>WhatsApp</span>
-                        <strong>{{ $site['phone'] }}</strong>
-                        <p>Best for fast intake when you want to move quickly.</p>
-                    </a>
-
-                    <a href="{{ $site['linkedin_url'] }}" class="panel direct-link-card" target="_blank" rel="noopener" data-reveal>
-                        <span>LinkedIn</span>
-                        <strong>Professional profile</strong>
-                        <p>Useful for agencies, hiring teams, and international opportunities.</p>
-                    </a>
-
-                    <article class="panel contact-expectation" data-reveal>
-                        <span class="eyebrow">Best fit</span>
-                        <h3>Businesses that need strong execution, not filler design.</h3>
-                        <ul class="simple-list">
-                            <li>Business websites and landing pages</li>
-                            <li>Dashboards, CRM, ERP, and internal tools</li>
-                            <li>SaaS concepts that need to feel product-ready fast</li>
-                        </ul>
-                    </article>
-                </div>
+                <article class="panel next-steps-panel">
+                    <span class="eyebrow">What happens next</span>
+                    <ol class="next-steps-list">
+                        <li>I read your brief within 24h.</li>
+                        <li>I reply with a clear next step.</li>
+                        <li>We align on scope before any commitment.</li>
+                    </ol>
+                </article>
             </div>
 
             <x-site.contact-form />
         </div>
     </section>
+
+    <section class="section">
+        <div class="container">
+            <x-site.section-heading
+                eyebrow="FAQ"
+                title="A few answers before we talk."
+                copy="This keeps the first conversation practical instead of circling around the same questions."
+            />
+            <div class="faq-list">
+                @foreach($homeFaqItems as $item)
+                    <details class="panel faq-item" data-reveal>
+                        <summary>{{ $item['question'] }}</summary>
+                        <p>{{ $item['answer'] }}</p>
+                    </details>
+                @endforeach
+            </div>
+        </div>
+    </section>
 @endsection
+

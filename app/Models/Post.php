@@ -14,12 +14,15 @@ class Post extends Model
     use HasFactory;
     use HasLocalizedContent;
 
+    protected $appends = ['reading_time'];
+
     protected $fillable = [
         'title',
         'slug',
         'excerpt',
         'body',
         'status',
+        'featured',
         'cover_image',
         'translations',
         'meta',
@@ -28,6 +31,7 @@ class Post extends Model
     ];
 
     protected $casts = [
+        'featured' => 'boolean',
         'translations' => 'array',
         'meta' => 'array',
         'published_at' => 'datetime',
@@ -56,5 +60,13 @@ class Post extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function getReadingTimeAttribute(): int
+    {
+        $body = strip_tags((string) $this->body);
+        $wordCount = str_word_count($body);
+
+        return max(1, (int) ceil($wordCount / 200));
     }
 }

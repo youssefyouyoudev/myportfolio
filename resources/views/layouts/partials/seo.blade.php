@@ -2,6 +2,7 @@
     $resolvedMeta = array_merge($site['default_seo'], $meta ?? []);
     $image = $resolvedMeta['image'] ?? $site['social_image'];
     $imageAlt = $resolvedMeta['image_alt'] ?? $site['name'].' social preview';
+    $canonical = $resolvedMeta['canonical'] ?? url()->full();
 @endphp
 
 <title>{{ $resolvedMeta['title'] }}</title>
@@ -15,7 +16,7 @@
 <meta property="og:title" content="{{ $resolvedMeta['title'] }}">
 <meta property="og:description" content="{{ $resolvedMeta['description'] }}">
 <meta property="og:type" content="{{ $resolvedMeta['type'] ?? 'website' }}">
-<meta property="og:url" content="{{ url()->current() }}">
+<meta property="og:url" content="{{ $canonical }}">
 <meta property="og:image" content="{{ $image }}">
 <meta property="og:image:alt" content="{{ $imageAlt }}">
 @foreach($alternateLocales as $alternateLocale)
@@ -26,7 +27,7 @@
 <meta name="twitter:description" content="{{ $resolvedMeta['description'] }}">
 <meta name="twitter:image" content="{{ $image }}">
 <meta name="twitter:image:alt" content="{{ $imageAlt }}">
-<link rel="canonical" href="{{ url()->current() }}">
+<link rel="canonical" href="{{ $canonical }}">
 @foreach($alternateLocales as $alternateLocale)
     <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName() ?? 'home', array_filter(array_merge(request()->route()?->parameters() ?? [], ['locale' => $alternateLocale]))) }}">
 @endforeach

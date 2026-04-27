@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" fill="none">
+  <rect width="220" height="60" rx="12" fill="#F4F4F5"/>
+  <path d="M30 18h14c7 0 12 5 12 12s-5 12-12 12H30V18Z" stroke="#52525B" stroke-width="6"/>
+  <path d="m44 30 12 12" stroke="#52525B" stroke-width="6" stroke-linecap="round"/>
+  <text x="72" y="35" fill="#3F3F46" font-family="Arial, sans-serif" font-size="18" font-weight="700">RiadFlow</text>
+</svg>

@@ -23,6 +23,7 @@ class Service extends Model
         'featured_image',
         'cta_url',
         'status',
+        'featured',
         'position',
         'translations',
         'features',
@@ -32,6 +33,7 @@ class Service extends Model
     ];
 
     protected $casts = [
+        'featured' => 'boolean',
         'translations' => 'array',
         'features' => 'array',
         'meta' => 'array',

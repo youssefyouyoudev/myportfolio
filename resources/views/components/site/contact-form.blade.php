@@ -5,7 +5,7 @@
     $timelines = $form['timelines'] ?? ['As soon as possible', 'Within 2 to 4 weeks', 'Within 1 to 2 months', 'Still planning the scope'];
 @endphp
 
-<form method="POST" action="{{ route('contact.store', ['locale' => app()->getLocale()]) }}" class="contact-form panel">
+<form method="POST" action="{{ route('contact.store', ['locale' => app()->getLocale()]) }}" class="contact-form panel" data-contact-form novalidate>
     @csrf
 
     <p class="contact-form-note">{{ __('brand.ui.contact.form_note') }}</p>
@@ -18,27 +18,29 @@
     </div>
 
     <div class="form-grid">
-        <label class="field">
+        <label class="field" for="contact-name">
             <span>{{ $form['name'] }}</span>
-            <input type="text" name="name" value="{{ old('name') }}" autocomplete="name" maxlength="120" required>
+            <input id="contact-name" type="text" name="name" value="{{ old('name') }}" autocomplete="name" maxlength="120" required data-error-target="name">
             @error('name')<small>{{ $message }}</small>@enderror
+            <small class="field-error" data-field-error="name"></small>
         </label>
 
-        <label class="field">
+        <label class="field" for="contact-email">
             <span>{{ $form['email'] }}</span>
-            <input type="email" name="email" value="{{ old('email') }}" autocomplete="email" inputmode="email" maxlength="150" required>
+            <input id="contact-email" type="email" name="email" value="{{ old('email') }}" autocomplete="email" inputmode="email" maxlength="150" required data-error-target="email">
             @error('email')<small>{{ $message }}</small>@enderror
+            <small class="field-error" data-field-error="email"></small>
         </label>
 
-        <label class="field">
+        <label class="field" for="contact-company">
             <span>{{ $form['company'] }}</span>
-            <input type="text" name="company" value="{{ old('company') }}" autocomplete="organization" maxlength="120">
+            <input id="contact-company" type="text" name="company" value="{{ old('company') }}" autocomplete="organization" maxlength="120">
             @error('company')<small>{{ $message }}</small>@enderror
         </label>
 
-        <label class="field">
+        <label class="field" for="contact-project-type">
             <span>{{ $form['project_type'] }}</span>
-            <select name="project_type">
+            <select id="contact-project-type" name="project_type">
                 <option value="">{{ $form['project_type_placeholder'] }}</option>
                 @foreach($projectTypes as $projectType)
                     <option value="{{ $projectType }}" @selected(old('project_type') === $projectType)>{{ $projectType }}</option>
@@ -47,9 +49,9 @@
             @error('project_type')<small>{{ $message }}</small>@enderror
         </label>
 
-        <label class="field">
+        <label class="field" for="contact-budget">
             <span>{{ $form['budget'] }}</span>
-            <select name="budget">
+            <select id="contact-budget" name="budget">
                 <option value="">{{ $form['budget_placeholder'] }}</option>
                 @foreach($form['budgets'] as $budget)
                     <option value="{{ $budget }}" @selected(old('budget') === $budget)>{{ $budget }}</option>
@@ -58,9 +60,9 @@
             @error('budget')<small>{{ $message }}</small>@enderror
         </label>
 
-        <label class="field">
+        <label class="field" for="contact-timeline">
             <span>{{ $form['timeline'] }}</span>
-            <select name="timeline">
+            <select id="contact-timeline" name="timeline">
                 <option value="">{{ $form['timeline_placeholder'] }}</option>
                 @foreach($timelines as $timeline)
                     <option value="{{ $timeline }}" @selected(old('timeline') === $timeline)>{{ $timeline }}</option>
@@ -70,14 +72,18 @@
         </label>
     </div>
 
-    <label class="field">
+    <label class="field" for="contact-message">
         <span>{{ $form['message'] }}</span>
-        <textarea name="message" rows="6" placeholder="{{ $form['message_placeholder'] }}" maxlength="2000" required>{{ old('message') }}</textarea>
+        <textarea id="contact-message" name="message" rows="6" placeholder="{{ $form['message_placeholder'] }}" maxlength="2000" required data-error-target="message">{{ old('message') }}</textarea>
         @error('message')<small>{{ $message }}</small>@enderror
+        <small class="field-error" data-field-error="message"></small>
     </label>
 
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">{{ $site['actions']['send_message'] }}</button>
+        <button type="submit" class="btn btn-primary" data-submit-button>
+            <span data-submit-label>{{ $site['actions']['send_message'] }}</span>
+            <span class="button-spinner" data-submit-spinner aria-hidden="true"></span>
+        </button>
         <a href="{{ $site['whatsapp_url'] }}" class="btn btn-secondary" target="_blank" rel="noopener">{{ $site['actions']['whatsapp'] }}</a>
     </div>
 </form>

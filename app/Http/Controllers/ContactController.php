@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLeadRequest;
-use App\Models\Lead;
+use App\Models\ContactMessage;
 use App\Support\BrandContent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -38,21 +38,19 @@ class ContactController extends Controller
 
         $validated = $request->validated();
 
-        Lead::create([
+        ContactMessage::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'company' => $validated['company'] ?? null,
+            'project_type' => $validated['project_type'] ?? null,
             'budget' => $validated['budget'] ?? null,
+            'timeline' => $validated['timeline'] ?? null,
             'message' => $validated['message'],
             'locale' => app()->getLocale(),
             'source' => 'website',
-            'meta' => [
-                'project_type' => $validated['project_type'] ?? null,
-                'timeline' => $validated['timeline'] ?? null,
-                'ip' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'path' => $request->path(),
-            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'path' => $request->path(),
         ]);
 
         return back()->with('status', __('messages.contact_thanks'));

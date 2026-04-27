@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -31,7 +32,7 @@ class PostController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $data = $this->validated($request);
+        $data = $this->prepareData($request, $this->validated($request));
         $data = $this->handleCoverImage($request, $data);
         $post = Post::create($data);
         $post->tags()->sync($request->input('tag_ids', []));
@@ -52,7 +53,7 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post): RedirectResponse
     {
-        $data = $this->validated($request, $post->id);
+        $data = $this->prepareData($request, $this->validated($request, $post->id));
         $data = $this->handleCoverImage($request, $data, $post);
         $post->update($data);
         $post->tags()->sync($request->input('tag_ids', []));
@@ -62,9 +63,7 @@ class PostController extends Controller
 
     public function destroy(Request $request, Post $post): RedirectResponse
     {
-        if ($post->cover_image) {
-            Storage::disk('public')->delete($post->cover_image);
-        }
+        $this->deleteMedia($post->cover_image);
 
         $post->delete();
 
@@ -79,6 +78,7 @@ class PostController extends Controller
             'excerpt' => ['nullable', 'string', 'max:400'],
             'body' => ['required', 'string'],
             'status' => ['required', 'in:draft,published'],
+            'featured' => ['boolean'],
             'cover_image' => ['nullable', 'string', 'max:255'],
             'cover_image_file' => ['nullable', 'image', 'max:5120'],
             'category_id' => ['nullable', 'exists:categories,id'],
@@ -88,19 +88,41 @@ class PostController extends Controller
             'translations.*.excerpt' => ['nullable', 'string', 'max:400'],
             'translations.*.body' => ['nullable', 'string'],
             'meta' => ['nullable', 'array'],
+            'meta.seo_title' => ['nullable', 'string', 'max:180'],
+            'meta.seo_description' => ['nullable', 'string', 'max:320'],
+            'meta.seo_keywords' => ['nullable', 'string', 'max:255'],
+            'meta.seo_image' => ['nullable', 'string', 'max:255'],
         ]);
     }
 
     private function handleCoverImage(Request $request, array $data, ?Post $post = null): array
     {
         if ($request->hasFile('cover_image_file')) {
-            if ($post?->cover_image) {
-                Storage::disk('public')->delete($post->cover_image);
-            }
+            $this->deleteMedia($post?->cover_image);
 
             $data['cover_image'] = $request->file('cover_image_file')->store('posts/covers', 'public');
         }
 
         return $data;
+    }
+
+    private function prepareData(Request $request, array $data): array
+    {
+        $data['featured'] = $request->boolean('featured');
+
+        if (($data['status'] ?? 'draft') === 'published' && empty($data['published_at'])) {
+            $data['published_at'] = now();
+        }
+
+        return $data;
+    }
+
+    private function deleteMedia(?string $path): void
+    {
+        if (! $path || Str::startsWith($path, ['http://', 'https://', '/storage/', 'storage/'])) {
+            return;
+        }
+
+        Storage::disk('public')->delete($path);
     }
 }

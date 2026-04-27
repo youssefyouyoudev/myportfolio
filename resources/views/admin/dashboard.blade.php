@@ -1,172 +1,194 @@
 @extends('layouts.admin')
 
+@section('title', 'Admin Dashboard')
+@section('admin_title', 'Admin Dashboard')
+@section('admin_copy', 'Private control center for managing portfolio content, publishing workflows, and inbound demand signals.')
+
 @section('content')
-@php
-    $maxLeadTrend = max(1, collect($leadTrend)->max('value'));
-    $maxTaskTrend = max(1, collect($taskTrend)->max('value'));
-    $maxTaskStatus = max(1, collect($taskStatus)->max());
-@endphp
+    @php
+        $primaryCrmCards = collect($crmCards)->take(4);
+        $secondaryCrmCards = collect($crmCards)->slice(4);
+        $quickLinks = [
+            ['label' => 'New project', 'href' => route('admin.projects.create', ['locale' => app()->getLocale()])],
+            ['label' => 'New post', 'href' => route('admin.posts.create', ['locale' => app()->getLocale()])],
+            ['label' => 'Add lead', 'href' => route('admin.leads.create', ['locale' => app()->getLocale()])],
+            ['label' => 'Open inbox', 'href' => route('admin.messages.index', ['locale' => app()->getLocale()])],
+        ];
+    @endphp
 
-<div class="mb-6 flex items-center justify-between">
-    <div>
-        <p class="text-sm text-[var(--muted)]">Admin Control Center</p>
-        <h1 class="text-2xl font-semibold text-[var(--text-strong)]">Business Overview</h1>
-        <p class="mt-1 text-sm text-[var(--muted)]">Single-owner mode · everything in one place</p>
-    </div>
-    <div class="text-right text-sm text-[var(--muted)]">
-        <p>Current month leads: <span class="font-semibold text-[var(--text-strong)]">{{ $stats['leads_this_month'] }}</span></p>
-        <p>Growth vs last month: <span class="font-semibold {{ $stats['lead_growth'] >= 0 ? 'text-emerald-400' : 'text-red-400' }}">{{ $stats['lead_growth'] }}%</span></p>
-    </div>
-</div>
+    <section class="admin-overview-grid">
+        <article class="panel admin-hero-card">
+            <div>
+                <span class="eyebrow">Content + CRM</span>
+                <h2>Everything important is in one private workspace.</h2>
+                <p>Publish portfolio content, review enquiries, manage leads, and move opportunities forward without jumping between disconnected tools.</p>
+            </div>
 
-<div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Projects</p>
-        <div class="text-2xl font-semibold text-[var(--text-strong)]">{{ $stats['projects'] }}</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">Published: {{ $stats['projects_published'] }}</p>
-    </div>
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Posts</p>
-        <div class="text-2xl font-semibold text-[var(--text-strong)]">{{ $stats['posts'] }}</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">Published: {{ $stats['posts_published'] }}</p>
-    </div>
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Leads</p>
-        <div class="text-2xl font-semibold text-[var(--text-strong)]">{{ $stats['leads'] }}</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">This month: {{ $stats['leads_this_month'] }}</p>
-    </div>
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Task Health</p>
-        <div class="text-2xl font-semibold text-[var(--text-strong)]">{{ $stats['task_completion_rate'] }}%</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">Completion rate</p>
-    </div>
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Tasks</p>
-        <div class="text-2xl font-semibold text-[var(--text-strong)]">{{ $stats['tasks'] }}</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">In system</p>
-    </div>
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Overdue</p>
-        <div class="text-2xl font-semibold text-red-400">{{ $stats['overdue_tasks'] }}</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">Need immediate action</p>
-    </div>
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Due in 7 days</p>
-        <div class="text-2xl font-semibold text-amber-300">{{ $stats['due_soon_tasks'] }}</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">Upcoming deadlines</p>
-    </div>
-    <div class="surface p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">Services</p>
-        <div class="text-2xl font-semibold text-[var(--text-strong)]">{{ $stats['services'] }}</div>
-        <p class="mt-2 text-xs text-[var(--muted)]">Active offerings</p>
-    </div>
-</div>
+            <div class="admin-foundation-list">
+                @foreach($foundation as $item)
+                    <span>{{ $item }}</span>
+                @endforeach
+            </div>
+        </article>
 
-<div class="mt-8 grid gap-6 lg:grid-cols-3">
-    <div class="surface p-4">
-        <h2 class="text-sm font-semibold text-[var(--text-strong)]">Lead trend (last 6 months)</h2>
-        <div class="mt-4 space-y-3">
-            @foreach($leadTrend as $point)
-                <div>
-                    <div class="mb-1 flex items-center justify-between text-xs text-[var(--muted)]">
-                        <span>{{ $point['label'] }}</span>
-                        <span>{{ $point['value'] }}</span>
-                    </div>
-                    <div class="h-2 rounded bg-[rgba(255,255,255,0.08)]">
-                        <div class="h-2 rounded bg-[var(--accent)]" style="width: {{ ($point['value'] / $maxLeadTrend) * 100 }}%"></div>
-                    </div>
-                </div>
+        <article class="panel admin-note-card">
+            <span class="eyebrow">Work faster</span>
+            <h2>Prioritize what needs action first.</h2>
+            <p>Unread messages, hot leads, and fresh finder results stay visible so follow-up work never gets buried under publishing tasks.</p>
+            <div class="admin-quick-links">
+                @foreach($quickLinks as $link)
+                    <a href="{{ $link['href'] }}" class="btn btn-secondary btn-compact">{{ $link['label'] }}</a>
+                @endforeach
+            </div>
+        </article>
+    </section>
+
+    <section class="admin-section-stack">
+        <div class="admin-section-head">
+            <div>
+                <span class="eyebrow">Priority</span>
+                <h2 class="section-title">What needs attention now</h2>
+                <p class="section-copy">The highest-signal CRM numbers stay first so the dashboard is useful in a few seconds.</p>
+            </div>
+        </div>
+
+        <div class="admin-card-grid admin-card-grid-priority">
+            @foreach($primaryCrmCards as $card)
+                <article class="panel admin-stat-card">
+                    <span class="admin-stat-label">{{ $card['label'] }}</span>
+                    <strong>{{ $card['value'] }}</strong>
+                    <p>{{ $card['copy'] }}</p>
+                    <small>{{ $card['note'] }}</small>
+                    @if(!empty($card['href']))
+                        <a href="{{ $card['href'] }}" class="text-link">Open module</a>
+                    @endif
+                </article>
             @endforeach
         </div>
-    </div>
+    </section>
 
-    <div class="surface p-4">
-        <h2 class="text-sm font-semibold text-[var(--text-strong)]">Task trend (last 6 months)</h2>
-        <div class="mt-4 space-y-3">
-            @foreach($taskTrend as $point)
-                <div>
-                    <div class="mb-1 flex items-center justify-between text-xs text-[var(--muted)]">
-                        <span>{{ $point['label'] }}</span>
-                        <span>{{ $point['value'] }}</span>
+    <section class="admin-detail-grid">
+        <article class="panel admin-module-card">
+            <span class="eyebrow">Latest content</span>
+            <h2>Quick visibility into the latest portfolio updates.</h2>
+            <div class="admin-content-grid">
+                @foreach($latestContent as $group)
+                    <div class="admin-content-column">
+                        <strong>{{ $group['label'] }}</strong>
+                        <ul class="admin-content-list">
+                            @forelse($group['items'] as $item)
+                                <li>
+                                    <a href="{{ $item['href'] }}">{{ $item['title'] }}</a>
+                                    <span>{{ $item['meta'] }}</span>
+                                </li>
+                            @empty
+                                <li class="is-empty">
+                                    <span>{{ $group['empty'] }}</span>
+                                </li>
+                            @endforelse
+                        </ul>
                     </div>
-                    <div class="h-2 rounded bg-[rgba(255,255,255,0.08)]">
-                        <div class="h-2 rounded bg-sky-400" style="width: {{ ($point['value'] / $maxTaskTrend) * 100 }}%"></div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+                @endforeach
+            </div>
+        </article>
 
-    <div class="surface p-4">
-        <h2 class="text-sm font-semibold text-[var(--text-strong)]">Task pipeline</h2>
-        <ul class="mt-4 space-y-3">
-            @foreach($taskStatus as $status => $count)
-                <li>
-                    <div class="mb-1 flex items-center justify-between text-xs text-[var(--muted)]">
-                        <span>{{ str($status)->replace('_', ' ')->title() }}</span>
-                        <span>{{ $count }}</span>
-                    </div>
-                    <div class="h-2 rounded bg-[rgba(255,255,255,0.08)]">
-                        <div class="h-2 rounded bg-violet-400" style="width: {{ ($count / $maxTaskStatus) * 100 }}%"></div>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
-    </div>
-</div>
+        <article class="panel admin-module-card">
+            <span class="eyebrow">Operational focus</span>
+            <h2>What this admin is optimized to support right now.</h2>
+            <ul class="simple-list">
+                <li>Project management and case-study publishing</li>
+                <li>Blog post drafting and SEO publishing workflows</li>
+                <li>Service page editing and offer management</li>
+                <li>Testimonial curation for trust and conversion</li>
+                <li>Message triage and manual lead follow-up visibility</li>
+            </ul>
+        </article>
+    </section>
 
-<div class="mt-8 grid gap-6 lg:grid-cols-2">
-    <div class="surface p-4">
-        <div class="mb-3 flex items-center justify-between">
-            <h2 class="text-sm font-semibold text-[var(--text-strong)]">Recent leads</h2>
-            <a href="{{ route('admin.leads.index') }}" class="text-xs text-[var(--accent-2)]">View all</a>
-        </div>
-        <ul class="mt-4 space-y-3">
-            @forelse($recentLeads as $lead)
-                <li class="flex items-center justify-between text-sm text-[var(--text)]">
-                    <span>{{ $lead->name }} · {{ $lead->email }}</span>
-                    <span class="text-xs text-[var(--muted)]">{{ $lead->created_at->diffForHumans() }}</span>
-                </li>
-            @empty
-                <li class="text-sm text-[var(--muted)]">No leads yet.</li>
-            @endforelse
-        </ul>
-    </div>
+    <section class="admin-detail-grid">
+        <article class="panel admin-module-card">
+            <span class="eyebrow">Pipeline metrics</span>
+            <h2>Secondary CRM signals</h2>
+            <div class="admin-card-grid admin-card-grid-compact">
+                @foreach($secondaryCrmCards as $card)
+                    <article class="admin-subtle-card">
+                        <span class="admin-stat-label">{{ $card['label'] }}</span>
+                        <strong>{{ $card['value'] }}</strong>
+                        <small>{{ $card['note'] }}</small>
+                        @if(!empty($card['href']))
+                            <a href="{{ $card['href'] }}" class="text-link">Open</a>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+        </article>
 
-    <div class="surface p-4">
-        <div class="mb-3 flex items-center justify-between">
-            <h2 class="text-sm font-semibold text-[var(--text-strong)]">Recent projects</h2>
-            <a href="{{ route('admin.projects.index') }}" class="text-xs text-[var(--accent-2)]">Manage</a>
-        </div>
-        <ul class="mt-4 space-y-3 text-sm text-[var(--text)]">
-            @forelse($recentProjects as $project)
-                <li class="flex items-center justify-between">
-                    <span>{{ $project->title }} <span class="text-xs text-[var(--muted)]">({{ $project->status }})</span></span>
-                    <span class="text-xs text-[var(--muted)]">{{ $project->created_at->diffForHumans() }}</span>
-                </li>
-            @empty
-                <li class="text-sm text-[var(--muted)]">No projects yet.</li>
-            @endforelse
-        </ul>
-    </div>
-</div>
+        <article class="panel admin-module-card">
+            <span class="eyebrow">Publishing modules</span>
+            <h2>Content inventory at a glance</h2>
+            <div class="admin-card-grid admin-card-grid-compact">
+                @foreach($contentCards as $card)
+                    <article class="admin-subtle-card">
+                        <span class="admin-stat-label">{{ $card['label'] }}</span>
+                        <strong>{{ $card['value'] }}</strong>
+                        <small>{{ $card['note'] }}</small>
+                        @if(!empty($card['href']))
+                            <a href="{{ $card['href'] }}" class="text-link">Open</a>
+                        @endif
+                    </article>
+                @endforeach
 
-<div class="mt-8 grid gap-6 lg:grid-cols-2">
-    <div class="surface p-4">
-        <h2 class="text-sm font-semibold text-[var(--text-strong)]">Project publication split</h2>
-        <div class="mt-4 flex flex-wrap gap-2 text-xs">
-            @foreach($projectStatus as $status => $count)
-                <span class="chip">{{ str($status)->title() }} · {{ $count }}</span>
-            @endforeach
-        </div>
-    </div>
-    <div class="surface p-4">
-        <h2 class="text-sm font-semibold text-[var(--text-strong)]">Post publication split</h2>
-        <div class="mt-4 flex flex-wrap gap-2 text-xs">
-            @foreach($postStatus as $status => $count)
-                <span class="chip">{{ str($status)->title() }} · {{ $count }}</span>
-            @endforeach
-        </div>
-    </div>
-</div>
+                @foreach($agentCards as $card)
+                    <article class="admin-subtle-card">
+                        <span class="admin-stat-label">{{ $card['label'] }}</span>
+                        <strong>{{ $card['value'] }}</strong>
+                        <small>{{ $card['note'] }}</small>
+                        @if(!empty($card['href']))
+                            <a href="{{ $card['href'] }}" class="text-link">Open</a>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+        </article>
+    </section>
+
+    <section class="admin-detail-grid">
+        <article class="panel admin-module-card">
+            <span class="eyebrow">Recent messages</span>
+            <h2>Latest inbound contact activity.</h2>
+            <ul class="admin-message-list">
+                @forelse($recentMessages as $message)
+                    <li>
+                        <strong>{{ $message->name }}</strong>
+                        <span>{{ $message->email }} @if($message->company) / {{ $message->company }} @endif</span>
+                        <small>{{ $message->created_at?->diffForHumans() }}</small>
+                    </li>
+                @empty
+                    <li class="is-empty">
+                        <strong>No messages yet</strong>
+                        <span>New contact form submissions will appear here.</span>
+                    </li>
+                @endforelse
+            </ul>
+        </article>
+
+        <article class="panel admin-module-card">
+            <span class="eyebrow">Recent leads</span>
+            <h2>Manual CRM records that need context or follow-up.</h2>
+            <ul class="admin-message-list">
+                @forelse($recentLeads as $lead)
+                    <li>
+                        <strong>{{ $lead->business_name }}</strong>
+                        <span>{{ $lead->statusLabel() }} @if($lead->city) / {{ $lead->city }} @endif</span>
+                        <small>{{ $lead->updated_at?->diffForHumans() }}</small>
+                    </li>
+                @empty
+                    <li class="is-empty">
+                        <strong>No leads yet</strong>
+                        <span>Add the first business lead to start the CRM pipeline.</span>
+                    </li>
+                @endforelse
+            </ul>
+        </article>
+    </section>
 @endsection

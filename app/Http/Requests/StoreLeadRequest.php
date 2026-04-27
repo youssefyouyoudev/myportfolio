@@ -20,7 +20,7 @@ class StoreLeadRequest extends FormRequest
             'project_type' => ['nullable', 'string', 'max:80'],
             'budget' => ['nullable', 'string', 'max:60'],
             'timeline' => ['nullable', 'string', 'max:80'],
-            'message' => ['required', 'string', 'max:2000'],
+            'message' => ['required', 'string', 'min:20', 'max:2000'],
             'website' => ['nullable', 'string', 'max:255'],
         ];
     }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Support\BrandContent;
+use App\Support\ContentMapper;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -11,6 +13,15 @@ class ServiceController extends Controller
     {
         $locale = app()->getLocale();
         $page = BrandContent::servicesIndex($locale);
+        $services = Service::published()
+            ->orderByDesc('featured')
+            ->orderBy('position')
+            ->latest('published_at')
+            ->get();
+
+        if ($services->isNotEmpty()) {
+            $page['items'] = $services->map(fn (Service $service): array => ContentMapper::serviceCard($service, $locale))->all();
+        }
 
         return view('pages.services.index', [
             'page' => $page,
@@ -18,7 +29,7 @@ class ServiceController extends Controller
                 $locale,
                 $page['seo'],
                 [BrandContent::personSchema($locale)],
-                asset('images/youyou-portrait.png'),
+                $page['items'][0]['featured_image'] ?? asset('images/youyou-portrait.png'),
                 [
                     ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
                     ['name' => 'Services', 'url' => route('services.index', ['locale' => $locale])],
@@ -30,7 +41,8 @@ class ServiceController extends Controller
     public function show(string $service): View
     {
         $locale = app()->getLocale();
-        $page = BrandContent::service($locale, $service);
+        $record = Service::published()->where('slug', $service)->first();
+        $page = $record ? ContentMapper::serviceCard($record, $locale) : BrandContent::service($locale, $service);
         abort_unless($page, 404);
 
         return view('pages.services.show', [
@@ -42,7 +54,7 @@ class ServiceController extends Controller
                     BrandContent::personSchema($locale),
                     BrandContent::serviceSchema($page, route('services.show', ['locale' => $locale, 'service' => $service])),
                 ],
-                asset('images/youyou-portrait.png'),
+                $page['featured_image'] ?? asset('images/youyou-portrait.png'),
                 [
                     ['name' => 'Home', 'url' => route('home', ['locale' => $locale])],
                     ['name' => 'Services', 'url' => route('services.index', ['locale' => $locale])],
