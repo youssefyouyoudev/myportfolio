@@ -18,6 +18,7 @@
     $processSteps      = $showcase['process'] ?? [];
     $statsNumbers      = $showcase['stats_numbers'] ?? [];
     $trustStrip        = $showcase['hero']['trust_strip'] ?? '';
+    $plannedScopeStrongRendered = false;
 @endphp
 
 {{-- ═══════════════════════ HERO ═══════════════════════ --}}
@@ -281,8 +282,17 @@
 
                         <div class="case-metric-row">
                             @foreach($project['metrics'] as $metric)
+                                @php
+                                    $isPlannedScopeMetric = strcasecmp(trim((string) $metric['value']), 'Planned per scope') === 0;
+                                    $renderMetricAsStrong = ! $isPlannedScopeMetric || ! $plannedScopeStrongRendered;
+                                    $plannedScopeStrongRendered = $plannedScopeStrongRendered || $isPlannedScopeMetric;
+                                @endphp
                                 <div class="case-metric-card">
-                                    <strong>{{ $metric['value'] }}</strong>
+                                    @if($renderMetricAsStrong)
+                                        <strong>{{ $metric['value'] }}</strong>
+                                    @else
+                                        <span class="case-metric-value">{{ $metric['value'] }}</span>
+                                    @endif
                                     <span>{{ $metric['label'] }}</span>
                                 </div>
                             @endforeach

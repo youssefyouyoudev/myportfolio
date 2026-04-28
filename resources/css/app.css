@@ -254,7 +254,7 @@ html[data-theme='light'] .header-panel {
 .hero-copy h1,
 .panel h2,
 .panel h3,
-.site-footer h3,
+.footer-title,
 .site-footer h4,
 .section-cta h2 {
     font-family: Sora, Manrope, system-ui, sans-serif;
@@ -1727,9 +1727,16 @@ body.is-rtl .simple-list {
     font-size: 0.92rem;
 }
 
-.footer-intro h3,
+.footer-title,
 .footer-column h4 {
     margin: 0;
+}
+
+.footer-title {
+    color: var(--text);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.25;
 }
 
 .footer-bottom {
@@ -2186,10 +2193,12 @@ body.is-rtl .portfolio-trust-list span::before {
     border-radius: 22px;
 }
 
-.case-metric-card strong {
+.case-metric-card strong,
+.case-metric-value {
     display: block;
     margin-bottom: 0.3rem;
     color: var(--text);
+    font-weight: 700;
 }
 
 .case-metric-card span {

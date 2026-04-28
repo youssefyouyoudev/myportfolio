@@ -196,7 +196,7 @@
                 <div class="footer-grid">
                     <div class="footer-intro">
                         <span class="eyebrow">{{ $landing['nav']['footer_eyebrow'] }}</span>
-                        <h3>{{ $landing['nav']['footer_title'] }}</h3>
+                        <p class="footer-title">{{ $landing['nav']['footer_title'] }}</p>
                         <p>{{ $landing['nav']['footer_copy'] }}</p>
                     </div>
                     <div class="footer-column">
@@ -214,7 +214,7 @@
                         <a href="{{ $site['phone_link'] }}">{{ $site['phone'] }}</a>
                         <a href="{{ $site['whatsapp_url'] }}" target="_blank" rel="noopener" aria-label="WhatsApp {{ $site['phone'] }}">{{ $site['actions']['whatsapp'] }}</a>
                         @foreach($site['socials'] as $social)
-                            <a href="{{ $social['url'] }}" target="_blank" rel="noopener" aria-label="{{ $social['label'] }}">{{ $social['label'] }}</a>
+                            <a href="{{ $social['url'] }}" target="_blank" rel="me noopener" aria-label="{{ $social['label'] }}">{{ $social['label'] }}</a>
                         @endforeach
                         <div class="footer-locales">
                             @foreach($localeLabels as $supportedLocale => $label)
@@ -242,4 +242,3 @@
     </div>
 </body>
 </html>
-

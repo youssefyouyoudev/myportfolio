@@ -627,7 +627,7 @@ MD,
             'outcome_long' => 'The final outcome was a clearer internal process, a more reliable product surface, and a stronger base for future iteration.',
             // TODO: replace with real, client-approved result cards for this project.
             'result_1_label' => 'Launch time',
-            'result_1_value' => 'Planned per scope',
+            'result_1_value' => 'Scoped launch plan',
             'result_2_label' => 'Performance score',
             'result_2_value' => 'Measured after launch',
             'result_3_label' => 'Client outcome',

@@ -35,9 +35,11 @@ class BrandContent
         $site['email_link'] = 'mailto:contact@youssefyouyou.com';
         $site['github_url'] = 'https://github.com/youssefyouyoudev';
         $site['linkedin_url'] = 'https://linkedin.com/in/youssefyouyoudev';
+        $site['devto_url'] = 'https://dev.to/youssefyouyoudev';
         $site['socials'] = [
             ['label' => 'GitHub', 'url' => $site['github_url']],
             ['label' => 'LinkedIn', 'url' => $site['linkedin_url']],
+            ['label' => 'Dev.to', 'url' => $site['devto_url']],
         ];
         $site['cv_url'] = route('resume', ['locale' => $locale]);
         $site['availability_badge'] = self::availabilityBadge();
@@ -1167,6 +1169,7 @@ class BrandContent
             'sameAs' => [
                 $site['github_url'],
                 $site['linkedin_url'],
+                $site['devto_url'],
             ],
             'knowsLanguage' => ['Arabic', 'French', 'English', 'German', 'Spanish'],
             'knowsAbout' => [
@@ -1205,6 +1208,7 @@ class BrandContent
             'sameAs' => [
                 $site['github_url'],
                 $site['linkedin_url'],
+                $site['devto_url'],
             ],
         ];
     }
