@@ -285,8 +285,8 @@ class BrandContent
     {
         $base = [
             'seo' => [
-                'title' => 'Youssef Youyou — Full-Stack Developer for Web, Mobile & Desktop Apps | Morocco',
-                'description' => 'Senior Full-Stack Developer in Morocco building web apps, mobile apps, desktop software, and AI systems for B2B and B2C clients. 6+ years, 20+ products shipped.',
+                'title' => 'Youssef Youyou — Full-Stack Developer | Morocco',
+                'description' => 'Full-Stack Developer in Morocco. Web, mobile & desktop apps. 6+ years, 20+ products shipped. Available now.',
                 'keywords' => 'full-stack developer Morocco, web mobile desktop developer Morocco, Laravel React Flutter developer, AI automation developer Morocco, developer Nador',
                 'type' => 'website',
             ],

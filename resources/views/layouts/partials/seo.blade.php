@@ -31,7 +31,7 @@
 @foreach($alternateLocales as $alternateLocale)
     <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName() ?? 'home', array_filter(array_merge(request()->route()?->parameters() ?? [], ['locale' => $alternateLocale]))) }}">
 @endforeach
-<link rel="alternate" hreflang="x-default" href="{{ route('home', ['locale' => 'en']) }}">
+<link rel="alternate" hreflang="x-default" href="{{ rtrim(config('app.url'), '/') }}">
 <link rel="icon" href="{{ asset('images/brand-mark.png') }}">
 @foreach(($resolvedMeta['schema'] ?? []) as $schema)
     <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>

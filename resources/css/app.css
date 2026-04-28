@@ -4012,6 +4012,22 @@ textarea.input-ghost {
     animation: none;
 }
 
+/* Visual weight for availability/status text without using <strong> semantics */
+.avail-label {
+    font-weight: 600;
+}
+
+/* Decorative meta labels (Client, Industry, Problem, Result) — visual bold without semantic bold */
+.meta-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+}
+
 /* ── Hero headline & subhead ── */
 .portfolio-hero-copy h1 {
     margin: 0 0 0.85rem;

@@ -38,7 +38,7 @@
         <div class="portfolio-hero-copy" data-reveal>
             <div class="availability-pill availability-pill-{{ $site['availability_badge']['state'] }}">
                 <span class="avail-dot" aria-hidden="true"></span>
-                <strong>{{ $site['availability_badge']['label'] }}</strong>
+                <span class="avail-label">{{ $site['availability_badge']['label'] }}</span>
             </div>
 
             <h1>I build the software. You grow the business.</h1>
@@ -242,16 +242,16 @@
                         <div class="case-meta-grid">
                             @if($project['is_nda'] ?? false)
                                 <div>
-                                    <strong>Access</strong>
+                                    <span class="meta-label">Access</span>
                                     <p>Under NDA &mdash; details available on request.</p>
                                 </div>
                             @else
                                 <div>
-                                    <strong>Client</strong>
+                                    <span class="meta-label">Client</span>
                                     <p>{{ $project['client'] ?? 'Private client' }}</p>
                                 </div>
                                 <div>
-                                    <strong>Industry</strong>
+                                    <span class="meta-label">Industry</span>
                                     <p>{{ $project['client_industry'] ?? 'Digital product' }}</p>
                                 </div>
                             @endif
@@ -259,11 +259,11 @@
 
                         <div class="case-meta-grid">
                             <div>
-                                <strong>{{ __('brand.common.problem') }}</strong>
+                                <span class="meta-label">{{ __('brand.common.problem') }}</span>
                                 <p>{{ $project['challenge'] }}</p>
                             </div>
                             <div>
-                                <strong>{{ __('brand.common.solution') }}</strong>
+                                <span class="meta-label">{{ __('brand.common.solution') }}</span>
                                 <p>{{ $project['solution'] }}</p>
                             </div>
                         </div>
@@ -317,7 +317,7 @@
                         </div>
                         <h3>{{ $project['title'] }}</h3>
                         <p>{{ $project['summary'] }}</p>
-                        <p><strong>Result:</strong> {{ $project['result_headline'] ?? $project['outcome'] ?? 'A clearer project story with stronger business context.' }}</p>
+                        <p><span class="meta-label">Result:</span> {{ $project['result_headline'] ?? $project['outcome'] ?? 'A clearer project story with stronger business context.' }}</p>
                         <div class="stack-list">
                             @foreach($project['stack'] as $item)
                                 <span>{{ $item }}</span>

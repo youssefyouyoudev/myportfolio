@@ -143,7 +143,7 @@
                             </svg>
                         </button>
                         <a href="{{ route('availability', ['locale' => $locale]) }}" class="header-status">
-                            <strong>{{ $site['availability_badge']['label'] }}</strong>
+                            <span class="avail-label">{{ $site['availability_badge']['label'] }}</span>
                             <span>{{ $site['availability_badge']['detail'] }}</span>
                         </a>
                         <a href="{{ route('contact.create', ['locale' => $locale]) }}" class="btn btn-primary header-cta" id="nav-cta-start">{{ $landing['nav']['start_project'] }}</a>
