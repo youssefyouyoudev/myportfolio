@@ -36,10 +36,16 @@ class BrandContent
         $site['github_url'] = 'https://github.com/youssefyouyoudev';
         $site['linkedin_url'] = 'https://linkedin.com/in/youssefyouyoudev';
         $site['devto_url'] = 'https://dev.to/youssefyouyoudev';
+        $site['medium_url'] = 'https://medium.com/@youssefyouyoudev';
+        $site['producthunt_url'] = 'https://producthunt.com/@youssefyouyoudev';
+        $site['hashnode_url'] = 'https://hashnode.com/@youssefyouyoudev';
         $site['socials'] = [
             ['label' => 'GitHub', 'url' => $site['github_url']],
             ['label' => 'LinkedIn', 'url' => $site['linkedin_url']],
             ['label' => 'Dev.to', 'url' => $site['devto_url']],
+            ['label' => 'Medium', 'url' => $site['medium_url']],
+            ['label' => 'ProductHunt', 'url' => $site['producthunt_url']],
+            ['label' => 'Hashnode', 'url' => $site['hashnode_url']],
         ];
         $site['cv_url'] = route('resume', ['locale' => $locale]);
         $site['availability_badge'] = self::availabilityBadge();
@@ -1170,6 +1176,9 @@ class BrandContent
                 $site['github_url'],
                 $site['linkedin_url'],
                 $site['devto_url'],
+                $site['medium_url'],
+                $site['producthunt_url'],
+                $site['hashnode_url'],
             ],
             'knowsLanguage' => ['Arabic', 'French', 'English', 'German', 'Spanish'],
             'knowsAbout' => [
@@ -1209,6 +1218,9 @@ class BrandContent
                 $site['github_url'],
                 $site['linkedin_url'],
                 $site['devto_url'],
+                $site['medium_url'],
+                $site['producthunt_url'],
+                $site['hashnode_url'],
             ],
         ];
     }

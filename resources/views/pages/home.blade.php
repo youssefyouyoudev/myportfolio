@@ -18,7 +18,11 @@
     $processSteps      = $showcase['process'] ?? [];
     $statsNumbers      = $showcase['stats_numbers'] ?? [];
     $trustStrip        = $showcase['hero']['trust_strip'] ?? '';
-    $plannedScopeStrongRendered = false;
+    $metricStrongLimits = [
+        'planned per scope' => 1,
+        'measured after launch' => 1,
+    ];
+    $limitedMetricStrongCounts = [];
 @endphp
 
 {{-- ═══════════════════════ HERO ═══════════════════════ --}}
@@ -283,9 +287,13 @@
                         <div class="case-metric-row">
                             @foreach($project['metrics'] as $metric)
                                 @php
-                                    $isPlannedScopeMetric = strcasecmp(trim((string) $metric['value']), 'Planned per scope') === 0;
-                                    $renderMetricAsStrong = ! $isPlannedScopeMetric || ! $plannedScopeStrongRendered;
-                                    $plannedScopeStrongRendered = $plannedScopeStrongRendered || $isPlannedScopeMetric;
+                                    $metricValueKey = strtolower(trim((string) $metric['value']));
+                                    $metricStrongLimit = $metricStrongLimits[$metricValueKey] ?? null;
+                                    $metricStrongCount = $limitedMetricStrongCounts[$metricValueKey] ?? 0;
+                                    $renderMetricAsStrong = $metricStrongLimit === null || $metricStrongCount < $metricStrongLimit;
+                                    if ($metricStrongLimit !== null && $renderMetricAsStrong) {
+                                        $limitedMetricStrongCounts[$metricValueKey] = $metricStrongCount + 1;
+                                    }
                                 @endphp
                                 <div class="case-metric-card">
                                     @if($renderMetricAsStrong)

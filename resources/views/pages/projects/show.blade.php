@@ -72,7 +72,7 @@
                     <div class="case-metric-row stacked">
                         @foreach($page['metrics'] as $metric)
                             <div class="case-metric-card">
-                                @if(strcasecmp(trim((string) $metric['value']), 'Planned per scope') === 0)
+                                @if(in_array(strtolower(trim((string) $metric['value'])), ['planned per scope', 'measured after launch'], true))
                                     <span class="case-metric-value">{{ $metric['value'] }}</span>
                                 @else
                                     <strong>{{ $metric['value'] }}</strong>
