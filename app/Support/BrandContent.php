@@ -66,7 +66,7 @@ class BrandContent
             ['label' => self::location($locale, 'developer-nador')['title'], 'url' => route('pages.location', ['locale' => $locale, 'slug' => 'developer-nador'])],
             ['label' => self::location($locale, 'developer-oriental')['title'], 'url' => route('pages.location', ['locale' => $locale, 'slug' => 'developer-oriental'])],
             ['label' => self::location($locale, 'developer-morocco')['title'], 'url' => route('pages.location', ['locale' => $locale, 'slug' => 'developer-morocco'])],
-            ['label' => $site['navigation']['blog'], 'url' => route('blog.index', ['locale' => $locale])],
+            ['label' => $site['navigation']['blog'], 'url' => config('external-blog.base_url')],
         ];
 
         return $site;
@@ -1242,7 +1242,7 @@ class BrandContent
             ],
             'potentialAction' => [
                 '@type' => 'SearchAction',
-                'target' => rtrim($site['website_url'], '/').'/'.$locale.'/blog?search={search_term_string}',
+                'target' => rtrim((string) config('external-blog.base_url'), '/').'/posts?search={search_term_string}',
                 'query-input' => 'required name=search_term_string',
             ],
         ];

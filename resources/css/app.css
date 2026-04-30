@@ -1656,6 +1656,87 @@ html[data-theme='light'] .contact-form {
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.blog-backlink-line {
+    max-width: 720px;
+    margin: -0.75rem 0 1.5rem;
+    color: var(--muted);
+}
+
+.blog-backlink-line a {
+    color: var(--accent-strong);
+    font-weight: 800;
+}
+
+.external-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.external-blog-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    overflow: hidden;
+    padding: 0;
+}
+
+.external-blog-image {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--bg-soft);
+}
+
+.external-blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.external-blog-card:hover .external-blog-image img {
+    transform: scale(1.04);
+}
+
+.external-blog-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.1rem;
+}
+
+.external-blog-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.external-blog-meta span {
+    color: var(--accent-strong);
+}
+
+.external-blog-body h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.3;
+}
+
+.external-blog-body p {
+    margin: 0;
+}
+
+.external-blog-body .btn {
+    margin-top: auto;
+    align-self: flex-start;
+}
+
 .simple-list {
     margin: 0;
     padding-left: 1.2rem;
@@ -3768,6 +3849,7 @@ textarea.input-ghost {
     .card-grid.two,
     .card-grid.three,
     .card-grid.four,
+    .external-blog-grid,
     .portfolio-service-grid,
     .portfolio-proof-grid,
     .portfolio-why-grid,

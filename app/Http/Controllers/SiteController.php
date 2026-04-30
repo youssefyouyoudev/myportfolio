@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\ClientLogo;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Testimonial;
+use App\Services\ExternalBlogService;
 use App\Support\BrandContent;
 use App\Support\ContentMapper;
 use Illuminate\Http\Response;
@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class SiteController extends Controller
 {
-    public function home(): View
+    public function home(ExternalBlogService $externalBlog): View
     {
         $locale = app()->getLocale();
         $page = BrandContent::home($locale);
@@ -114,6 +114,8 @@ class SiteController extends Controller
             'showClientLogos' => $showClientLogos,
             'recentWorkTypes' => $recentWorkTypes,
             'homeFaqItems' => $homeFaqItems,
+            'externalBlogBaseUrl' => config('external-blog.base_url'),
+            'externalBlogPosts' => $externalBlog->latest(3),
             'homeStructuredData' => [
                 BrandContent::personSchema($locale),
                 BrandContent::websiteSchema($locale),
@@ -270,7 +272,6 @@ class SiteController extends Controller
             $urls[] = route('terms-of-service', ['locale' => $locale]);
             $urls[] = route('services.index', ['locale' => $locale]);
             $urls[] = route('projects.index', ['locale' => $locale]);
-            $urls[] = route('blog.index', ['locale' => $locale]);
             $urls[] = route('contact.create', ['locale' => $locale]);
 
             $services = Service::published()->exists()
@@ -289,18 +290,12 @@ class SiteController extends Controller
                 $urls[] = route('projects.show', ['locale' => $locale, 'project' => $project['slug']]);
             }
 
-            $articles = Post::published()->exists()
-                ? Post::published()->get(['slug'])->map(fn (Post $post): array => ['slug' => $post->slug])->all()
-                : BrandContent::blogCatalog($locale);
-
-            foreach ($articles as $article) {
-                $urls[] = route('blog.show', ['locale' => $locale, 'slug' => $article['slug']]);
-            }
-
             foreach (BrandContent::locationCatalog($locale) as $page) {
                 $urls[] = route('pages.location', ['locale' => $locale, 'slug' => $page['slug']]);
             }
         }
+
+        $urls[] = config('external-blog.base_url');
 
         return response()
             ->view('sitemap.xml', ['urls' => array_values(array_unique($urls))])

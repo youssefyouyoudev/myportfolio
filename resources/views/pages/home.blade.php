@@ -17,6 +17,8 @@
     $whoIWorkWith      = $showcase['who_i_work_with'] ?? [];
     $processSteps      = $showcase['process'] ?? [];
     $statsNumbers      = $showcase['stats_numbers'] ?? [];
+    $blogPosts         = collect($externalBlogPosts ?? [])->take(3);
+    $blogBaseUrl       = rtrim((string) ($externalBlogBaseUrl ?? config('external-blog.base_url')), '/');
     $trustStrip        = $showcase['hero']['trust_strip'] ?? '';
     $metricStrongLimits = [
         'planned per scope' => 1,
@@ -361,6 +363,54 @@
 </section>
 
 {{-- ═══════════════════════ CONTACT ═══════════════════════ --}}
+@if($blogPosts->isNotEmpty())
+<section class="section section-soft" id="insights">
+    <div class="container">
+        <x-site.section-heading
+            eyebrow="Insights"
+            title="Latest articles from Youssef Blog."
+            copy="Practical notes for founders, teams, and builders who care about clear software decisions."
+        />
+
+        <p class="blog-backlink-line">
+            Explore more <a href="{{ $blogBaseUrl }}">Laravel, SaaS and AI guides</a> from the external blog.
+        </p>
+
+        <div class="external-blog-grid">
+            @foreach($blogPosts as $article)
+                <article class="panel external-blog-card" data-reveal>
+                    <a href="{{ $article['url'] }}" class="external-blog-image" aria-label="Read {{ $article['title'] }}">
+                        <img
+                            src="{{ $article['image'] }}"
+                            alt="{{ $article['title'] }}"
+                            width="640"
+                            height="360"
+                            loading="lazy"
+                        >
+                    </a>
+                    <div class="external-blog-body">
+                        <div class="external-blog-meta">
+                            <span>{{ $article['category'] }}</span>
+                            @if(!empty($article['published_at']))
+                                <time>{{ $article['published_at'] }}</time>
+                            @endif
+                        </div>
+                        <h3>{{ $article['title'] }}</h3>
+                        <p>{{ $article['excerpt'] }}</p>
+                        <a href="{{ $article['url'] }}" class="btn btn-secondary">Read article &rarr;</a>
+                    </div>
+                </article>
+            @endforeach
+        </div>
+
+        <div class="section-inline-cta">
+            <p>Fresh guides now live on the dedicated blog subdomain.</p>
+            <a href="{{ $blogBaseUrl }}" class="btn btn-primary">View all articles &rarr;</a>
+        </div>
+    </div>
+</section>
+@endif
+
 <section class="section section-soft" id="contact">
     <div class="container contact-layout">
         <div class="contact-column">

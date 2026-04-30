@@ -8,7 +8,6 @@ use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
-use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileController;
@@ -55,8 +54,10 @@ Route::middleware('setLocale')->prefix('{locale?}')
         Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
         Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 
-        Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-        Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+        Route::redirect('/blog', 'https://blog.youssefyouyou.com', 301);
+        Route::get('/blog/{slug}', function (string $slug) {
+            return redirect()->away("https://blog.youssefyouyou.com/posts/{$slug}", 301);
+        });
 
         Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

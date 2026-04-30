@@ -3,6 +3,7 @@
     $site = \App\Support\BrandContent::site($locale);
     $landing = \App\Support\BrandContent::landing($locale);
     $meta = $seo ?? [];
+    $externalBlogUrl = rtrim((string) config('external-blog.base_url'), '/');
     $homeUrl = route('home', ['locale' => $locale]);
     $alternateLocales = \App\Support\BrandContent::supportedLocales();
     $currentRouteName = \Illuminate\Support\Facades\Route::currentRouteName() ?? 'home';
@@ -52,8 +53,8 @@
         ],
         [
             'label' => $landing['nav']['insights'],
-            'url'   => route('blog.index', ['locale' => $locale]),
-            'active' => str_starts_with($currentRouteName, 'blog.'),
+            'url'   => $externalBlogUrl,
+            'active' => false,
         ],
         [
             'label' => 'Contact',
